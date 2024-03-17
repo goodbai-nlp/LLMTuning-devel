@@ -1,0 +1,29 @@
+=== Summary ===
+
+-- All --
+Number of sentence        =   2416
+Number of Error sentence  =     11
+Number of Skip  sentence  =      0
+Number of Valid sentence  =   2405
+Bracketing Recall         =  95.21
+Bracketing Precision      =  95.63
+Bracketing FMeasure       =  95.42
+Complete match            =  54.76
+Average crossing          =   0.24
+No crossing               =  87.23
+2 or less crossing        =  97.17
+Tagging accuracy          =  98.09
+
+-- len<=40 --
+Number of sentence        =   2245
+Number of Error sentence  =     10
+Number of Skip  sentence  =      0
+Number of Valid sentence  =   2235
+Bracketing Recall         =  95.40
+Bracketing Precision      =  95.82
+Bracketing FMeasure       =  95.61
+Complete match            =  57.27
+Average crossing          =   0.21
+No crossing               =  88.41
+2 or less crossing        =  97.63
+Tagging accuracy          =  98.07

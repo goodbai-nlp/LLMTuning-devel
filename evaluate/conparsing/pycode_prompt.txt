@@ -1,0 +1,18 @@
+class Tree(list):
+    r"""
+    A Tree represents a hierarchical grouping of leaves and subtrees. For example, each constituent in a syntax tree is represented by a single Tree.
+    A tree's children are encoded as a list of leaves and subtrees, where a leaf is a basic (non-tree) value; and a subtree is a nested Tree.
+    """
+    def __init__(self, node, children=None):
+        if children is None:
+            raise TypeError(
+                "%s: Expected a node value and child list " % type(self).__name__
+            )
+        elif isinstance(children, str):
+            raise TypeError(
+                "%s() argument 2 should be a list, not a "
+                "string" % type(self).__name__
+            )
+        else:
+            list.__init__(self, children)
+            self._label = node

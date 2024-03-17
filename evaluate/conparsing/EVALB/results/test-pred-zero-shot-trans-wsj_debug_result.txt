@@ -1,0 +1,29 @@
+=== Summary ===
+
+-- All --
+Number of sentence        =      0
+Number of Error sentence  =      0
+Number of Skip  sentence  =      0
+Number of Valid sentence  =      0
+Bracketing Recall         =   0.00
+Bracketing Precision      =   0.00
+Bracketing FMeasure       =   -nan
+Complete match            =   0.00
+Average crossing          =   0.00
+No crossing               =   0.00
+2 or less crossing        =   0.00
+Tagging accuracy          =   0.00
+
+-- len<=40 --
+Number of sentence        =      0
+Number of Error sentence  =      0
+Number of Skip  sentence  =      0
+Number of Valid sentence  =      0
+Bracketing Recall         =   0.00
+Bracketing Precision      =   0.00
+Bracketing FMeasure       =   -nan
+Complete match            =   0.00
+Average crossing          =   0.00
+No crossing               =   0.00
+2 or less crossing        =   0.00
+Tagging accuracy          =   0.00
