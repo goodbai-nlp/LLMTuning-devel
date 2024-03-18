@@ -310,5 +310,6 @@ def main():
     with open(out_file, "w", encoding="utf-8") as fout:
         fout.write("\n".join(gen_res) + "\n")
 
+
 if __name__ == "__main__":
     main()

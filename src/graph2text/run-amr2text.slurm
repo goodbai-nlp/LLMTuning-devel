@@ -4,7 +4,7 @@
 #SBATCH -N 1                            #申请计算节点数
 #SBATCH --ntasks-per-node=96            #申请每个节点32核CPU
 #SBATCH --gres=gpu:8                    #申请4张GPU卡
-#SBATCH -w wxhd11           		       #指定GPU
+#SBATCH -w wxhd09           		       #指定GPU
 #SBATCH --output=logs/run-job%j.out         #作业标准输出
 #SBATCH --error=logs/run-job%j.err          #作业标准报错信息
 hostname
@@ -12,7 +12,7 @@ echo $CUDA_VISIBLE_DEVICES
 nvidia-smi
 module load Anaconda cuda-11.8 gcc-9.3.0
 source /data/anaconda3/bin/activate
-conda activate py3.10torch2.0devel
+conda activate py3.10torch2.1llm
 cd $SLURM_SUBMIT_DIR
 # sleep 15h
-bash fine_tune_amr2text_clm.sh
+bash finetune_amr2text_clm.sh

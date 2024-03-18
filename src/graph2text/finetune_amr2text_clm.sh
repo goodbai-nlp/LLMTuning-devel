@@ -1,7 +1,7 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 
 BasePath=/cpfs/29bcf0bdae829206-000001/home/usera401
-BasePath2=/data/home/usera401
+BasePath=/data/home/usera401
 CurDir=$(cd $(dirname $0);cd ..; pwd)
 
 MODEL_NAME=llama2-7b
@@ -41,7 +41,7 @@ else
 fi
 
 echo ${CurDir}
-deepspeed ${CurDir}/finetune_peft.py \
+deepspeed ${CurDir}/finetune_std.py \
     --deepspeed ${CurDir}/ds_configs/stage1_no_offloading.conf \
     --data_path ${DataPath}/${DataSetName} \
     --model_name_or_path ${MODEL} \

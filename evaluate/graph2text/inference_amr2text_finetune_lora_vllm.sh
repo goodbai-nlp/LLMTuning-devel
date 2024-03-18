@@ -9,15 +9,19 @@ DATA=${BasePath}/data/AMRData/LDC2020-leo-amr2text/test.jsonl
 
 PORT_ID=$(expr $RANDOM + 1000)
 
-MODEL=$1
+BaseMODEL=${BasePath}/data/pretrained-models/llama2-7b-chat
+BaseMODEL=${BasePath}/data/pretrained-models/llama2-7b
+LoRAMODEL=$1
+
 python -u inference_vllm.py \
     --test_file ${DATA} \
-    --model_name_or_path ${MODEL} \
+    --lora_name_or_path ${LoRAMODEL} \
+    --model_name_or_path ${BaseMODEL} \
     --num_beams 1 \
     --max_new_tokens 512 \
-    --out_prefix "pred" \
+    --out_prefix "LoRA-llama-7b-pred" \
     --input_key "input" \
-    --instruction "Generate a descriptive text for the given abstract meaning representation graph." \
+    --instruction "Generate a descriptive text for the given graph." \
     --prompt_template "supervised" 2>&1 | tee $MODEL/eval.log
 
 echo "Evaluating SacreBLEU score ..."
