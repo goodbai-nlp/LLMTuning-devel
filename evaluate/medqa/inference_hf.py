@@ -8,17 +8,19 @@ import torch
 import json
 import sys
 import os
+import re
 import math
 import time
+from nltk import Tree
 from tqdm import tqdm
 from transformers import (
     AutoConfig,
     AutoModelForCausalLM,
     AutoTokenizer,
+    GenerationConfig,
 )
 import torch.distributed as dist
-from accelerate import init_empty_weights, infer_auto_device_map, load_checkpoint_and_dispatch
-from accelerate.utils import get_balanced_memory
+from peft import PeftModel, PeftConfig
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
 logger = logging.getLogger(__name__)
@@ -51,14 +53,14 @@ def parse_args():
         required=True,
     )
     parser.add_argument(
-        "--out_path",
-        type=str,
-        default=None,
-        help="testset",
-    )
-    parser.add_argument(
         "--instruction",
         default="Generate the constituent tree for a given sentence.",
+        type=str,
+        help="input file",
+    )
+    parser.add_argument(
+        "--sys_instruction",
+        default="",
         type=str,
         help="input file",
     )
@@ -165,10 +167,16 @@ def prompt_eval(args, model, tokenizer, prompts):
     all_res = []
     with torch.inference_mode():
         for prompt in tqdm(prompts):
+            if "llama3" in args.model_name_or_path.lower() and not prompt.startswith("<|begin_of_text|>"):
+                prompt = f"<|begin_of_text|>{prompt}"
             inputs = tokenizer(prompt, return_tensors="pt").to(torch.cuda.current_device())
             # print("input_ids:", inputs.input_ids)
+            ori_input = tokenizer.batch_decode(
+                inputs.input_ids, skip_special_tokens=False, clean_up_tokenization_spaces=False
+            )
+            print("input_tokens:", ori_input)
             generate_ids = model.generate(
-                inputs.input_ids,
+                input_ids=inputs.input_ids,
                 num_beams=args.num_beams,
                 do_sample=False,
                 eos_token_id=tokenizer.eos_token_id,
@@ -186,46 +194,40 @@ def prompt_eval(args, model, tokenizer, prompts):
                 new_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
             )
             all_res += output
-            # print(f"{output}")
-            
+            print(f"output_token:{output}")
     return all_res
 
 
-def create_prompt(data, args, tokenizer=None):
+def create_prompt(data, args, tokenizer):
     if args.prompt_template == "None":
         prompts = [itm[args.input_key] for itm in data]
-    elif args.prompt_template in ["llama2-chat", "llama3-chat", "phi-3-instruct"]:
+    if args.prompt_template == "llama2-chat":
         system_prompt = "You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information."
-        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
-        prompts = []
-        for sample in data:
-            chat = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": sample[args.input_key].rstrip()},
-            ]
-            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
-    elif args.prompt_template in ["mixtral", "gemma-it"]:
-        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
-        prompts = []
-        for sample in data:
-            chat = [
-                {"role": "user", "content": sample[args.input_key].rstrip()},
-            ]
-            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
-    elif args.prompt_template == "llama2-chat-kg":
-        prompts = [webnlg_template.format(triples=sample[args.input_key]) for sample in data]
+        prompts = [f"[INST] <<SYS>>\n{system_prompt}\n<</SYS>>\n\n{sample[args.input_key].rstrip()} [/INST] " for sample in data]
+    elif args.prompt_template == "chat-v1":
+        if not len(args.sys_instruction):
+            chats = []
+        else:
+            chats = [{"role":"system", "content": args.sys_instruction}]
+
+        task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
+        prompts = [
+            tokenizer.apply_chat_template(chats + [{"role": "user", "content": f"{sample[args.input_key]} {task_instruction}"}], tokenize=False)
+            for sample in data
+        ]
     elif args.prompt_template == "pubmedqa":
         prompts = [f"{sample[args.input_key].rstrip()}\nQuestion:\n{sample['QUESTION']}\nPlease respond with yes, no or maybe. The answer to the question is:" for sample in data]
     elif args.prompt_template == "supervised":
+        task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
         prompts = [
-            f"Human:\n{args.instruction} {sample[args.input_key]}\nAssistant:\n"
+            f"Human:\n{task_instruction} {sample[args.input_key]}\nAssistant:\n"
             for sample in data
         ]
-    elif args.prompt_template == "supervised-llama3":
+    elif args.prompt_template == "supervised-v2":
         sys_instruction = ""
         task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
         prompts = [
-            f'<|begin_of_text|>{sys_instruction}Human:\n{task_instruction} {sample[args.input_key]}\nAssistant:\n'
+            f'{sys_instruction}### Human: {task_instruction} {sample[args.input_key]}\n### Assistant: '
             for sample in data
         ]
     elif args.prompt_template == "vicuna":
@@ -235,7 +237,7 @@ def create_prompt(data, args, tokenizer=None):
         ]
     elif args.prompt_template == "gpt":
         prompts = [
-            f"Human:\n{args.instruction} {sample[args.input_key]}\nAssistant:\n"
+            f"Human:\n{args.instruction}{sample[args.input_key]}\nAssistant:\n"
             for sample in data
         ]
     elif args.prompt_template == "one_shot":
@@ -286,45 +288,29 @@ rank = local_rank
 def main():
     args = parse_args()
     start_time = time.time()
-    config = AutoConfig.from_pretrained(args.model_name_or_path, trust_remote_code=True)
     print(f"Loading tokenizer from {args.model_name_or_path}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, fast_tokenizer=False, add_eos_token=False, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path, trust_remote_code=True)
-    model.cuda()
-    
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, fast_tokenizer=False, add_eos_token=False)
+    model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path, device_map="auto")
     end_time = time.time()
     logger.info(f"Loaded model {args.model_name_or_path} in {end_time - start_time:.4f} seconds")
     logger.info(f"Model parameters: {model.num_parameters():,} / footprint: {model.get_memory_footprint() / (1024*1024*1024):.2f} GB")
 
-    if args.test_file.endswith("jsonl"):
-        with open(args.test_file, "r", encoding="utf-8") as fin:
-            data = [json.loads(line.strip()) for line in fin]
-            prompts = create_prompt(data, args, tokenizer)
-    elif args.test_file.endswith("json"):
-        with open(args.test_file, "r", encoding="utf-8") as fin:
-            data = json.load(fin)
-            prompts = create_prompt(data, args, tokenizer)
-    else:
-        print("unsupported file format")
+    with open(args.test_file, "r", encoding="utf-8") as fin:
+        data = [json.loads(line.strip()) for line in fin]
+        prompts = create_prompt(data, args, tokenizer)
+        print("Example Prompts", prompts[:5])
+        # exit()
 
-    print(f"Loaded {len(prompts)} data for generation")
-    print(f"Example data: {prompts[:5]}")
-    
     print("Start inference ...")
 
     pred_res = prompt_eval(args, model, tokenizer, prompts)
     pred_res_cleaned = [itm.replace("\n", " ") for itm in pred_res]
-    out_prefix = args.test_file.split("/")[-1].split(".")[0]
-    
-    if args.out_path is not None:
-        out_path = args.out_path
-        if not os.path.exists(out_path):
-            os.mkdir(out_path)
-    else:
-        out_path = args.model_name_or_path
-    
-    with open(f"{out_path}/{args.out_prefix}_{out_prefix}_hf.txt", "w", encoding="utf-8") as fout:
+    out_prefix = args.test_file.split("/")[-1]
+    with open(
+        f"{args.model_name_or_path}/{args.out_prefix}_{out_prefix}_pred_peft", "w", encoding="utf-8"
+    ) as fout:
         fout.write("\n".join(pred_res_cleaned) + "\n")
+
 
 if __name__ == "__main__":
     main()

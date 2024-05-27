@@ -2,59 +2,45 @@
 # SPDX-License-Identifier: Apache-2.0
 
 # DeepSpeed Team
+import os
+os.environ['OPENBLAS_NUM_THREADS'] = '1'
 import argparse
 import logging
 import torch
 import json
 import sys
 import os
-import math
-import time
+import re
+from nltk import Tree
 from tqdm import tqdm
 from transformers import (
     AutoConfig,
+    LlamaConfig,
+    LlamaTokenizer,
     AutoModelForCausalLM,
+    LlamaForCausalLM,
     AutoTokenizer,
 )
-import torch.distributed as dist
-from accelerate import init_empty_weights, infer_auto_device_map, load_checkpoint_and_dispatch
-from accelerate.utils import get_balanced_memory
+from vllm import LLM, SamplingParams
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.path.pardir)))
+
 logger = logging.getLogger(__name__)
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
-    datefmt="%m/%d/%Y %H:%M:%S",
-    handlers=[logging.StreamHandler(sys.stdout)],
-)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Eval the finetued SFT model")
     parser.add_argument(
+        "--model_name",
+        type=str,
+        help="Path to pretrained model",
+        required=False,
+    )
+    parser.add_argument(
         "--model_name_or_path",
         type=str,
         help="Path to pretrained model",
         required=True,
-    )
-    parser.add_argument(
-        "--max_memory",
-        type=float,
-        default=0.45,
-        help="Maximum allowable GPU memory useage for each GPU",
-    )
-    parser.add_argument(
-        "--test_file",
-        type=str,
-        help="Path to test_file",
-        required=True,
-    )
-    parser.add_argument(
-        "--out_path",
-        type=str,
-        default=None,
-        help="testset",
     )
     parser.add_argument(
         "--instruction",
@@ -63,9 +49,39 @@ def parse_args():
         help="input file",
     )
     parser.add_argument(
+        "--sys_instruction",
+        default="",
+        type=str,
+        help="input file",
+    )
+    parser.add_argument(
+        "--test_file",
+        type=str,
+        help="Path to test_file",
+        required=True,
+    )
+    parser.add_argument(
         "--num_beams",
         type=int,
         default=5,
+        help="Specify num of beams",
+    )
+    parser.add_argument(
+        "--beam_search",
+        action="store_true",
+        default=False,
+        help="use beam search or not",
+    )
+    parser.add_argument(
+        "--device_id",
+        type=int,
+        default=0,
+        help="Specify num of beams",
+    )
+    parser.add_argument(
+        "--ngpus",
+        type=int,
+        default=1,
         help="Specify num of beams",
     )
     parser.add_argument(
@@ -75,9 +91,15 @@ def parse_args():
         help="Specify num of beams",
     )
     parser.add_argument(
-        "--penalty_alpha",
+        "--presence_penalty",
         type=float,
-        default=0.6,
+        default=0.0,
+        help="Specify num of beams",
+    )
+    parser.add_argument(
+        "--frequency_penalty",
+        type=float,
+        default=0.0,
         help="Specify num of beams",
     )
     parser.add_argument(
@@ -96,10 +118,7 @@ def parse_args():
         "--local_rank", type=int, default=-1, help="local_rank for distributed training on gpus"
     )
     parser.add_argument(
-        "--low_cpu_mem_usage",
-        action="store_true",
-        default=False,
-        help="whether to use low_cpu_mem_usage for inference",
+        "--use_deepspeed", action="store_true", default=False, help="whether to use deepspeed for inference"
     )
     parser.add_argument(
         "--out_prefix",
@@ -107,24 +126,11 @@ def parse_args():
         help="testset",
         required=True,
     )
-    parser.add_argument("--bit_8", action="store_true", default=False)
-    parser.add_argument(
-        "--offload_state_dict",
-        action="store_true",
-        default=False,
-        help="Whether to offload state dict (useful for very large LMs)",
-    )
-    parser.add_argument(
-        "--offload_folder",
-        type=str,
-        default="resources/offload/",
-        help="directory path for offloading",
-    )
     parser.add_argument(
         "--prompt_template",
         type=str,
         default="None",
-        help="directory path for offloading",
+        help="testset",
     )
     parser.add_argument(
         "--input_key",
@@ -132,88 +138,33 @@ def parse_args():
         default="sentence",
         help="input key of test set",
     )
+    parser.add_argument(
+        "--bit_8",
+        action="store_true", default=False
+    )
 
     args = parser.parse_args()
 
     return args
 
 
-def set_max_memory(args):
-    n_gpus = torch.cuda.device_count()
-    if args.max_memory and n_gpus > 1:
-        logger.info("Infering max memory...")
-        t = torch.cuda.get_device_properties(0).total_memory / (1024 * 1024 * 1024)
-        # note, we use math.floor() as a conservative rounding method
-        # to optimize the maximum batch size on multiple GPUs, we give the first GPU less memory
-        # see max_memory at https://huggingface.co/docs/accelerate/main/en/usage_guides/big_modeling
-        max_memory = {
-            i: (
-                f"{math.floor(t*args.max_memory)}GiB"
-                if i > 0
-                else f"{math.floor(t*args.max_memory*0.2)}GiB"
-            )
-            for i in range(n_gpus)
-        }
-        # max_memory['cpu'] = '400GiB' # may need to lower this depending on hardware
-        logger.info(f"Set maximum memory: {max_memory}")
-        return max_memory
-    else:
-        return None
-
-
-def prompt_eval(args, model, tokenizer, prompts):
-    all_res = []
-    with torch.inference_mode():
-        for prompt in tqdm(prompts):
-            inputs = tokenizer(prompt, return_tensors="pt").to(torch.cuda.current_device())
-            # print("input_ids:", inputs.input_ids)
-            generate_ids = model.generate(
-                inputs.input_ids,
-                num_beams=args.num_beams,
-                do_sample=False,
-                eos_token_id=tokenizer.eos_token_id,
-                num_return_sequences=1,
-                max_new_tokens=args.max_new_tokens,
-            )
-            # print("generate_ids:", generate_ids)
-            ori_output = tokenizer.batch_decode(
-                generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
-            )
-            # print(f"{ori_output}")
-            new_ids = generate_ids[:, inputs.input_ids.size(1):]
-            # print("new_ids:", new_ids)
-            output = tokenizer.batch_decode(
-                new_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False
-            )
-            all_res += output
-            # print(f"{output}")
-            
-    return all_res
-
-
-def create_prompt(data, args, tokenizer=None):
+def create_prompt(data, args, tokenizer):
     if args.prompt_template == "None":
         prompts = [itm[args.input_key] for itm in data]
-    elif args.prompt_template in ["llama2-chat", "llama3-chat", "phi-3-instruct"]:
+    elif args.prompt_template == "llama2-chat":
         system_prompt = "You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information."
-        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
-        prompts = []
-        for sample in data:
-            chat = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": sample[args.input_key].rstrip()},
-            ]
-            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
-    elif args.prompt_template in ["mixtral", "gemma-it"]:
-        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
-        prompts = []
-        for sample in data:
-            chat = [
-                {"role": "user", "content": sample[args.input_key].rstrip()},
-            ]
-            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
-    elif args.prompt_template == "llama2-chat-kg":
-        prompts = [webnlg_template.format(triples=sample[args.input_key]) for sample in data]
+        prompts = [f"[INST] <<SYS>>\n{system_prompt}\n<</SYS>>\n\n{sample[args.input_key].rstrip()} [/INST] " for sample in data]
+    elif args.prompt_template == "chat-v1":
+        if not len(args.sys_instruction):
+            chats = []
+        else:
+            chats = [{"role":"system", "content": args.sys_instruction}]
+
+        task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
+        prompts = [
+            tokenizer.apply_chat_template(chats + [{"role": "user", "content": f"{sample[args.input_key]} {task_instruction}"}], tokenize=False)
+            for sample in data
+        ]
     elif args.prompt_template == "pubmedqa":
         prompts = [f"{sample[args.input_key].rstrip()}\nQuestion:\n{sample['QUESTION']}\nPlease respond with yes, no or maybe. The answer to the question is:" for sample in data]
     elif args.prompt_template == "supervised":
@@ -221,21 +172,21 @@ def create_prompt(data, args, tokenizer=None):
             f"Human:\n{args.instruction} {sample[args.input_key]}\nAssistant:\n"
             for sample in data
         ]
-    elif args.prompt_template == "supervised-llama3":
+    elif args.prompt_template == "supervised-v2":
         sys_instruction = ""
         task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
         prompts = [
-            f'<|begin_of_text|>{sys_instruction}Human:\n{task_instruction} {sample[args.input_key]}\nAssistant:\n'
+            f'{sys_instruction}### Human: {task_instruction} {sample[args.input_key]}\n### Assistant: '
             for sample in data
         ]
     elif args.prompt_template == "vicuna":
         prompts = [
-            f"USER: {args.instruction} {sample[args.input_key]} ASSISTANT:"
+            f"USER: {args.instruction}{sample[args.input_key]} ASSISTANT:"
             for sample in data
         ]
     elif args.prompt_template == "gpt":
         prompts = [
-            f"Human:\n{args.instruction} {sample[args.input_key]}\nAssistant:\n"
+            f"Human:\n{args.instruction}{sample[args.input_key]}\nAssistant:\n"
             for sample in data
         ]
     elif args.prompt_template == "one_shot":
@@ -278,24 +229,32 @@ def create_prompt(data, args, tokenizer=None):
     return prompts
 
 
-local_rank = int(os.getenv("LOCAL_RANK", 0))
+def tree_to_lisp(tree):
+    """
+    Converts an NLTK Tree to a Lisp-style string.
+    """
+    if isinstance(tree, Tree):
+        children_str = ' '.join(tree_to_lisp(t) for t in tree)
+        return f"({tree.label()} {children_str})"
+    else:
+        return tree
+
+
+def postprocess_text(text):
+    #return text
+    text = text.lower()
+    text = ' '.join(re.split('(\W)', text))
+    text = ' '.join(text.split())
+    return text
+
 world_size = torch.cuda.device_count()
-rank = local_rank
 
 
 def main():
     args = parse_args()
-    start_time = time.time()
-    config = AutoConfig.from_pretrained(args.model_name_or_path, trust_remote_code=True)
-    print(f"Loading tokenizer from {args.model_name_or_path}")
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, fast_tokenizer=False, add_eos_token=False, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(args.model_name_or_path, trust_remote_code=True)
-    model.cuda()
-    
-    end_time = time.time()
-    logger.info(f"Loaded model {args.model_name_or_path} in {end_time - start_time:.4f} seconds")
-    logger.info(f"Model parameters: {model.num_parameters():,} / footprint: {model.get_memory_footprint() / (1024*1024*1024):.2f} GB")
-
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, fast_tokenizer=False, add_eos_token=False)
+    model = LLM(model=args.model_name if args.model_name else args.model_name_or_path, download_dir=args.model_name_or_path, tensor_parallel_size=world_size, gpu_memory_utilization=0.90, swap_space=1)
+    print(args.test_file)
     if args.test_file.endswith("jsonl"):
         with open(args.test_file, "r", encoding="utf-8") as fin:
             data = [json.loads(line.strip()) for line in fin]
@@ -306,25 +265,32 @@ def main():
             prompts = create_prompt(data, args, tokenizer)
     else:
         print("unsupported file format")
-
     print(f"Loaded {len(prompts)} data for generation")
     print(f"Example data: {prompts[:5]}")
     
-    print("Start inference ...")
-
-    pred_res = prompt_eval(args, model, tokenizer, prompts)
-    pred_res_cleaned = [itm.replace("\n", " ") for itm in pred_res]
-    out_prefix = args.test_file.split("/")[-1].split(".")[0]
-    
-    if args.out_path is not None:
-        out_path = args.out_path
-        if not os.path.exists(out_path):
-            os.mkdir(out_path)
+    if args.beam_search:
+        gen_params = SamplingParams(n=args.num_beams, use_beam_search=True, temperature=0.0, best_of=args.num_beams, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>", "<|eot_id|>"])
     else:
-        out_path = args.model_name_or_path
+        gen_params = SamplingParams(n=1, use_beam_search=False, best_of=1, temperature=0, frequency_penalty=args.frequency_penalty, presence_penalty=args.presence_penalty, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>", "###", "<|eot_id|>"])
+
+    gen_res = ["" for _ in range(len(prompts))]
+    prompt_res = ["" for _ in range(len(prompts))]
+    outputs = model.generate(prompts, gen_params)
+    # print("Output:", outputs)
+    for output in outputs:
+        prompt = output.prompt
+        generated_text = output.outputs[0].text
+        iid = int(output.request_id)
+        # print(f"Prompt: {prompt!r}\nGenerated text: {generated_text!r}")
+        # gen_res.append(generated_text)
+        
+        gen_res[iid] = generated_text.replace("\n", "")
+        prompt_res[iid] = prompt
     
-    with open(f"{out_path}/{args.out_prefix}_{out_prefix}_hf.txt", "w", encoding="utf-8") as fout:
-        fout.write("\n".join(pred_res_cleaned) + "\n")
+    out_prefix = args.test_file.split("/")[-1].split(".")[0]
+    with open(f"{args.model_name_or_path}/{args.out_prefix}_{out_prefix}_vllm.txt", "w", encoding="utf-8") as fout:
+        fout.write("\n".join(gen_res) + "\n")
+
 
 if __name__ == "__main__":
     main()

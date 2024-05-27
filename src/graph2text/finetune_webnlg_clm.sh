@@ -1,22 +1,25 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 
-BasePath=/data/home/usera401
+BasePath=/UNICOMFS/hitsz_khchen_1
+DataPath=${BasePath}/data/Data2text/
+# DataSetName=webnlg20
+# DataSetName=webnlg17
+DataSetName=webnlg17-llama3
+# DataSetName=EventNarrative
+
 CurDir=$(cd $(dirname $0);cd ..; pwd)
 
 MODEL_NAME=llama2-7b
-for MODEL_NAME in llama2-7b
+for MODEL_NAME in llama3-8b
 do
 MODEL=${BasePath}/data/pretrained-models/${MODEL_NAME}
-DataPath=${BasePath}/data/Data2text
-DataSetName=webnlg20
-DataSetName=webnlg17
 
 export HF_DATASETS_CACHE=${DataPath}/${DataSetName}/.cache
 
 MODEL_SIZE=7B
 NUM_GPUS=8
-BATCH_SIZE_PER_GPU=16
-TOTAL_BATCH_SIZE=128
+BATCH_SIZE_PER_GPU=32
+TOTAL_BATCH_SIZE=256
 GRADIENT_ACC_STEPS=$(($TOTAL_BATCH_SIZE/$NUM_GPUS/$BATCH_SIZE_PER_GPU))
 echo "Training llama model ${MODEL_SIZE} using $NUM_GPUS GPUs, $BATCH_SIZE_PER_GPU batch size per GPU, $GRADIENT_ACC_STEPS gradient accumulation steps"
 
@@ -71,5 +74,5 @@ deepspeed ${CurDir}/finetune_std.py \
     --overwrite_output_dir \
     --preprocessing_num_workers 1 \
     --data_cache_dir ${DataPath}/${DataSetName}/.cache-clm \
-    --report_to "tensorboard" 2>&1 | tee ${OUTPUT_DIR}/training.log
+    --report_to "none" 2>&1 | tee ${OUTPUT_DIR}/training.log
 done

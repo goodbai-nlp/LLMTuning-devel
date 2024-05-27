@@ -16,7 +16,7 @@ python -u ../inference_vllm.py \
     --num_beams 1 \
     --max_new_tokens 512 \
     --out_path "./output" \
-    --out_prefix "llama3-70b-instruction" \
+    --out_prefix "mixtral-8x7b-instruct-v0.1" \
     --instruction "" \
     --input_key "Question" \
-    --prompt_template "llama3-chat" 2>&1 | tee $MODEL/eval.log
+    --prompt_template "mixtral" 2>&1 | tee $MODEL/eval.log

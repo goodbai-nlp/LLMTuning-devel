@@ -1,6 +1,6 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 
-BasePath=/UNICOMFS/hitsz_khchen_1
+BasePath=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/
 CurDir=$(cd $(dirname $0);cd ..; pwd)
 
 MODEL_NAME=llama2-7b
@@ -9,9 +9,7 @@ do
 
 MODEL=${BasePath}/data/pretrained-models/${MODEL_NAME}
 DataPath=${BasePath}/data/AMRData/
-DataSetName=LDC2020-var-amr2text
-DataSetName=LDC2020-leo-amr2text
-DataSetName=LDC2020-leo-amr2text-llama3
+DataSetName=LDC2017-amrparsing-llama3
 
 export HF_DATASETS_CACHE=${DataPath}/${DataSetName}/.cache
 
@@ -45,6 +43,7 @@ deepspeed ${CurDir}/finetune_std.py \
     --model_name_or_path ${MODEL} \
     --tokenizer_name ${MODEL} \
     --use_fast_tokenizer False \
+    --add_special_token True \
     --conditional_gen True \
     --max_seq_length 1024 \
     --do_train \

@@ -1,0 +1,981 @@
+Training llama model 7B using 8 GPUs, 16 batch size per GPU, 1 gradient accumulation steps
+finetune_amrparsing_clm.sh: 第 31 行:read: 读错误: 0: 错误的文件描述符
+Please answer yes or no.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/code/exp.LLMTuning-devel/src
+Training llama model 7B using 8 GPUs, 16 batch size per GPU, 1 gradient accumulation steps
+finetune_amrparsing_clm.sh: 第 31 行:read: 读错误: 0: 错误的文件描述符
+Please answer yes or no.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/code/exp.LLMTuning-devel/src
+[2024-05-21 00:16:44,608] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:16:47,614] [WARNING] [runner.py:203:fetch_hostfile] Unable to find hostfile, will proceed with training with local resources only.
+Detected CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7: setting --include=localhost:0,1,2,3,4,5,6,7
+[2024-05-21 00:16:47,669] [INFO] [runner.py:570:main] cmd = /home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/bin/python -u -m deepspeed.launcher.launch --world_info=eyJsb2NhbGhvc3QiOiBbMCwgMSwgMiwgMywgNCwgNSwgNiwgN119 --master_addr=127.0.0.1 --master_port=29500 --enable_each_rank_log=None /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/code/exp.LLMTuning-devel/src/finetune_std.py --deepspeed /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/code/exp.LLMTuning-devel/src/ds_configs/stage1_no_offloading.conf --data_path /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/AMRData//LDC2017-amrparsing-llama3 --model_name_or_path /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b --tokenizer_name /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b --use_fast_tokenizer False --add_special_token True --conditional_gen True --max_seq_length 1024 --do_train --do_eval --per_device_train_batch_size 16 --per_device_eval_batch_size 16 --gradient_accumulation_steps 1 --learning_rate 2e-5 --lr_scheduler_type cosine --warmup_ratio 0.03 --weight_decay 0.1 --evaluation_strategy steps --logging_steps 100 --greater_is_better False --save_strategy epoch --save_total_limit 5 --save_only_model True --num_train_epochs 5 --logging_first_step True --gradient_checkpointing --use_peft False --use_flash_attn True --output_dir /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel --bf16 --tf32 True --overwrite_output_dir --preprocessing_num_workers 1 --data_cache_dir /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/AMRData//LDC2017-amrparsing-llama3/.cache-clm --report_to wandb
+[2024-05-21 00:16:53,182] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:16:55,954] [INFO] [launch.py:145:main] WORLD INFO DICT: {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]}
+[2024-05-21 00:16:55,954] [INFO] [launch.py:151:main] nnodes=1, num_local_procs=8, node_rank=0
+[2024-05-21 00:16:55,954] [INFO] [launch.py:162:main] global_rank_mapping=defaultdict(<class 'list'>, {'localhost': [0, 1, 2, 3, 4, 5, 6, 7]})
+[2024-05-21 00:16:55,954] [INFO] [launch.py:163:main] dist_world_size=8
+[2024-05-21 00:16:55,954] [INFO] [launch.py:165:main] Setting CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+[2024-05-21 00:17:09,552] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:17:09,561] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+[2024-05-21 00:17:10,279] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-21 00:17:10,280] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:17:10,311] [INFO] [comm.py:637:init_distributed] cdb=None
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+[2024-05-21 00:17:10,911] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-21 00:17:10,911] [INFO] [comm.py:668:init_distributed] Initializing TorchBackend in DeepSpeed with backend nccl
+[2024-05-21 00:17:10,915] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/deepspeed.py:23: FutureWarning: transformers.deepspeed module is deprecated and will be removed in a future version. Please import deepspeed modules directly from transformers.integrations
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+[2024-05-21 00:17:11,116] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:17:11,155] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:17:11,181] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[2024-05-21 00:17:11,185] [INFO] [real_accelerator.py:158:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+05/21/2024 00:17:11 - WARNING - __main__ - Process rank: 2, device: cuda:2, n_gpu: 1distributed training: True, 16-bits training: False
+05/21/2024 00:17:11 - WARNING - __main__ - Process rank: 6, device: cuda:6, n_gpu: 1distributed training: True, 16-bits training: False
+[2024-05-21 00:17:11,581] [INFO] [comm.py:637:init_distributed] cdb=None
+05/21/2024 00:17:11 - WARNING - __main__ - Process rank: 4, device: cuda:4, n_gpu: 1distributed training: True, 16-bits training: False
+[2024-05-21 00:17:11,960] [INFO] [comm.py:637:init_distributed] cdb=None
+[WARNING|logging.py:314] 2024-05-21 00:17:11,967 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[WARNING|logging.py:314] 2024-05-21 00:17:11,981 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[2024-05-21 00:17:11,982] [INFO] [comm.py:637:init_distributed] cdb=None
+[2024-05-21 00:17:12,012] [INFO] [comm.py:637:init_distributed] cdb=None
+Manually add 2963 special tokens
+Manually add 2963 special tokens
+[2024-05-21 00:17:12,089] [INFO] [comm.py:637:init_distributed] cdb=None
+05/21/2024 00:17:12 - WARNING - __main__ - Process rank: 5, device: cuda:5, n_gpu: 1distributed training: True, 16-bits training: False
+[WARNING|logging.py:314] 2024-05-21 00:17:12,247 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Manually add 2963 special tokens
+05/21/2024 00:17:12 - WARNING - __main__ - Process rank: 7, device: cuda:7, n_gpu: 1distributed training: True, 16-bits training: False
+05/21/2024 00:17:12 - WARNING - __main__ - Process rank: 1, device: cuda:1, n_gpu: 1distributed training: True, 16-bits training: False
+05/21/2024 00:17:12 - WARNING - __main__ - Process rank: 3, device: cuda:3, n_gpu: 1distributed training: True, 16-bits training: False
+05/21/2024 00:17:12 - WARNING - __main__ - Process rank: 0, device: cuda:0, n_gpu: 1distributed training: True, 16-bits training: False
+05/21/2024 00:17:12 - INFO - __main__ - Training parameters LLMTrainingArguments(
+_n_gpu=1,
+accelerator_config={'split_batches': False, 'dispatch_batches': None, 'even_batches': True, 'use_seedable_sampler': True, 'gradient_accumulation_kwargs': None},
+adafactor=False,
+adam_beta1=0.9,
+adam_beta2=0.999,
+adam_epsilon=1e-08,
+auto_find_batch_size=False,
+bf16=True,
+bf16_full_eval=False,
+conditional_gen=True,
+data_seed=None,
+dataloader_drop_last=False,
+dataloader_num_workers=0,
+dataloader_persistent_workers=False,
+dataloader_pin_memory=True,
+dataloader_prefetch_factor=None,
+ddp_backend=None,
+ddp_broadcast_buffers=None,
+ddp_bucket_cap_mb=None,
+ddp_find_unused_parameters=None,
+ddp_timeout=1800,
+debug=[],
+deepspeed=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/code/exp.LLMTuning-devel/src/ds_configs/stage1_no_offloading.conf,
+disable_tqdm=False,
+dispatch_batches=None,
+do_eval=True,
+do_predict=False,
+do_train=True,
+early_stopping=5,
+eval_accumulation_steps=None,
+eval_dataloader_num_workers=0,
+eval_delay=0,
+eval_do_concat_batches=True,
+eval_steps=100,
+evaluation_strategy=steps,
+fp16=False,
+fp16_backend=auto,
+fp16_full_eval=False,
+fp16_opt_level=O1,
+fsdp=[],
+fsdp_config={'min_num_params': 0, 'xla': False, 'xla_fsdp_v2': False, 'xla_fsdp_grad_ckpt': False},
+fsdp_min_num_params=0,
+fsdp_transformer_layer_cls_to_wrap=None,
+full_determinism=False,
+generation_max_length=None,
+generation_num_beams=None,
+gradient_accumulation_steps=1,
+gradient_checkpointing=True,
+gradient_checkpointing_kwargs=None,
+greater_is_better=False,
+group_by_length=False,
+half_precision_backend=auto,
+hub_always_push=False,
+hub_model_id=None,
+hub_private_repo=False,
+hub_strategy=every_save,
+hub_token=<HUB_TOKEN>,
+ignore_data_skip=False,
+ignore_opt_states=False,
+include_inputs_for_metrics=False,
+include_num_input_tokens_seen=False,
+include_tokens_per_second=False,
+jit_mode_eval=False,
+label_names=None,
+label_smoothing_factor=0.0,
+learning_rate=2e-05,
+length_column_name=length,
+length_penalty=1.0,
+load_best_model_at_end=False,
+local_rank=0,
+log_level=passive,
+log_level_replica=warning,
+log_on_each_node=True,
+logging_dir=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/runs/May21_00-17-10_gpu004,
+logging_first_step=True,
+logging_nan_inf_filter=True,
+logging_steps=100,
+logging_strategy=steps,
+lr_scheduler_kwargs={},
+lr_scheduler_type=cosine,
+max_grad_norm=1.0,
+max_new_tokens=128,
+max_steps=-1,
+metric_for_best_model=None,
+min_length=0,
+mp_parameters=,
+neftune_noise_alpha=None,
+no_cuda=False,
+num_train_epochs=5.0,
+optim=adamw_torch,
+optim_args=None,
+optim_target_modules=None,
+output_dir=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel,
+overwrite_output_dir=True,
+past_index=-1,
+peft_lora_alpha=16,
+peft_lora_r=64,
+per_device_eval_batch_size=16,
+per_device_train_batch_size=16,
+predict_with_generate=False,
+prediction_loss_only=False,
+push_to_hub=False,
+push_to_hub_model_id=None,
+push_to_hub_organization=None,
+push_to_hub_token=<PUSH_TO_HUB_TOKEN>,
+ray_scope=last,
+remove_unused_columns=True,
+report_to=['wandb'],
+resume_from_checkpoint=None,
+run_name=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel,
+save_on_each_node=False,
+save_only_model=True,
+save_safetensors=True,
+save_steps=500,
+save_strategy=epoch,
+save_total_limit=5,
+seed=42,
+skip_memory_metrics=True,
+smart_init=False,
+sortish_sampler=False,
+split_batches=None,
+task=amr2text,
+tf32=True,
+torch_compile=False,
+torch_compile_backend=None,
+torch_compile_mode=None,
+torchdynamo=None,
+tpu_metrics_debug=False,
+tpu_num_cores=None,
+use_cpu=False,
+use_flash_attn=True,
+use_ipex=False,
+use_legacy_prediction_loop=False,
+use_mps_device=False,
+use_peft=False,
+use_qlora=False,
+wandb_project=Graph2text,
+warmup_ratio=0.03,
+warmup_steps=0,
+weight_decay=0.1,
+)
+[INFO|configuration_utils.py:724] 2024-05-21 00:17:12,582 >> loading configuration file /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b/config.json
+[INFO|configuration_utils.py:789] 2024-05-21 00:17:12,586 >> Model config LlamaConfig {
+  "_name_or_path": "/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b",
+  "architectures": [
+    "LlamaForCausalLM"
+  ],
+  "attention_bias": false,
+  "attention_dropout": 0.0,
+  "bos_token_id": 128000,
+  "eos_token_id": 128001,
+  "hidden_act": "silu",
+  "hidden_size": 4096,
+  "initializer_range": 0.02,
+  "intermediate_size": 14336,
+  "max_position_embeddings": 8192,
+  "model_type": "llama",
+  "num_attention_heads": 32,
+  "num_hidden_layers": 32,
+  "num_key_value_heads": 8,
+  "pretraining_tp": 1,
+  "rms_norm_eps": 1e-05,
+  "rope_scaling": null,
+  "rope_theta": 500000.0,
+  "tie_word_embeddings": false,
+  "torch_dtype": "bfloat16",
+  "transformers_version": "4.40.2",
+  "use_cache": true,
+  "vocab_size": 128256
+}
+
+[INFO|tokenization_utils_base.py:2085] 2024-05-21 00:17:12,592 >> loading file tokenizer.json
+[INFO|tokenization_utils_base.py:2085] 2024-05-21 00:17:12,592 >> loading file added_tokens.json
+[INFO|tokenization_utils_base.py:2085] 2024-05-21 00:17:12,592 >> loading file special_tokens_map.json
+[INFO|tokenization_utils_base.py:2085] 2024-05-21 00:17:12,592 >> loading file tokenizer_config.json
+[WARNING|logging.py:314] 2024-05-21 00:17:12,810 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Manually add 2963 special tokens
+[WARNING|logging.py:314] 2024-05-21 00:17:12,924 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Manually add 2963 special tokens
+[WARNING|logging.py:314] 2024-05-21 00:17:13,113 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Manually add 2963 special tokens
+[WARNING|logging.py:314] 2024-05-21 00:17:13,188 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+[WARNING|logging.py:314] 2024-05-21 00:17:13,190 >> Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+05/21/2024 00:17:13 - INFO - __main__ - Unsupportted Tokenizer Type:<class 'transformers.tokenization_utils_fast.PreTrainedTokenizerFast'>
+Manually add 2963 special tokens
+Manually add 2963 special tokens
+05/21/2024 00:17:18 - INFO - __main__ - Loading from cache ...
+[WARNING|logging.py:329] 2024-05-21 00:17:19,227 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,228 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,232 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,237 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,242 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,243 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,250 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,258 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[INFO|modeling_utils.py:3426] 2024-05-21 00:17:19,287 >> loading weights file /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b/model.safetensors.index.json
+[WARNING|logging.py:329] 2024-05-21 00:17:19,292 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,293 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,293 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,294 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,296 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,296 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,299 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,299 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,301 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[INFO|configuration_utils.py:928] 2024-05-21 00:17:19,302 >> Generate config GenerationConfig {
+  "bos_token_id": 128000,
+  "eos_token_id": 128001
+}
+
+[WARNING|logging.py:329] 2024-05-21 00:17:19,303 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,303 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,306 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,307 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,307 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,309 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,323 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,324 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,329 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,338 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,345 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,383 >> You are attempting to use Flash Attention 2.0 without specifying a torch dtype. This might lead to unexpected behaviour
+[WARNING|logging.py:329] 2024-05-21 00:17:19,383 >> You are attempting to use Flash Attention 2.0 with a model not initialized on GPU. Make sure to move the model to GPU after initializing it on CPU with `model.to('cuda')`.
+[WARNING|logging.py:329] 2024-05-21 00:17:19,398 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaForCausalLM is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+[WARNING|logging.py:329] 2024-05-21 00:17:19,414 >> Flash Attention 2.0 only supports torch.float16 and torch.bfloat16 dtypes, but the current dype in LlamaModel is torch.float32. You should run training or inference using Automatic Mixed-Precision via the `with torch.autocast(device_type='torch_device'):` decorator, or load the model with the `torch_dtype` argument. Example: `model = AutoModel.from_pretrained("openai/whisper-tiny", attn_implementation="flash_attention_2", torch_dtype=torch.float16)`
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:49<02:29, 49.78s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:50<02:32, 50.81s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:53<02:39, 53.02s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:50<02:31, 50.41s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:53<02:39, 53.29s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:53<02:39, 53.32s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:52<02:38, 52.86s/it]Loading checkpoint shards:  25%|██▌       | 1/4 [00:53<02:39, 53.15s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:28<01:26, 43.24s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:31<01:29, 44.65s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:31<01:29, 44.82s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:33<01:31, 45.57s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:33<01:31, 45.87s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:33<01:31, 45.74s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:34<01:31, 45.94s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:33<01:31, 45.93s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:04<00:39, 39.38s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:04<00:39, 39.86s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:08<00:40, 40.90s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:06<00:00, 24.76s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:06<00:00, 31.67s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [02:07<00:00, 25.27s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:07<00:00, 31.80s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [02:10<00:00, 25.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:10<00:00, 32.64s/it]
+Loading checkpoint shards:  75%|███████▌  | 3/4 [02:11<00:42, 42.21s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:12<00:42, 42.40s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:09<00:41, 41.81s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:11<00:42, 42.33s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [02:12<00:42, 42.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 27.76s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 34.33s/it]
+[INFO|modeling_utils.py:4170] 2024-05-21 00:19:50,821 >> All model checkpoint weights were used when initializing LlamaForCausalLM.
+
+[INFO|modeling_utils.py:4178] 2024-05-21 00:19:50,821 >> All the weights of LlamaForCausalLM were initialized from the model checkpoint at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b.
+If your task is similar to the task the model of the checkpoint was trained on, you can already use LlamaForCausalLM for predictions without further training.
+[INFO|configuration_utils.py:881] 2024-05-21 00:19:50,826 >> loading configuration file /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//data/pretrained-models/llama3-8b/generation_config.json
+[INFO|configuration_utils.py:928] 2024-05-21 00:19:50,826 >> Generate config GenerationConfig {
+  "bos_token_id": 128000,
+  "eos_token_id": 128001
+}
+
+[INFO|modeling_utils.py:1994] 2024-05-21 00:19:50,859 >> You are resizing the embedding layer without providing a `pad_to_multiple_of` parameter. This means that the new embedding dimension will be 131224. This might induce some performance reduction as *Tensor Cores* will not be available. For more details about this, or help on choosing the correct value for resizing, refer to this guide: https://docs.nvidia.com/deeplearning/performance/dl-performance-matrix-multiplication/index.html#requirements-tc
+Loading checkpoint shards: 100%|██████████| 4/4 [02:15<00:00, 27.50s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:15<00:00, 33.76s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 27.80s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 34.33s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 27.87s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 34.47s/it]
+Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 27.90s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:17<00:00, 34.49s/it]
+05/21/2024 00:20:03 - INFO - __main__ - Sample 7296 of the training set: {'input_ids': [128000, 35075, 512, 32215, 279, 8278, 7438, 4876, 369, 279, 2728, 11914, 13, 8876, 1690, 315, 1057, 17312, 527, 16075, 304, 11340, 11, 433, 374, 4461, 430, 584, 1253, 539, 617, 279, 5070, 311, 387, 3025, 311, 3708, 17312, 311, 10471, 627, 72803, 512, 7, 131059, 128442, 130935, 320, 131060, 128654, 130935, 320, 131061, 128260, 130992, 482, 130934, 320, 131062, 584, 883, 130935, 320, 131063, 5211, 883, 130995, 320, 131064, 128257, 130935, 320, 131065, 128466, 130934, 131062, 130935, 320, 131066, 71816, 130994, 131062, 883, 130936, 320, 131067, 3224, 131013, 330, 62819, 1, 130988, 320, 131068, 836, 130929, 330, 62819, 1, 883, 883, 883, 883, 883, 883, 130935, 8838, 320, 131069, 128256, 130934, 320, 131070, 128801, 130935, 320, 131071, 71816, 130996, 320, 131072, 1690, 883, 883, 130936, 320, 131073, 3224, 131013, 330, 97818, 1, 130988, 320, 131074, 836, 130929, 330, 97818, 1, 883, 883, 883, 883, 883, 128001], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'labels': [-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 7, 131059, 128442, 130935, 320, 131060, 128654, 130935, 320, 131061, 128260, 130992, 482, 130934, 320, 131062, 584, 883, 130935, 320, 131063, 5211, 883, 130995, 320, 131064, 128257, 130935, 320, 131065, 128466, 130934, 131062, 130935, 320, 131066, 71816, 130994, 131062, 883, 130936, 320, 131067, 3224, 131013, 330, 62819, 1, 130988, 320, 131068, 836, 130929, 330, 62819, 1, 883, 883, 883, 883, 883, 883, 130935, 8838, 320, 131069, 128256, 130934, 320, 131070, 128801, 130935, 320, 131071, 71816, 130996, 320, 131072, 1690, 883, 883, 130936, 320, 131073, 3224, 131013, 330, 97818, 1, 130988, 320, 131074, 836, 130929, 330, 97818, 1, 883, 883, 883, 883, 883, 128001]}.
+05/21/2024 00:20:03 - INFO - __main__ - Sample 1639 of the training set: {'input_ids': [128000, 35075, 512, 32215, 279, 8278, 7438, 4876, 369, 279, 2728, 11914, 13, 2030, 433, 10975, 603, 1148, 584, 2351, 3411, 369, 25, 279, 3346, 315, 1274, 889, 584, 1440, 369, 2771, 4250, 636, 264, 2683, 627, 72803, 512, 7, 131059, 128258, 130936, 320, 131060, 128288, 130934, 320, 131061, 433, 883, 130935, 320, 131062, 3245, 130935, 8838, 320, 131063, 128346, 130934, 131072, 883, 130935, 8838, 320, 131064, 128270, 130936, 320, 131065, 3346, 130996, 8838, 320, 131066, 1732, 130934, 8838, 320, 131067, 128277, 130935, 320, 131068, 2683, 883, 130935, 8838, 320, 131069, 128257, 130992, 482, 883, 130935, 8838, 320, 131070, 128266, 130934, 131072, 130935, 8838, 320, 131071, 128335, 883, 883, 883, 883, 883, 883, 883, 130936, 320, 131072, 584, 883, 883, 883, 128001], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'labels': [-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 7, 131059, 128258, 130936, 320, 131060, 128288, 130934, 320, 131061, 433, 883, 130935, 320, 131062, 3245, 130935, 8838, 320, 131063, 128346, 130934, 131072, 883, 130935, 8838, 320, 131064, 128270, 130936, 320, 131065, 3346, 130996, 8838, 320, 131066, 1732, 130934, 8838, 320, 131067, 128277, 130935, 320, 131068, 2683, 883, 130935, 8838, 320, 131069, 128257, 130992, 482, 883, 130935, 8838, 320, 131070, 128266, 130934, 131072, 130935, 8838, 320, 131071, 128335, 883, 883, 883, 883, 883, 883, 883, 130936, 320, 131072, 584, 883, 883, 883, 128001]}.
+05/21/2024 00:20:03 - INFO - __main__ - Sample 18024 of the training set: {'input_ids': [128000, 35075, 512, 32215, 279, 8278, 7438, 4876, 369, 279, 2728, 11914, 13, 763, 220, 2550, 16, 11, 1403, 45415, 505, 279, 3907, 315, 32380, 53049, 11, 13375, 264, 10795, 11, 9787, 315, 15613, 311, 420, 3224, 627, 72803, 512, 7, 131059, 128969, 130934, 320, 131060, 1732, 130996, 220, 17, 130934, 8838, 320, 131061, 130797, 130935, 320, 131062, 12374, 131013, 330, 31272, 3659, 932, 28464, 2632, 3074, 1, 130988, 320, 131063, 836, 130929, 330, 1844, 1553, 88623, 1, 130930, 330, 1073, 1, 130931, 330, 15289, 64, 1, 130932, 330, 49, 3074, 1, 883, 883, 130936, 320, 131064, 46215, 883, 883, 883, 130935, 320, 131065, 129222, 130934, 131060, 130937, 320, 131066, 1732, 130934, 8838, 320, 131067, 128452, 130935, 320, 131068, 3224, 130985, 320, 131069, 420, 883, 883, 883, 883, 131007, 320, 131070, 130779, 131014, 220, 2550, 16, 883, 883, 883, 128001], 'attention_mask': [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 'labels': [-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 7, 131059, 128969, 130934, 320, 131060, 1732, 130996, 220, 17, 130934, 8838, 320, 131061, 130797, 130935, 320, 131062, 12374, 131013, 330, 31272, 3659, 932, 28464, 2632, 3074, 1, 130988, 320, 131063, 836, 130929, 330, 1844, 1553, 88623, 1, 130930, 330, 1073, 1, 130931, 330, 15289, 64, 1, 130932, 330, 49, 3074, 1, 883, 883, 130936, 320, 131064, 46215, 883, 883, 883, 130935, 320, 131065, 129222, 130934, 131060, 130937, 320, 131066, 1732, 130934, 8838, 320, 131067, 128452, 130935, 320, 131068, 3224, 130985, 320, 131069, 420, 883, 883, 883, 883, 131007, 320, 131070, 130779, 131014, 220, 2550, 16, 883, 883, 883, 128001]}.
+05/21/2024 00:20:03 - WARNING - accelerate.utils.other - Detected kernel version 3.10.0, which is below the recommended minimum of 5.5.0; this can cause the process to hang. It is recommended to upgrade the kernel to the minimum version or higher.
+[INFO|trainer.py:626] 2024-05-21 00:20:03,616 >> Using auto half precision backend
+[2024-05-21 00:20:03,837] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed info: version=0.11.2, git-hash=unknown, git-branch=unknown
+[2024-05-21 00:20:29,145] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Flops Profiler Enabled: False
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118/fused_adam/build.ninja...
+Building extension module fused_adam...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+ninja: no work to do.
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.24050140380859375 seconds
+Loading extension module fused_adam...
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Time to load fused_adam op: 0.20630383491516113 seconds
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Using /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118 as PyTorch extensions root...
+Detected CUDA files, patching ldflags
+Emitting ninja build file /online1/ycsc_chenkh/chenkh_nvlink/.cache/torch_extensions/py310_cu118/fused_adam/build.ninja...
+Building extension module fused_adam...
+Allowing ninja to set a default number of workers... (overridable by setting the environment variable MAX_JOBS=N)
+ninja: no work to do.
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.2849767208099365 seconds
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.2047882080078125 seconds
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Loading extension module fused_adam...
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.40662622451782227 seconds
+Time to load fused_adam op: 0.40569138526916504 seconds
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+[2024-05-21 00:20:30,285] [INFO] [logging.py:96:log_dist] [Rank 0] Using DeepSpeed Optimizer param name adamw as basic optimizer
+[2024-05-21 00:20:30,285] [INFO] [logging.py:96:log_dist] [Rank 0] Removing param_group that has no 'params' in the basic Optimizer
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.3033318519592285 seconds
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+Loading extension module fused_adam...
+Time to load fused_adam op: 0.40569353103637695 seconds
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/deepspeed/ops/adam/fused_adam.py:96: UserWarning: The torch.cuda.*DtypeTensor constructors are no longer recommended. It's best to use methods such as torch.tensor(data, dtype=*, device='cuda') to create tensors. (Triggered internally at /opt/conda/conda-bld/pytorch_1702400366987/work/torch/csrc/tensor/python_tensor.cpp:83.)
+  self._dummy_overflow_buf = get_accelerator().IntTensor([0])
+[2024-05-21 00:20:30,321] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Basic Optimizer = FusedAdam
+[2024-05-21 00:20:30,321] [INFO] [utils.py:56:is_zero_supported_optimizer] Checking ZeRO support for optimizer=FusedAdam type=<class 'deepspeed.ops.adam.fused_adam.FusedAdam'>
+[2024-05-21 00:20:30,321] [INFO] [logging.py:96:log_dist] [Rank 0] Creating torch.bfloat16 ZeRO stage 1 optimizer
+[2024-05-21 00:20:30,321] [INFO] [stage_1_and_2.py:147:__init__] Reduce bucket size 16777216
+[2024-05-21 00:20:30,321] [INFO] [stage_1_and_2.py:148:__init__] Allgather bucket size 500,000,000
+[2024-05-21 00:20:30,321] [INFO] [stage_1_and_2.py:149:__init__] CPU Offload: False
+[2024-05-21 00:20:30,321] [INFO] [stage_1_and_2.py:150:__init__] Round robin gradient partitioning: False
+[WARNING|logging.py:314] 2024-05-21 00:20:55,347 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:55,473 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[WARNING|logging.py:314] 2024-05-21 00:20:56,898 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:56,967 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[WARNING|logging.py:314] 2024-05-21 00:20:57,500 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:57,548 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[WARNING|logging.py:314] 2024-05-21 00:20:57,736 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:57,825 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[WARNING|logging.py:314] 2024-05-21 00:20:57,845 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:57,898 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[WARNING|logging.py:314] 2024-05-21 00:20:58,058 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[2024-05-21 00:20:58,117] [INFO] [utils.py:802:see_memory_usage] Before initializing optimizer states
+[2024-05-21 00:20:58,118] [INFO] [utils.py:803:see_memory_usage] MA 18.88 GB         Max_MA 20.75 GB         CA 21.26 GB         Max_CA 21 GB 
+[2024-05-21 00:20:58,119] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 60.09 GB, percent = 6.0%
+[WARNING|logging.py:314] 2024-05-21 00:20:58,124 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+[WARNING|logging.py:329] 2024-05-21 00:20:58,126 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:20:58,174 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+[2024-05-21 00:20:58,316] [INFO] [utils.py:802:see_memory_usage] After initializing optimizer states
+[2024-05-21 00:20:58,316] [INFO] [utils.py:803:see_memory_usage] MA 26.38 GB         Max_MA 30.13 GB         CA 32.52 GB         Max_CA 33 GB 
+[2024-05-21 00:20:58,317] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 60.09 GB, percent = 6.0%
+[2024-05-21 00:20:58,317] [INFO] [stage_1_and_2.py:514:__init__] optimizer state initialized
+[2024-05-21 00:20:58,469] [INFO] [utils.py:802:see_memory_usage] After initializing ZeRO optimizer
+[2024-05-21 00:20:58,469] [INFO] [utils.py:803:see_memory_usage] MA 26.38 GB         Max_MA 26.38 GB         CA 32.52 GB         Max_CA 33 GB 
+[2024-05-21 00:20:58,470] [INFO] [utils.py:810:see_memory_usage] CPU Virtual Memory:  used = 60.09 GB, percent = 6.0%
+[2024-05-21 00:20:58,471] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed Final Optimizer = adamw
+[2024-05-21 00:20:58,472] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed using configured LR scheduler = WarmupDecayLR
+[2024-05-21 00:20:58,472] [INFO] [logging.py:96:log_dist] [Rank 0] DeepSpeed LR Scheduler = <deepspeed.runtime.lr_schedules.WarmupDecayLR object at 0x7fa97e02bfa0>
+[2024-05-21 00:20:58,472] [INFO] [logging.py:96:log_dist] [Rank 0] step=0, skipped=0, lr=[2e-05], mom=[[0.9, 0.999]]
+[2024-05-21 00:20:58,472] [INFO] [config.py:972:print] DeepSpeedEngine configuration:
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   activation_checkpointing_config  {
+    "partition_activations": false, 
+    "contiguous_memory_optimization": false, 
+    "cpu_checkpointing": false, 
+    "number_checkpoints": null, 
+    "synchronize_checkpoint_boundary": false, 
+    "profile": false
+}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   aio_config ................... {'block_size': 1048576, 'queue_depth': 8, 'thread_count': 1, 'single_submit': False, 'overlap_events': True}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   amp_enabled .................. False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   amp_params ................... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   autotuning_config ............ {
+    "enabled": false, 
+    "start_step": null, 
+    "end_step": null, 
+    "metric_path": null, 
+    "arg_mappings": null, 
+    "metric": "throughput", 
+    "model_info": null, 
+    "results_dir": "autotuning_results", 
+    "exps_dir": "autotuning_exps", 
+    "overwrite": true, 
+    "fast": true, 
+    "start_profile_step": 3, 
+    "end_profile_step": 5, 
+    "tuner_type": "gridsearch", 
+    "tuner_early_stopping": 5, 
+    "tuner_num_trials": 50, 
+    "model_info_path": null, 
+    "mp_size": 1, 
+    "max_train_batch_size": null, 
+    "min_train_batch_size": 1, 
+    "max_train_micro_batch_size_per_gpu": 1.024000e+03, 
+    "min_train_micro_batch_size_per_gpu": 1, 
+    "num_tuning_micro_batch_sizes": 3
+}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   bfloat16_enabled ............. True
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   checkpoint_parallel_write_pipeline  False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   checkpoint_tag_validation_enabled  True
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   checkpoint_tag_validation_fail  False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   comms_config ................. <deepspeed.comm.config.DeepSpeedCommsConfig object at 0x7fa9a41f51b0>
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   communication_data_type ...... None
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   compression_config ........... {'weight_quantization': {'shared_parameters': {'enabled': False, 'quantizer_kernel': False, 'schedule_offset': 0, 'quantize_groups': 1, 'quantize_verbose': False, 'quantization_type': 'symmetric', 'quantize_weight_in_forward': False, 'rounding': 'nearest', 'fp16_mixed_quantize': False, 'quantize_change_ratio': 0.001}, 'different_groups': {}}, 'activation_quantization': {'shared_parameters': {'enabled': False, 'quantization_type': 'symmetric', 'range_calibration': 'dynamic', 'schedule_offset': 1000}, 'different_groups': {}}, 'sparse_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'row_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'head_pruning': {'shared_parameters': {'enabled': False, 'method': 'topk', 'schedule_offset': 1000}, 'different_groups': {}}, 'channel_pruning': {'shared_parameters': {'enabled': False, 'method': 'l1', 'schedule_offset': 1000}, 'different_groups': {}}, 'layer_reduction': {'enabled': False}}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   curriculum_enabled_legacy .... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   curriculum_params_legacy ..... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   data_efficiency_config ....... {'enabled': False, 'seed': 1234, 'data_sampling': {'enabled': False, 'num_epochs': 1000, 'num_workers': 0, 'curriculum_learning': {'enabled': False}}, 'data_routing': {'enabled': False, 'random_ltd': {'enabled': False, 'layer_token_lr_schedule': {'enabled': False}}}}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   data_efficiency_enabled ...... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   dataloader_drop_last ......... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   disable_allgather ............ False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   dump_state ................... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   dynamic_loss_scale_args ...... None
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_enabled ........... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_gas_boundary_resolution  1
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_layer_name ........ bert.encoder.layer
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_layer_num ......... 0
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_max_iter .......... 100
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_stability ......... 1e-06
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_tol ............... 0.01
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   eigenvalue_verbose ........... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   elasticity_enabled ........... False
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   flops_profiler_config ........ {
+    "enabled": false, 
+    "recompute_fwd_factor": 0.0, 
+    "profile_step": 1, 
+    "module_depth": -1, 
+    "top_modules": 1, 
+    "detailed": true, 
+    "output_file": null
+}
+[2024-05-21 00:20:58,473] [INFO] [config.py:976:print]   fp16_auto_cast ............... None
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   fp16_enabled ................. False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   fp16_master_weights_and_gradients  False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   global_rank .................. 0
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   grad_accum_dtype ............. None
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   gradient_accumulation_steps .. 1
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   gradient_clipping ............ 1.0
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   gradient_predivide_factor .... 1.0
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   hybrid_engine ................ enabled=False max_out_tokens=512 inference_tp_size=1 release_inference_cache=False pin_parameters=True tp_gather_partition_size=8
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   initial_dynamic_scale ........ 1
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   load_universal_checkpoint .... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   loss_scale ................... 1.0
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   memory_breakdown ............. False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   mics_hierarchial_params_gather  False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   mics_shard_size .............. -1
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   monitor_config ............... tensorboard=TensorBoardConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') wandb=WandbConfig(enabled=False, group=None, team=None, project='deepspeed') csv_monitor=CSVConfig(enabled=False, output_path='', job_name='DeepSpeedJobName') enabled=False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   nebula_config ................ {
+    "enabled": false, 
+    "persistent_storage_path": null, 
+    "persistent_time_interval": 100, 
+    "num_of_version_in_retention": 2, 
+    "enable_nebula_load": true, 
+    "load_path": null
+}
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   optimizer_legacy_fusion ...... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   optimizer_name ............... adamw
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   optimizer_params ............. {'lr': 2e-05, 'betas': [0.9, 0.999], 'eps': 1e-08, 'weight_decay': 0.1}
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   pipeline ..................... {'stages': 'auto', 'partition': 'best', 'seed_layers': False, 'activation_checkpoint_interval': 0}
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   pld_enabled .................. False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   pld_params ................... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   prescale_gradients ........... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   scheduler_name ............... WarmupDecayLR
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   scheduler_params ............. {'total_num_steps': 1430, 'warmup_min_lr': 0, 'warmup_max_lr': 2e-05, 'warmup_num_steps': 43}
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   seq_parallel_communication_data_type  torch.float32
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   sparse_attention ............. None
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   sparse_gradients_enabled ..... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   steps_per_print .............. inf
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   train_batch_size ............. 128
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   train_micro_batch_size_per_gpu  16
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   use_node_local_storage ....... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   wall_clock_breakdown ......... False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   weight_quantization_config ... None
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   world_size ................... 8
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   zero_allow_untested_optimizer  False
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   zero_config .................. stage=1 contiguous_gradients=True reduce_scatter=True reduce_bucket_size=16777216 allgather_partitions=True allgather_bucket_size=500,000,000 overlap_comm=True load_from_fp32_weights=True elastic_checkpoint=False offload_param=None offload_optimizer=None sub_group_size=1000000000 cpu_offload_param=None cpu_offload_use_pin_memory=None cpu_offload=None prefetch_bucket_size=15099494 param_persistence_threshold=40960 model_persistence_threshold=sys.maxsize max_live_parameters=1000000000 max_reuse_distance=1000000000 gather_16bit_weights_on_model_save=True stage3_gather_fp16_weights_on_model_save=False ignore_unused_parameters=True legacy_stage1=False round_robin_gradients=False zero_hpz_partition_size=1 zero_quantized_weights=False zero_quantized_nontrainable_weights=False zero_quantized_gradients=False mics_shard_size=-1 mics_hierarchical_params_gather=False memory_efficient_linear=True pipeline_loading_checkpoint=False override_module_apply=True
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   zero_enabled ................. True
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   zero_force_ds_cpu_optimizer .. True
+[2024-05-21 00:20:58,474] [INFO] [config.py:976:print]   zero_optimization_stage ...... 1
+[2024-05-21 00:20:58,475] [INFO] [config.py:962:print_user_config]   json = {
+    "bf16": {
+        "enabled": true
+    }, 
+    "optimizer": {
+        "type": "AdamW", 
+        "params": {
+            "lr": 2e-05, 
+            "betas": [0.9, 0.999], 
+            "eps": 1e-08, 
+            "weight_decay": 0.1
+        }
+    }, 
+    "scheduler": {
+        "type": "WarmupDecayLR", 
+        "params": {
+            "total_num_steps": 1.430000e+03, 
+            "warmup_min_lr": 0, 
+            "warmup_max_lr": 2e-05, 
+            "warmup_num_steps": 43
+        }
+    }, 
+    "zero_optimization": {
+        "stage": 1, 
+        "overlap_comm": true, 
+        "contiguous_gradients": true, 
+        "sub_group_size": 1.000000e+09, 
+        "reduce_bucket_size": 1.677722e+07, 
+        "stage3_prefetch_bucket_size": 1.509949e+07, 
+        "stage3_param_persistence_threshold": 4.096000e+04, 
+        "stage3_max_live_parameters": 1.000000e+09, 
+        "stage3_max_reuse_distance": 1.000000e+09, 
+        "stage3_gather_16bit_weights_on_model_save": true
+    }, 
+    "gradient_accumulation_steps": 1, 
+    "gradient_clipping": 1.0, 
+    "steps_per_print": inf, 
+    "train_batch_size": 128, 
+    "train_micro_batch_size_per_gpu": 16, 
+    "wall_clock_breakdown": false, 
+    "fp16": {
+        "enabled": false
+    }
+}
+[INFO|trainer.py:2048] 2024-05-21 00:20:58,475 >> ***** Running training *****
+[INFO|trainer.py:2049] 2024-05-21 00:20:58,475 >>   Num examples = 36,521
+[INFO|trainer.py:2050] 2024-05-21 00:20:58,475 >>   Num Epochs = 5
+[INFO|trainer.py:2051] 2024-05-21 00:20:58,475 >>   Instantaneous batch size per device = 16
+[INFO|trainer.py:2054] 2024-05-21 00:20:58,475 >>   Total train batch size (w. parallel, distributed & accumulation) = 128
+[INFO|trainer.py:2055] 2024-05-21 00:20:58,475 >>   Gradient Accumulation steps = 1
+[INFO|trainer.py:2056] 2024-05-21 00:20:58,475 >>   Total optimization steps = 1,430
+[INFO|trainer.py:2057] 2024-05-21 00:20:58,476 >>   Number of trainable parameters = 8,054,575,104
+[INFO|integration_utils.py:723] 2024-05-21 00:20:58,477 >> Automatic Weights & Biases logging enabled, to disable set os.environ["WANDB_DISABLED"] = "true"
+wandb: Tracking run with wandb version 0.16.6
+wandb: W&B syncing is set to `offline` in this directory.  
+wandb: Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+  0%|          | 0/1430 [00:00<?, ?it/s][WARNING|logging.py:314] 2024-05-21 00:21:17,907 >> You're using a PreTrainedTokenizerFast tokenizer. Please note that with a fast tokenizer, using the `__call__` method is faster than using a method to encode the text followed by a call to the `pad` method to get a padded encoding.
+Saving dummy inputs...
+Skiping attention_mask...
+[WARNING|logging.py:329] 2024-05-21 00:21:18,410 >> `use_cache=True` is incompatible with gradient checkpointing. Setting `use_cache=False`.
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+  0%|          | 1/1430 [00:06<2:24:07,  6.05s/it]                                                  {'loss': 7.5301, 'grad_norm': 117.77926835690354, 'learning_rate': 0.0, 'epoch': 0.0}
+  0%|          | 1/1430 [00:06<2:24:07,  6.05s/it]  0%|          | 2/1430 [00:11<2:11:55,  5.54s/it]  0%|          | 3/1430 [00:16<2:05:32,  5.28s/it]  0%|          | 4/1430 [00:21<2:05:53,  5.30s/it]  0%|          | 5/1430 [00:27<2:13:39,  5.63s/it]  0%|          | 6/1430 [00:32<2:08:44,  5.42s/it]  0%|          | 7/1430 [00:37<2:03:23,  5.20s/it]  1%|          | 8/1430 [00:42<2:05:10,  5.28s/it]  1%|          | 9/1430 [00:47<2:01:05,  5.11s/it]  1%|          | 10/1430 [00:52<1:59:26,  5.05s/it]  1%|          | 11/1430 [00:57<1:58:02,  4.99s/it]  1%|          | 12/1430 [01:03<2:02:30,  5.18s/it]  1%|          | 13/1430 [01:08<2:01:06,  5.13s/it]  1%|          | 14/1430 [01:13<2:03:36,  5.24s/it]  1%|          | 15/1430 [01:19<2:05:14,  5.31s/it]  1%|          | 16/1430 [01:24<2:06:07,  5.35s/it]  1%|          | 17/1430 [01:29<2:04:04,  5.27s/it]  1%|▏         | 18/1430 [01:34<1:59:39,  5.08s/it]  1%|▏         | 19/1430 [01:39<1:57:26,  4.99s/it]  1%|▏         | 20/1430 [01:43<1:55:34,  4.92s/it]  1%|▏         | 21/1430 [01:48<1:55:54,  4.94s/it]  2%|▏         | 22/1430 [01:53<1:56:36,  4.97s/it]  2%|▏         | 23/1430 [01:58<1:57:48,  5.02s/it]  2%|▏         | 24/1430 [02:04<1:59:29,  5.10s/it]  2%|▏         | 25/1430 [02:09<1:59:12,  5.09s/it]  2%|▏         | 26/1430 [02:14<1:58:05,  5.05s/it]  2%|▏         | 27/1430 [02:19<1:56:14,  4.97s/it]  2%|▏         | 28/1430 [02:24<1:56:08,  4.97s/it]  2%|▏         | 29/1430 [02:28<1:54:42,  4.91s/it]  2%|▏         | 30/1430 [02:33<1:55:00,  4.93s/it]  2%|▏         | 31/1430 [02:39<1:58:06,  5.07s/it]  2%|▏         | 32/1430 [02:44<1:56:56,  5.02s/it]  2%|▏         | 33/1430 [02:49<1:59:12,  5.12s/it]  2%|▏         | 34/1430 [02:54<1:57:04,  5.03s/it]  2%|▏         | 35/1430 [03:00<2:06:49,  5.46s/it]  3%|▎         | 36/1430 [03:05<2:00:52,  5.20s/it]  3%|▎         | 37/1430 [03:10<2:03:08,  5.30s/it]  3%|▎         | 38/1430 [03:15<1:58:55,  5.13s/it]  3%|▎         | 39/1430 [03:20<1:59:04,  5.14s/it]  3%|▎         | 40/1430 [03:26<2:00:44,  5.21s/it]  3%|▎         | 41/1430 [03:31<2:00:19,  5.20s/it]  3%|▎         | 42/1430 [03:36<1:58:05,  5.10s/it]  3%|▎         | 43/1430 [03:42<2:08:42,  5.57s/it]  3%|▎         | 44/1430 [03:48<2:10:24,  5.65s/it]  3%|▎         | 45/1430 [03:53<2:02:50,  5.32s/it]  3%|▎         | 46/1430 [03:58<2:03:04,  5.34s/it]  3%|▎         | 47/1430 [04:03<2:03:22,  5.35s/it]  3%|▎         | 48/1430 [04:08<2:01:13,  5.26s/it]  3%|▎         | 49/1430 [04:13<1:57:56,  5.12s/it]  3%|▎         | 50/1430 [04:18<1:55:36,  5.03s/it]  4%|▎         | 51/1430 [04:25<2:10:28,  5.68s/it]  4%|▎         | 52/1430 [04:31<2:07:48,  5.56s/it]  4%|▎         | 53/1430 [04:39<2:28:40,  6.48s/it]  4%|▍         | 54/1430 [04:44<2:18:23,  6.03s/it]  4%|▍         | 55/1430 [04:51<2:20:27,  6.13s/it]  4%|▍         | 56/1430 [04:55<2:09:31,  5.66s/it]  4%|▍         | 57/1430 [05:00<2:04:57,  5.46s/it]  4%|▍         | 58/1430 [05:05<2:02:16,  5.35s/it]  4%|▍         | 59/1430 [05:10<1:56:57,  5.12s/it]  4%|▍         | 60/1430 [05:15<1:56:24,  5.10s/it]  4%|▍         | 61/1430 [05:19<1:52:18,  4.92s/it]  4%|▍         | 62/1430 [05:24<1:53:16,  4.97s/it]  4%|▍         | 63/1430 [05:30<1:56:13,  5.10s/it]  4%|▍         | 64/1430 [05:34<1:52:52,  4.96s/it]  5%|▍         | 65/1430 [05:42<2:10:39,  5.74s/it]  5%|▍         | 66/1430 [05:48<2:09:41,  5.70s/it]  5%|▍         | 67/1430 [05:52<2:03:13,  5.42s/it]  5%|▍         | 68/1430 [05:57<1:59:18,  5.26s/it]  5%|▍         | 69/1430 [06:02<1:53:38,  5.01s/it]  5%|▍         | 70/1430 [06:07<1:56:05,  5.12s/it]  5%|▍         | 71/1430 [06:13<1:58:03,  5.21s/it]  5%|▌         | 72/1430 [06:18<1:56:34,  5.15s/it]  5%|▌         | 73/1430 [06:26<2:16:06,  6.02s/it]  5%|▌         | 74/1430 [06:31<2:08:56,  5.71s/it]  5%|▌         | 75/1430 [06:35<2:01:41,  5.39s/it]  5%|▌         | 76/1430 [06:40<1:58:13,  5.24s/it]  5%|▌         | 77/1430 [06:46<2:00:43,  5.35s/it]  5%|▌         | 78/1430 [06:52<2:05:50,  5.58s/it]  6%|▌         | 79/1430 [06:57<2:00:56,  5.37s/it]  6%|▌         | 80/1430 [07:01<1:56:11,  5.16s/it]  6%|▌         | 81/1430 [07:06<1:52:33,  5.01s/it]  6%|▌         | 82/1430 [07:11<1:53:12,  5.04s/it]  6%|▌         | 83/1430 [07:15<1:48:33,  4.84s/it]  6%|▌         | 84/1430 [07:20<1:47:17,  4.78s/it]  6%|▌         | 85/1430 [07:25<1:49:01,  4.86s/it]  6%|▌         | 86/1430 [07:30<1:49:15,  4.88s/it]  6%|▌         | 87/1430 [07:35<1:48:29,  4.85s/it]  6%|▌         | 88/1430 [07:40<1:51:55,  5.00s/it]  6%|▌         | 89/1430 [07:45<1:51:13,  4.98s/it]  6%|▋         | 90/1430 [07:50<1:50:47,  4.96s/it]  6%|▋         | 91/1430 [07:55<1:48:49,  4.88s/it]  6%|▋         | 92/1430 [08:00<1:52:10,  5.03s/it]  7%|▋         | 93/1430 [08:05<1:49:04,  4.89s/it]  7%|▋         | 94/1430 [08:10<1:49:59,  4.94s/it]  7%|▋         | 95/1430 [08:14<1:48:00,  4.85s/it]  7%|▋         | 96/1430 [08:20<1:49:26,  4.92s/it]  7%|▋         | 97/1430 [08:24<1:49:29,  4.93s/it]  7%|▋         | 98/1430 [08:29<1:49:10,  4.92s/it]  7%|▋         | 99/1430 [08:34<1:48:52,  4.91s/it]  7%|▋         | 100/1430 [08:39<1:48:16,  4.88s/it]                                                    {'loss': 1.0354, 'grad_norm': 6.220007381128182, 'learning_rate': 1.9192501802451336e-05, 'epoch': 0.35}
+  7%|▋         | 100/1430 [08:39<1:48:16,  4.88s/it]Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Saving dummy inputs...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+Skiping attention_mask...
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+
+  0%|          | 0/11 [00:00<?, ?it/s][A/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/transformers/utils/import_utils.py:521: FutureWarning: `is_torch_tpu_available` is deprecated and will be removed in 4.41.0. Please use the `is_torch_xla_available` instead.
+  warnings.warn(
+
+ 18%|█▊        | 2/11 [00:02<00:11,  1.27s/it][A
+ 27%|██▋       | 3/11 [00:03<00:07,  1.03it/s][A
+ 36%|███▋      | 4/11 [00:04<00:08,  1.28s/it][A
+ 45%|████▌     | 5/11 [00:06<00:07,  1.32s/it][A
+ 55%|█████▍    | 6/11 [00:07<00:06,  1.33s/it][A
+ 64%|██████▎   | 7/11 [00:08<00:04,  1.05s/it][A
+ 73%|███████▎  | 8/11 [00:09<00:03,  1.05s/it][A
+ 82%|████████▏ | 9/11 [00:09<00:01,  1.03it/s][A
+ 91%|█████████ | 10/11 [00:10<00:00,  1.03it/s][A
+100%|██████████| 11/11 [00:12<00:00,  1.06s/it][A                                                    
+                                               [A{'eval_loss': 0.33666151762008667, 'eval_acc': 0.9225881420502893, 'eval_runtime': 14.2155, 'eval_samples_per_second': 96.444, 'eval_steps_per_second': 0.774, 'epoch': 0.35}
+  7%|▋         | 100/1430 [08:53<1:48:16,  4.88s/it]
+100%|██████████| 11/11 [00:12<00:00,  1.06s/it][A
+                                               [A  7%|▋         | 101/1430 [08:59<3:26:20,  9.32s/it]  7%|▋         | 102/1430 [09:04<3:00:58,  8.18s/it]  7%|▋         | 103/1430 [09:09<2:39:50,  7.23s/it]  7%|▋         | 104/1430 [09:14<2:22:23,  6.44s/it]  7%|▋         | 105/1430 [09:19<2:13:58,  6.07s/it]  7%|▋         | 106/1430 [09:24<2:04:40,  5.65s/it]  7%|▋         | 107/1430 [09:28<1:58:18,  5.37s/it]  8%|▊         | 108/1430 [09:34<1:57:57,  5.35s/it]  8%|▊         | 109/1430 [09:39<1:55:15,  5.24s/it]  8%|▊         | 110/1430 [09:44<1:52:45,  5.13s/it]  8%|▊         | 111/1430 [09:48<1:49:37,  4.99s/it]  8%|▊         | 112/1430 [09:53<1:50:14,  5.02s/it]  8%|▊         | 113/1430 [09:59<1:52:20,  5.12s/it]  8%|▊         | 114/1430 [10:04<1:56:09,  5.30s/it]  8%|▊         | 115/1430 [10:09<1:53:12,  5.17s/it]  8%|▊         | 116/1430 [10:14<1:52:22,  5.13s/it]  8%|▊         | 117/1430 [10:19<1:49:20,  5.00s/it]  8%|▊         | 118/1430 [10:24<1:52:09,  5.13s/it]  8%|▊         | 119/1430 [10:29<1:47:51,  4.94s/it]  8%|▊         | 120/1430 [10:34<1:47:40,  4.93s/it]  8%|▊         | 121/1430 [10:39<1:46:18,  4.87s/it]  9%|▊         | 122/1430 [10:43<1:44:30,  4.79s/it]  9%|▊         | 123/1430 [10:49<1:48:34,  4.98s/it]  9%|▊         | 124/1430 [10:53<1:46:36,  4.90s/it]  9%|▊         | 125/1430 [10:58<1:48:14,  4.98s/it]  9%|▉         | 126/1430 [11:04<1:49:14,  5.03s/it]  9%|▉         | 127/1430 [11:09<1:48:42,  5.01s/it]  9%|▉         | 128/1430 [11:14<1:48:53,  5.02s/it]  9%|▉         | 129/1430 [11:18<1:47:25,  4.95s/it]  9%|▉         | 130/1430 [11:23<1:45:13,  4.86s/it]  9%|▉         | 131/1430 [11:28<1:44:52,  4.84s/it]  9%|▉         | 132/1430 [11:33<1:48:23,  5.01s/it]  9%|▉         | 133/1430 [11:38<1:48:29,  5.02s/it]  9%|▉         | 134/1430 [11:43<1:47:13,  4.96s/it]  9%|▉         | 135/1430 [11:48<1:44:53,  4.86s/it] 10%|▉         | 136/1430 [11:53<1:44:35,  4.85s/it] 10%|▉         | 137/1430 [11:57<1:44:18,  4.84s/it] 10%|▉         | 138/1430 [12:02<1:43:51,  4.82s/it] 10%|▉         | 139/1430 [12:07<1:43:49,  4.83s/it] 10%|▉         | 140/1430 [12:12<1:42:27,  4.77s/it] 10%|▉         | 141/1430 [12:18<1:51:17,  5.18s/it] 10%|▉         | 142/1430 [12:23<1:48:44,  5.07s/it] 10%|█         | 143/1430 [12:27<1:46:17,  4.96s/it] 10%|█         | 144/1430 [12:32<1:44:58,  4.90s/it] 10%|█         | 145/1430 [12:38<1:51:28,  5.21s/it] 10%|█         | 146/1430 [12:43<1:52:08,  5.24s/it] 10%|█         | 147/1430 [12:48<1:48:31,  5.08s/it] 10%|█         | 148/1430 [12:53<1:48:15,  5.07s/it] 10%|█         | 149/1430 [12:58<1:46:59,  5.01s/it] 10%|█         | 150/1430 [13:03<1:44:11,  4.88s/it] 11%|█         | 151/1430 [13:07<1:43:38,  4.86s/it] 11%|█         | 152/1430 [13:12<1:41:39,  4.77s/it] 11%|█         | 153/1430 [13:17<1:43:39,  4.87s/it] 11%|█         | 154/1430 [13:22<1:42:28,  4.82s/it] 11%|█         | 155/1430 [13:27<1:44:21,  4.91s/it] 11%|█         | 156/1430 [13:33<1:54:34,  5.40s/it] 11%|█         | 157/1430 [13:38<1:49:50,  5.18s/it] 11%|█         | 158/1430 [13:42<1:44:49,  4.94s/it] 11%|█         | 159/1430 [13:47<1:45:41,  4.99s/it] 11%|█         | 160/1430 [13:52<1:45:21,  4.98s/it] 11%|█▏        | 161/1430 [13:58<1:45:51,  5.00s/it] 11%|█▏        | 162/1430 [14:02<1:44:55,  4.96s/it] 11%|█▏        | 163/1430 [14:07<1:43:58,  4.92s/it] 11%|█▏        | 164/1430 [14:12<1:45:53,  5.02s/it] 12%|█▏        | 165/1430 [14:17<1:44:24,  4.95s/it] 12%|█▏        | 166/1430 [14:23<1:48:43,  5.16s/it] 12%|█▏        | 167/1430 [14:28<1:47:24,  5.10s/it] 12%|█▏        | 168/1430 [14:33<1:45:25,  5.01s/it] 12%|█▏        | 169/1430 [14:38<1:44:36,  4.98s/it] 12%|█▏        | 170/1430 [14:42<1:43:46,  4.94s/it] 12%|█▏        | 171/1430 [14:47<1:43:45,  4.94s/it] 12%|█▏        | 172/1430 [14:53<1:45:15,  5.02s/it] 12%|█▏        | 173/1430 [14:58<1:46:18,  5.07s/it] 12%|█▏        | 174/1430 [15:03<1:49:16,  5.22s/it] 12%|█▏        | 175/1430 [15:12<2:09:08,  6.17s/it] 12%|█▏        | 176/1430 [15:16<1:58:59,  5.69s/it] 12%|█▏        | 177/1430 [15:21<1:55:07,  5.51s/it] 12%|█▏        | 178/1430 [15:26<1:51:38,  5.35s/it] 13%|█▎        | 179/1430 [15:31<1:48:50,  5.22s/it] 13%|█▎        | 180/1430 [15:36<1:46:52,  5.13s/it] 13%|█▎        | 181/1430 [15:42<1:51:02,  5.33s/it] 13%|█▎        | 182/1430 [15:47<1:51:05,  5.34s/it] 13%|█▎        | 183/1430 [15:52<1:46:54,  5.14s/it] 13%|█▎        | 184/1430 [15:57<1:47:51,  5.19s/it] 13%|█▎        | 185/1430 [16:02<1:45:47,  5.10s/it] 13%|█▎        | 186/1430 [16:07<1:44:58,  5.06s/it] 13%|█▎        | 187/1430 [16:15<2:00:15,  5.80s/it] 13%|█▎        | 188/1430 [16:20<1:53:59,  5.51s/it] 13%|█▎        | 189/1430 [16:24<1:48:25,  5.24s/it] 13%|█▎        | 190/1430 [16:29<1:44:49,  5.07s/it] 13%|█▎        | 191/1430 [16:34<1:44:46,  5.07s/it] 13%|█▎        | 192/1430 [16:39<1:44:50,  5.08s/it] 13%|█▎        | 193/1430 [16:44<1:42:21,  4.96s/it] 14%|█▎        | 194/1430 [16:49<1:41:28,  4.93s/it] 14%|█▎        | 195/1430 [16:53<1:39:40,  4.84s/it] 14%|█▎        | 196/1430 [16:59<1:44:04,  5.06s/it] 14%|█▍        | 197/1430 [17:04<1:45:56,  5.16s/it] 14%|█▍        | 198/1430 [17:10<1:50:42,  5.39s/it] 14%|█▍        | 199/1430 [17:16<1:53:12,  5.52s/it] 14%|█▍        | 200/1430 [17:22<1:56:22,  5.68s/it]                                                    {'loss': 0.3142, 'grad_norm': 19.712824733771033, 'learning_rate': 1.7750540735400146e-05, 'epoch': 0.7}
+ 14%|█▍        | 200/1430 [17:22<1:56:22,  5.68s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.55it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.28058329224586487, 'eval_acc': 0.9336133949487188, 'eval_runtime': 12.3041, 'eval_samples_per_second': 111.426, 'eval_steps_per_second': 0.894, 'epoch': 0.7}
+ 14%|█▍        | 200/1430 [17:34<1:56:22,  5.68s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 14%|█▍        | 201/1430 [17:39<3:07:06,  9.13s/it] 14%|█▍        | 202/1430 [17:44<2:41:06,  7.87s/it] 14%|█▍        | 203/1430 [17:50<2:27:47,  7.23s/it] 14%|█▍        | 204/1430 [17:55<2:12:42,  6.49s/it] 14%|█▍        | 205/1430 [18:00<2:03:49,  6.06s/it] 14%|█▍        | 206/1430 [18:05<1:56:26,  5.71s/it] 14%|█▍        | 207/1430 [18:10<1:52:49,  5.54s/it] 15%|█▍        | 208/1430 [18:14<1:47:01,  5.25s/it] 15%|█▍        | 209/1430 [18:20<1:51:13,  5.47s/it] 15%|█▍        | 210/1430 [18:26<1:51:33,  5.49s/it] 15%|█▍        | 211/1430 [18:31<1:48:08,  5.32s/it] 15%|█▍        | 212/1430 [18:36<1:46:23,  5.24s/it] 15%|█▍        | 213/1430 [18:41<1:43:36,  5.11s/it] 15%|█▍        | 214/1430 [18:46<1:45:01,  5.18s/it] 15%|█▌        | 215/1430 [18:51<1:42:24,  5.06s/it] 15%|█▌        | 216/1430 [18:56<1:41:32,  5.02s/it] 15%|█▌        | 217/1430 [19:00<1:38:30,  4.87s/it] 15%|█▌        | 218/1430 [19:05<1:38:14,  4.86s/it] 15%|█▌        | 219/1430 [19:10<1:40:19,  4.97s/it] 15%|█▌        | 220/1430 [19:16<1:42:34,  5.09s/it] 15%|█▌        | 221/1430 [19:20<1:41:10,  5.02s/it] 16%|█▌        | 222/1430 [19:29<2:03:26,  6.13s/it] 16%|█▌        | 223/1430 [19:34<1:58:22,  5.88s/it] 16%|█▌        | 224/1430 [19:40<1:56:04,  5.77s/it] 16%|█▌        | 225/1430 [19:46<1:56:34,  5.80s/it] 16%|█▌        | 226/1430 [19:51<1:50:22,  5.50s/it] 16%|█▌        | 227/1430 [19:57<1:53:20,  5.65s/it] 16%|█▌        | 228/1430 [20:03<1:55:28,  5.76s/it] 16%|█▌        | 229/1430 [20:08<1:53:13,  5.66s/it] 16%|█▌        | 230/1430 [20:13<1:51:08,  5.56s/it] 16%|█▌        | 231/1430 [20:18<1:47:42,  5.39s/it] 16%|█▌        | 232/1430 [20:23<1:44:59,  5.26s/it] 16%|█▋        | 233/1430 [20:28<1:42:04,  5.12s/it] 16%|█▋        | 234/1430 [20:33<1:41:37,  5.10s/it] 16%|█▋        | 235/1430 [20:38<1:40:19,  5.04s/it] 17%|█▋        | 236/1430 [20:43<1:40:09,  5.03s/it] 17%|█▋        | 237/1430 [20:48<1:38:03,  4.93s/it] 17%|█▋        | 238/1430 [20:53<1:37:25,  4.90s/it] 17%|█▋        | 239/1430 [20:57<1:36:09,  4.84s/it] 17%|█▋        | 240/1430 [21:05<1:54:25,  5.77s/it] 17%|█▋        | 241/1430 [21:11<1:51:29,  5.63s/it] 17%|█▋        | 242/1430 [21:16<1:48:52,  5.50s/it] 17%|█▋        | 243/1430 [21:20<1:43:53,  5.25s/it] 17%|█▋        | 244/1430 [21:25<1:41:11,  5.12s/it] 17%|█▋        | 245/1430 [21:30<1:38:41,  5.00s/it] 17%|█▋        | 246/1430 [21:35<1:39:16,  5.03s/it] 17%|█▋        | 247/1430 [21:40<1:36:46,  4.91s/it] 17%|█▋        | 248/1430 [21:45<1:37:35,  4.95s/it] 17%|█▋        | 249/1430 [21:51<1:42:51,  5.23s/it] 17%|█▋        | 250/1430 [21:56<1:41:58,  5.19s/it] 18%|█▊        | 251/1430 [22:01<1:41:43,  5.18s/it] 18%|█▊        | 252/1430 [22:06<1:40:44,  5.13s/it] 18%|█▊        | 253/1430 [22:10<1:36:48,  4.94s/it] 18%|█▊        | 254/1430 [22:16<1:39:39,  5.08s/it] 18%|█▊        | 255/1430 [22:22<1:47:00,  5.46s/it] 18%|█▊        | 256/1430 [22:28<1:47:10,  5.48s/it] 18%|█▊        | 257/1430 [22:32<1:43:03,  5.27s/it] 18%|█▊        | 258/1430 [22:38<1:42:24,  5.24s/it] 18%|█▊        | 259/1430 [22:43<1:40:25,  5.15s/it] 18%|█▊        | 260/1430 [22:48<1:41:38,  5.21s/it] 18%|█▊        | 261/1430 [22:53<1:38:31,  5.06s/it] 18%|█▊        | 262/1430 [22:58<1:40:06,  5.14s/it] 18%|█▊        | 263/1430 [23:03<1:41:54,  5.24s/it] 18%|█▊        | 264/1430 [23:09<1:41:11,  5.21s/it] 19%|█▊        | 265/1430 [23:14<1:40:17,  5.17s/it] 19%|█▊        | 266/1430 [23:19<1:44:21,  5.38s/it] 19%|█▊        | 267/1430 [23:25<1:43:49,  5.36s/it] 19%|█▊        | 268/1430 [23:30<1:40:16,  5.18s/it] 19%|█▉        | 269/1430 [23:35<1:43:52,  5.37s/it] 19%|█▉        | 270/1430 [23:40<1:39:47,  5.16s/it] 19%|█▉        | 271/1430 [23:45<1:36:57,  5.02s/it] 19%|█▉        | 272/1430 [23:50<1:40:36,  5.21s/it] 19%|█▉        | 273/1430 [23:56<1:44:52,  5.44s/it] 19%|█▉        | 274/1430 [24:02<1:45:47,  5.49s/it] 19%|█▉        | 275/1430 [24:08<1:46:53,  5.55s/it] 19%|█▉        | 276/1430 [24:13<1:44:41,  5.44s/it] 19%|█▉        | 277/1430 [24:17<1:38:57,  5.15s/it] 19%|█▉        | 278/1430 [24:22<1:37:38,  5.09s/it] 20%|█▉        | 279/1430 [24:27<1:38:07,  5.11s/it] 20%|█▉        | 280/1430 [24:32<1:36:16,  5.02s/it] 20%|█▉        | 281/1430 [24:38<1:39:38,  5.20s/it] 20%|█▉        | 282/1430 [24:43<1:37:39,  5.10s/it] 20%|█▉        | 283/1430 [24:48<1:39:29,  5.20s/it] 20%|█▉        | 284/1430 [24:53<1:38:17,  5.15s/it] 20%|█▉        | 285/1430 [24:58<1:38:33,  5.16s/it] 20%|██        | 286/1430 [25:03<1:36:13,  5.05s/it][INFO|configuration_utils.py:471] 2024-05-21 00:46:25,185 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-286/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 00:46:25,188 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-286/generation_config.json
+[INFO|modeling_utils.py:2598] 2024-05-21 00:46:41,154 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-286/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 00:46:41,183 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-286/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 00:46:41,203 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-286/special_tokens_map.json
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 20%|██        | 287/1430 [25:28<3:29:45, 11.01s/it] 20%|██        | 288/1430 [25:33<2:53:04,  9.09s/it] 20%|██        | 289/1430 [25:38<2:28:41,  7.82s/it] 20%|██        | 290/1430 [25:43<2:12:17,  6.96s/it] 20%|██        | 291/1430 [25:47<2:00:41,  6.36s/it] 20%|██        | 292/1430 [25:52<1:51:49,  5.90s/it] 20%|██        | 293/1430 [25:58<1:48:32,  5.73s/it] 21%|██        | 294/1430 [26:03<1:47:50,  5.70s/it] 21%|██        | 295/1430 [26:08<1:41:33,  5.37s/it] 21%|██        | 296/1430 [26:12<1:35:57,  5.08s/it] 21%|██        | 297/1430 [26:17<1:35:03,  5.03s/it] 21%|██        | 298/1430 [26:22<1:34:27,  5.01s/it] 21%|██        | 299/1430 [26:27<1:33:46,  4.98s/it] 21%|██        | 300/1430 [26:33<1:37:18,  5.17s/it]                                                    {'loss': 0.2518, 'grad_norm': 2.795435359124925, 'learning_rate': 1.6308579668348956e-05, 'epoch': 1.05}
+ 21%|██        | 300/1430 [26:33<1:37:18,  5.17s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.39it/s][A
+ 27%|██▋       | 3/11 [00:01<00:04,  1.64it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.02s/it][A
+ 45%|████▌     | 5/11 [00:05<00:06,  1.16s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:05,  1.18s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.05it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.01it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.08it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.2392134666442871, 'eval_acc': 0.9392567951047475, 'eval_runtime': 12.3042, 'eval_samples_per_second': 111.426, 'eval_steps_per_second': 0.894, 'epoch': 1.05}
+ 21%|██        | 300/1430 [26:45<1:37:18,  5.17s/it]
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A
+                                               [A 21%|██        | 301/1430 [26:50<2:44:33,  8.75s/it] 21%|██        | 302/1430 [26:55<2:23:06,  7.61s/it] 21%|██        | 303/1430 [27:00<2:09:53,  6.92s/it] 21%|██▏       | 304/1430 [27:05<1:58:01,  6.29s/it] 21%|██▏       | 305/1430 [27:10<1:50:01,  5.87s/it] 21%|██▏       | 306/1430 [27:15<1:43:56,  5.55s/it] 21%|██▏       | 307/1430 [27:19<1:38:37,  5.27s/it] 22%|██▏       | 308/1430 [27:24<1:35:08,  5.09s/it] 22%|██▏       | 309/1430 [27:28<1:32:39,  4.96s/it] 22%|██▏       | 310/1430 [27:33<1:32:09,  4.94s/it] 22%|██▏       | 311/1430 [27:38<1:31:16,  4.89s/it] 22%|██▏       | 312/1430 [27:43<1:30:42,  4.87s/it] 22%|██▏       | 313/1430 [27:48<1:30:32,  4.86s/it] 22%|██▏       | 314/1430 [27:53<1:32:59,  5.00s/it] 22%|██▏       | 315/1430 [27:58<1:31:14,  4.91s/it] 22%|██▏       | 316/1430 [28:03<1:30:34,  4.88s/it] 22%|██▏       | 317/1430 [28:08<1:30:39,  4.89s/it] 22%|██▏       | 318/1430 [28:13<1:31:28,  4.94s/it] 22%|██▏       | 319/1430 [28:19<1:39:10,  5.36s/it] 22%|██▏       | 320/1430 [28:24<1:38:08,  5.30s/it] 22%|██▏       | 321/1430 [28:29<1:35:08,  5.15s/it] 23%|██▎       | 322/1430 [28:34<1:33:54,  5.09s/it] 23%|██▎       | 323/1430 [28:39<1:32:20,  5.01s/it] 23%|██▎       | 324/1430 [28:43<1:29:37,  4.86s/it] 23%|██▎       | 325/1430 [28:48<1:27:58,  4.78s/it] 23%|██▎       | 326/1430 [28:53<1:28:56,  4.83s/it] 23%|██▎       | 327/1430 [28:58<1:30:07,  4.90s/it] 23%|██▎       | 328/1430 [29:03<1:32:45,  5.05s/it] 23%|██▎       | 329/1430 [29:08<1:30:35,  4.94s/it] 23%|██▎       | 330/1430 [29:13<1:29:03,  4.86s/it] 23%|██▎       | 331/1430 [29:18<1:29:39,  4.89s/it] 23%|██▎       | 332/1430 [29:22<1:27:36,  4.79s/it] 23%|██▎       | 333/1430 [29:27<1:29:26,  4.89s/it] 23%|██▎       | 334/1430 [29:32<1:28:39,  4.85s/it] 23%|██▎       | 335/1430 [29:37<1:29:14,  4.89s/it] 23%|██▎       | 336/1430 [29:42<1:30:15,  4.95s/it] 24%|██▎       | 337/1430 [29:47<1:32:14,  5.06s/it] 24%|██▎       | 338/1430 [29:54<1:40:30,  5.52s/it] 24%|██▎       | 339/1430 [29:59<1:36:55,  5.33s/it] 24%|██▍       | 340/1430 [30:04<1:37:17,  5.36s/it] 24%|██▍       | 341/1430 [30:10<1:39:45,  5.50s/it] 24%|██▍       | 342/1430 [30:15<1:33:59,  5.18s/it] 24%|██▍       | 343/1430 [30:20<1:34:47,  5.23s/it] 24%|██▍       | 344/1430 [30:24<1:31:12,  5.04s/it] 24%|██▍       | 345/1430 [30:29<1:31:03,  5.04s/it] 24%|██▍       | 346/1430 [30:35<1:31:12,  5.05s/it] 24%|██▍       | 347/1430 [30:39<1:29:29,  4.96s/it] 24%|██▍       | 348/1430 [30:46<1:40:15,  5.56s/it] 24%|██▍       | 349/1430 [30:54<1:52:48,  6.26s/it] 24%|██▍       | 350/1430 [30:59<1:45:26,  5.86s/it] 25%|██▍       | 351/1430 [31:05<1:43:40,  5.77s/it] 25%|██▍       | 352/1430 [31:10<1:39:23,  5.53s/it] 25%|██▍       | 353/1430 [31:14<1:34:44,  5.28s/it] 25%|██▍       | 354/1430 [31:21<1:40:38,  5.61s/it] 25%|██▍       | 355/1430 [31:26<1:36:29,  5.39s/it] 25%|██▍       | 356/1430 [31:30<1:33:23,  5.22s/it] 25%|██▍       | 357/1430 [31:35<1:28:57,  4.97s/it] 25%|██▌       | 358/1430 [31:39<1:26:35,  4.85s/it] 25%|██▌       | 359/1430 [31:47<1:39:53,  5.60s/it] 25%|██▌       | 360/1430 [31:51<1:35:26,  5.35s/it] 25%|██▌       | 361/1430 [31:59<1:45:09,  5.90s/it] 25%|██▌       | 362/1430 [32:05<1:47:00,  6.01s/it] 25%|██▌       | 363/1430 [32:10<1:40:58,  5.68s/it] 25%|██▌       | 364/1430 [32:14<1:35:37,  5.38s/it] 26%|██▌       | 365/1430 [32:19<1:33:20,  5.26s/it] 26%|██▌       | 366/1430 [32:25<1:34:47,  5.35s/it] 26%|██▌       | 367/1430 [32:30<1:31:32,  5.17s/it] 26%|██▌       | 368/1430 [32:36<1:36:28,  5.45s/it] 26%|██▌       | 369/1430 [32:41<1:35:24,  5.40s/it] 26%|██▌       | 370/1430 [32:46<1:30:39,  5.13s/it] 26%|██▌       | 371/1430 [32:51<1:30:16,  5.11s/it] 26%|██▌       | 372/1430 [32:56<1:29:06,  5.05s/it] 26%|██▌       | 373/1430 [33:00<1:27:31,  4.97s/it] 26%|██▌       | 374/1430 [33:05<1:25:46,  4.87s/it] 26%|██▌       | 375/1430 [33:10<1:25:39,  4.87s/it] 26%|██▋       | 376/1430 [33:15<1:25:50,  4.89s/it] 26%|██▋       | 377/1430 [33:20<1:26:56,  4.95s/it] 26%|██▋       | 378/1430 [33:25<1:29:16,  5.09s/it] 27%|██▋       | 379/1430 [33:30<1:28:10,  5.03s/it] 27%|██▋       | 380/1430 [33:35<1:28:01,  5.03s/it] 27%|██▋       | 381/1430 [33:41<1:31:07,  5.21s/it] 27%|██▋       | 382/1430 [33:46<1:28:50,  5.09s/it] 27%|██▋       | 383/1430 [33:52<1:33:02,  5.33s/it] 27%|██▋       | 384/1430 [33:56<1:30:08,  5.17s/it] 27%|██▋       | 385/1430 [34:01<1:28:40,  5.09s/it] 27%|██▋       | 386/1430 [34:07<1:29:59,  5.17s/it] 27%|██▋       | 387/1430 [34:12<1:28:18,  5.08s/it] 27%|██▋       | 388/1430 [34:16<1:26:10,  4.96s/it] 27%|██▋       | 389/1430 [34:22<1:31:14,  5.26s/it] 27%|██▋       | 390/1430 [34:27<1:30:00,  5.19s/it] 27%|██▋       | 391/1430 [34:32<1:26:39,  5.00s/it] 27%|██▋       | 392/1430 [34:37<1:28:24,  5.11s/it] 27%|██▋       | 393/1430 [34:43<1:30:08,  5.22s/it] 28%|██▊       | 394/1430 [34:48<1:31:12,  5.28s/it] 28%|██▊       | 395/1430 [34:53<1:29:56,  5.21s/it] 28%|██▊       | 396/1430 [34:58<1:29:14,  5.18s/it] 28%|██▊       | 397/1430 [35:04<1:32:54,  5.40s/it] 28%|██▊       | 398/1430 [35:10<1:34:16,  5.48s/it] 28%|██▊       | 399/1430 [35:15<1:33:48,  5.46s/it] 28%|██▊       | 400/1430 [35:20<1:32:20,  5.38s/it]                                                    {'loss': 0.1663, 'grad_norm': 5.847588731762014, 'learning_rate': 1.4866618601297766e-05, 'epoch': 1.4}
+ 28%|██▊       | 400/1430 [35:20<1:32:20,  5.38s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.55it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.23s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.01it/s][A
+ 73%|███████▎  | 8/11 [00:08<00:03,  1.01s/it][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.06it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.05it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A                                                    
+                                               [A{'eval_loss': 0.21786706149578094, 'eval_acc': 0.9463741636297047, 'eval_runtime': 12.4032, 'eval_samples_per_second': 110.536, 'eval_steps_per_second': 0.887, 'epoch': 1.4}
+ 28%|██▊       | 400/1430 [35:33<1:32:20,  5.38s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A
+                                               [A 28%|██▊       | 401/1430 [35:38<2:33:49,  8.97s/it] 28%|██▊       | 402/1430 [35:45<2:22:24,  8.31s/it] 28%|██▊       | 403/1430 [35:50<2:05:59,  7.36s/it] 28%|██▊       | 404/1430 [35:55<1:53:50,  6.66s/it] 28%|██▊       | 405/1430 [36:00<1:46:12,  6.22s/it] 28%|██▊       | 406/1430 [36:05<1:39:13,  5.81s/it] 28%|██▊       | 407/1430 [36:10<1:33:46,  5.50s/it] 29%|██▊       | 408/1430 [36:15<1:34:13,  5.53s/it] 29%|██▊       | 409/1430 [36:20<1:29:37,  5.27s/it] 29%|██▊       | 410/1430 [36:25<1:28:43,  5.22s/it] 29%|██▊       | 411/1430 [36:30<1:26:59,  5.12s/it] 29%|██▉       | 412/1430 [36:35<1:25:04,  5.01s/it] 29%|██▉       | 413/1430 [36:39<1:22:13,  4.85s/it] 29%|██▉       | 414/1430 [36:45<1:26:57,  5.14s/it] 29%|██▉       | 415/1430 [36:49<1:24:27,  4.99s/it] 29%|██▉       | 416/1430 [36:54<1:23:53,  4.96s/it] 29%|██▉       | 417/1430 [36:59<1:23:28,  4.94s/it] 29%|██▉       | 418/1430 [37:04<1:23:11,  4.93s/it] 29%|██▉       | 419/1430 [37:09<1:22:54,  4.92s/it] 29%|██▉       | 420/1430 [37:15<1:30:11,  5.36s/it] 29%|██▉       | 421/1430 [37:21<1:28:53,  5.29s/it] 30%|██▉       | 422/1430 [37:26<1:27:57,  5.24s/it] 30%|██▉       | 423/1430 [37:31<1:25:54,  5.12s/it] 30%|██▉       | 424/1430 [37:35<1:24:42,  5.05s/it] 30%|██▉       | 425/1430 [37:40<1:21:19,  4.86s/it] 30%|██▉       | 426/1430 [37:44<1:19:16,  4.74s/it] 30%|██▉       | 427/1430 [37:49<1:20:14,  4.80s/it] 30%|██▉       | 428/1430 [37:55<1:24:04,  5.03s/it] 30%|███       | 429/1430 [38:00<1:23:23,  5.00s/it] 30%|███       | 430/1430 [38:05<1:24:11,  5.05s/it] 30%|███       | 431/1430 [38:10<1:22:13,  4.94s/it] 30%|███       | 432/1430 [38:18<1:40:29,  6.04s/it] 30%|███       | 433/1430 [38:24<1:39:15,  5.97s/it] 30%|███       | 434/1430 [38:32<1:47:00,  6.45s/it] 30%|███       | 435/1430 [38:37<1:40:26,  6.06s/it] 30%|███       | 436/1430 [38:41<1:34:06,  5.68s/it] 31%|███       | 437/1430 [38:47<1:32:24,  5.58s/it] 31%|███       | 438/1430 [38:52<1:29:14,  5.40s/it] 31%|███       | 439/1430 [38:58<1:32:03,  5.57s/it] 31%|███       | 440/1430 [39:03<1:30:01,  5.46s/it] 31%|███       | 441/1430 [39:08<1:27:40,  5.32s/it] 31%|███       | 442/1430 [39:14<1:30:01,  5.47s/it] 31%|███       | 443/1430 [39:19<1:28:08,  5.36s/it] 31%|███       | 444/1430 [39:25<1:31:50,  5.59s/it] 31%|███       | 445/1430 [39:30<1:30:50,  5.53s/it] 31%|███       | 446/1430 [39:35<1:26:09,  5.25s/it] 31%|███▏      | 447/1430 [39:40<1:23:15,  5.08s/it] 31%|███▏      | 448/1430 [39:45<1:24:45,  5.18s/it] 31%|███▏      | 449/1430 [39:50<1:22:45,  5.06s/it] 31%|███▏      | 450/1430 [39:55<1:22:10,  5.03s/it] 32%|███▏      | 451/1430 [40:00<1:23:34,  5.12s/it] 32%|███▏      | 452/1430 [40:05<1:22:06,  5.04s/it] 32%|███▏      | 453/1430 [40:14<1:40:06,  6.15s/it] 32%|███▏      | 454/1430 [40:19<1:37:47,  6.01s/it] 32%|███▏      | 455/1430 [40:25<1:35:51,  5.90s/it] 32%|███▏      | 456/1430 [40:30<1:32:12,  5.68s/it] 32%|███▏      | 457/1430 [40:35<1:28:26,  5.45s/it] 32%|███▏      | 458/1430 [40:41<1:27:48,  5.42s/it] 32%|███▏      | 459/1430 [40:45<1:24:58,  5.25s/it] 32%|███▏      | 460/1430 [40:51<1:27:49,  5.43s/it] 32%|███▏      | 461/1430 [40:57<1:27:35,  5.42s/it] 32%|███▏      | 462/1430 [41:01<1:23:46,  5.19s/it] 32%|███▏      | 463/1430 [41:06<1:21:04,  5.03s/it] 32%|███▏      | 464/1430 [41:11<1:21:45,  5.08s/it] 33%|███▎      | 465/1430 [41:16<1:21:51,  5.09s/it] 33%|███▎      | 466/1430 [41:21<1:20:18,  5.00s/it] 33%|███▎      | 467/1430 [41:26<1:18:23,  4.88s/it] 33%|███▎      | 468/1430 [41:31<1:19:51,  4.98s/it] 33%|███▎      | 469/1430 [41:36<1:19:48,  4.98s/it] 33%|███▎      | 470/1430 [41:41<1:18:25,  4.90s/it] 33%|███▎      | 471/1430 [41:45<1:17:08,  4.83s/it] 33%|███▎      | 472/1430 [41:50<1:16:29,  4.79s/it] 33%|███▎      | 473/1430 [41:55<1:15:20,  4.72s/it] 33%|███▎      | 474/1430 [42:00<1:17:55,  4.89s/it] 33%|███▎      | 475/1430 [42:06<1:22:23,  5.18s/it] 33%|███▎      | 476/1430 [42:10<1:19:48,  5.02s/it] 33%|███▎      | 477/1430 [42:15<1:18:35,  4.95s/it] 33%|███▎      | 478/1430 [42:20<1:16:09,  4.80s/it] 33%|███▎      | 479/1430 [42:25<1:19:27,  5.01s/it] 34%|███▎      | 480/1430 [42:30<1:16:51,  4.85s/it] 34%|███▎      | 481/1430 [42:35<1:17:48,  4.92s/it] 34%|███▎      | 482/1430 [42:40<1:20:50,  5.12s/it] 34%|███▍      | 483/1430 [42:45<1:21:49,  5.18s/it] 34%|███▍      | 484/1430 [42:51<1:21:14,  5.15s/it] 34%|███▍      | 485/1430 [42:55<1:18:41,  5.00s/it] 34%|███▍      | 486/1430 [43:00<1:17:41,  4.94s/it] 34%|███▍      | 487/1430 [43:05<1:15:56,  4.83s/it] 34%|███▍      | 488/1430 [43:10<1:16:23,  4.87s/it] 34%|███▍      | 489/1430 [43:14<1:16:28,  4.88s/it] 34%|███▍      | 490/1430 [43:19<1:16:49,  4.90s/it] 34%|███▍      | 491/1430 [43:24<1:16:18,  4.88s/it] 34%|███▍      | 492/1430 [43:29<1:16:02,  4.86s/it] 34%|███▍      | 493/1430 [43:34<1:18:10,  5.01s/it] 35%|███▍      | 494/1430 [43:40<1:21:01,  5.19s/it] 35%|███▍      | 495/1430 [43:45<1:21:43,  5.24s/it] 35%|███▍      | 496/1430 [43:50<1:19:58,  5.14s/it] 35%|███▍      | 497/1430 [43:56<1:23:56,  5.40s/it] 35%|███▍      | 498/1430 [44:02<1:23:32,  5.38s/it] 35%|███▍      | 499/1430 [44:07<1:21:17,  5.24s/it] 35%|███▍      | 500/1430 [44:11<1:19:36,  5.14s/it]                                                    {'loss': 0.1635, 'grad_norm': 1.402152173230872, 'learning_rate': 1.3424657534246576e-05, 'epoch': 1.75}
+ 35%|███▍      | 500/1430 [44:11<1:19:36,  5.14s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.54it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:05,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.08it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.1991245299577713, 'eval_acc': 0.9492295293587735, 'eval_runtime': 12.3027, 'eval_samples_per_second': 111.439, 'eval_steps_per_second': 0.894, 'epoch': 1.75}
+ 35%|███▍      | 500/1430 [44:24<1:19:36,  5.14s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 35%|███▌      | 501/1430 [44:29<2:18:33,  8.95s/it] 35%|███▌      | 502/1430 [44:34<1:59:04,  7.70s/it] 35%|███▌      | 503/1430 [44:39<1:46:11,  6.87s/it] 35%|███▌      | 504/1430 [44:45<1:40:02,  6.48s/it] 35%|███▌      | 505/1430 [44:49<1:32:03,  5.97s/it] 35%|███▌      | 506/1430 [44:55<1:29:30,  5.81s/it] 35%|███▌      | 507/1430 [44:59<1:23:54,  5.45s/it] 36%|███▌      | 508/1430 [45:04<1:20:10,  5.22s/it] 36%|███▌      | 509/1430 [45:09<1:19:29,  5.18s/it] 36%|███▌      | 510/1430 [45:14<1:19:00,  5.15s/it] 36%|███▌      | 511/1430 [45:19<1:16:45,  5.01s/it] 36%|███▌      | 512/1430 [45:24<1:18:36,  5.14s/it] 36%|███▌      | 513/1430 [45:29<1:16:28,  5.00s/it] 36%|███▌      | 514/1430 [45:36<1:23:22,  5.46s/it] 36%|███▌      | 515/1430 [45:40<1:20:42,  5.29s/it] 36%|███▌      | 516/1430 [45:46<1:20:08,  5.26s/it] 36%|███▌      | 517/1430 [45:51<1:18:08,  5.14s/it] 36%|███▌      | 518/1430 [45:56<1:21:09,  5.34s/it] 36%|███▋      | 519/1430 [46:03<1:25:42,  5.64s/it] 36%|███▋      | 520/1430 [46:09<1:26:48,  5.72s/it] 36%|███▋      | 521/1430 [46:14<1:23:40,  5.52s/it] 37%|███▋      | 522/1430 [46:19<1:21:29,  5.39s/it] 37%|███▋      | 523/1430 [46:24<1:18:42,  5.21s/it] 37%|███▋      | 524/1430 [46:29<1:18:02,  5.17s/it] 37%|███▋      | 525/1430 [46:33<1:14:58,  4.97s/it] 37%|███▋      | 526/1430 [46:38<1:14:29,  4.94s/it] 37%|███▋      | 527/1430 [46:43<1:15:05,  4.99s/it] 37%|███▋      | 528/1430 [46:48<1:13:26,  4.89s/it] 37%|███▋      | 529/1430 [46:53<1:15:38,  5.04s/it] 37%|███▋      | 530/1430 [46:58<1:14:40,  4.98s/it] 37%|███▋      | 531/1430 [47:03<1:15:40,  5.05s/it] 37%|███▋      | 532/1430 [47:08<1:14:19,  4.97s/it] 37%|███▋      | 533/1430 [47:13<1:16:00,  5.08s/it] 37%|███▋      | 534/1430 [47:18<1:14:29,  4.99s/it] 37%|███▋      | 535/1430 [47:23<1:15:06,  5.04s/it] 37%|███▋      | 536/1430 [47:28<1:13:54,  4.96s/it] 38%|███▊      | 537/1430 [47:33<1:13:47,  4.96s/it] 38%|███▊      | 538/1430 [47:38<1:12:27,  4.87s/it] 38%|███▊      | 539/1430 [47:43<1:13:30,  4.95s/it] 38%|███▊      | 540/1430 [47:48<1:12:50,  4.91s/it] 38%|███▊      | 541/1430 [47:53<1:14:47,  5.05s/it] 38%|███▊      | 542/1430 [47:57<1:12:32,  4.90s/it] 38%|███▊      | 543/1430 [48:03<1:16:42,  5.19s/it] 38%|███▊      | 544/1430 [48:09<1:17:16,  5.23s/it] 38%|███▊      | 545/1430 [48:15<1:20:54,  5.48s/it] 38%|███▊      | 546/1430 [48:20<1:19:01,  5.36s/it] 38%|███▊      | 547/1430 [48:24<1:15:37,  5.14s/it] 38%|███▊      | 548/1430 [48:29<1:13:16,  4.98s/it] 38%|███▊      | 549/1430 [48:34<1:14:31,  5.08s/it] 38%|███▊      | 550/1430 [48:39<1:13:07,  4.99s/it] 39%|███▊      | 551/1430 [48:44<1:11:39,  4.89s/it] 39%|███▊      | 552/1430 [48:49<1:11:41,  4.90s/it] 39%|███▊      | 553/1430 [48:54<1:14:51,  5.12s/it] 39%|███▊      | 554/1430 [48:59<1:14:16,  5.09s/it] 39%|███▉      | 555/1430 [49:04<1:13:27,  5.04s/it] 39%|███▉      | 556/1430 [49:09<1:12:34,  4.98s/it] 39%|███▉      | 557/1430 [49:14<1:11:51,  4.94s/it] 39%|███▉      | 558/1430 [49:19<1:10:34,  4.86s/it] 39%|███▉      | 559/1430 [49:24<1:13:40,  5.08s/it] 39%|███▉      | 560/1430 [49:29<1:13:07,  5.04s/it] 39%|███▉      | 561/1430 [49:34<1:11:58,  4.97s/it] 39%|███▉      | 562/1430 [49:39<1:10:25,  4.87s/it] 39%|███▉      | 563/1430 [49:44<1:10:36,  4.89s/it] 39%|███▉      | 564/1430 [49:49<1:11:32,  4.96s/it] 40%|███▉      | 565/1430 [49:54<1:11:37,  4.97s/it] 40%|███▉      | 566/1430 [49:58<1:10:52,  4.92s/it] 40%|███▉      | 567/1430 [50:03<1:09:38,  4.84s/it] 40%|███▉      | 568/1430 [50:08<1:10:31,  4.91s/it] 40%|███▉      | 569/1430 [50:13<1:11:13,  4.96s/it] 40%|███▉      | 570/1430 [50:19<1:14:37,  5.21s/it] 40%|███▉      | 571/1430 [50:24<1:14:34,  5.21s/it] 40%|████      | 572/1430 [50:29<1:12:18,  5.06s/it][INFO|configuration_utils.py:471] 2024-05-21 01:11:50,857 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-572/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 01:11:50,859 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-572/generation_config.json
+[INFO|modeling_utils.py:2598] 2024-05-21 01:12:06,227 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-572/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 01:12:06,268 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-572/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 01:12:06,297 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-572/special_tokens_map.json
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 40%|████      | 573/1430 [50:54<2:36:54, 10.99s/it] 40%|████      | 574/1430 [50:59<2:11:59,  9.25s/it] 40%|████      | 575/1430 [51:04<1:54:00,  8.00s/it] 40%|████      | 576/1430 [51:09<1:40:07,  7.03s/it] 40%|████      | 577/1430 [51:13<1:29:04,  6.27s/it] 40%|████      | 578/1430 [51:19<1:24:57,  5.98s/it] 40%|████      | 579/1430 [51:24<1:21:31,  5.75s/it] 41%|████      | 580/1430 [51:28<1:16:22,  5.39s/it] 41%|████      | 581/1430 [51:33<1:12:32,  5.13s/it] 41%|████      | 582/1430 [51:38<1:10:23,  4.98s/it] 41%|████      | 583/1430 [51:42<1:07:51,  4.81s/it] 41%|████      | 584/1430 [51:47<1:07:00,  4.75s/it] 41%|████      | 585/1430 [51:52<1:08:20,  4.85s/it] 41%|████      | 586/1430 [51:57<1:08:19,  4.86s/it] 41%|████      | 587/1430 [52:01<1:07:35,  4.81s/it] 41%|████      | 588/1430 [52:07<1:11:44,  5.11s/it] 41%|████      | 589/1430 [52:13<1:13:15,  5.23s/it] 41%|████▏     | 590/1430 [52:18<1:13:54,  5.28s/it] 41%|████▏     | 591/1430 [52:23<1:13:18,  5.24s/it] 41%|████▏     | 592/1430 [52:31<1:24:40,  6.06s/it] 41%|████▏     | 593/1430 [52:37<1:22:34,  5.92s/it] 42%|████▏     | 594/1430 [52:42<1:18:11,  5.61s/it] 42%|████▏     | 595/1430 [52:46<1:14:35,  5.36s/it] 42%|████▏     | 596/1430 [52:51<1:12:24,  5.21s/it] 42%|████▏     | 597/1430 [52:56<1:11:28,  5.15s/it] 42%|████▏     | 598/1430 [53:02<1:15:06,  5.42s/it] 42%|████▏     | 599/1430 [53:08<1:15:31,  5.45s/it] 42%|████▏     | 600/1430 [53:13<1:13:15,  5.30s/it]                                                    {'loss': 0.1384, 'grad_norm': 19.856574196430746, 'learning_rate': 1.1982696467195386e-05, 'epoch': 2.1}
+ 42%|████▏     | 600/1430 [53:13<1:13:15,  5.30s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.31it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.55it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.2366643249988556, 'eval_acc': 0.9466279332485249, 'eval_runtime': 12.3114, 'eval_samples_per_second': 111.36, 'eval_steps_per_second': 0.893, 'epoch': 2.1}
+ 42%|████▏     | 600/1430 [53:25<1:13:15,  5.30s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 42%|████▏     | 601/1430 [53:32<2:09:35,  9.38s/it] 42%|████▏     | 602/1430 [53:37<1:54:36,  8.30s/it] 42%|████▏     | 603/1430 [53:42<1:40:33,  7.30s/it] 42%|████▏     | 604/1430 [53:48<1:31:35,  6.65s/it] 42%|████▏     | 605/1430 [53:53<1:26:01,  6.26s/it] 42%|████▏     | 606/1430 [53:58<1:20:07,  5.83s/it] 42%|████▏     | 607/1430 [54:03<1:16:30,  5.58s/it] 43%|████▎     | 608/1430 [54:07<1:12:28,  5.29s/it] 43%|████▎     | 609/1430 [54:12<1:10:47,  5.17s/it] 43%|████▎     | 610/1430 [54:18<1:11:45,  5.25s/it] 43%|████▎     | 611/1430 [54:23<1:10:57,  5.20s/it] 43%|████▎     | 612/1430 [54:28<1:09:36,  5.11s/it] 43%|████▎     | 613/1430 [54:32<1:08:13,  5.01s/it] 43%|████▎     | 614/1430 [54:38<1:09:00,  5.07s/it] 43%|████▎     | 615/1430 [54:44<1:14:21,  5.47s/it] 43%|████▎     | 616/1430 [54:50<1:15:31,  5.57s/it] 43%|████▎     | 617/1430 [54:55<1:13:40,  5.44s/it] 43%|████▎     | 618/1430 [55:00<1:13:23,  5.42s/it] 43%|████▎     | 619/1430 [55:06<1:13:19,  5.42s/it] 43%|████▎     | 620/1430 [55:11<1:10:50,  5.25s/it] 43%|████▎     | 621/1430 [55:15<1:08:31,  5.08s/it] 43%|████▎     | 622/1430 [55:20<1:06:51,  4.96s/it] 44%|████▎     | 623/1430 [55:25<1:06:03,  4.91s/it] 44%|████▎     | 624/1430 [55:30<1:05:25,  4.87s/it] 44%|████▎     | 625/1430 [55:34<1:04:12,  4.79s/it] 44%|████▍     | 626/1430 [55:39<1:04:50,  4.84s/it] 44%|████▍     | 627/1430 [55:44<1:05:16,  4.88s/it] 44%|████▍     | 628/1430 [55:49<1:04:15,  4.81s/it] 44%|████▍     | 629/1430 [55:53<1:03:40,  4.77s/it] 44%|████▍     | 630/1430 [55:58<1:03:44,  4.78s/it] 44%|████▍     | 631/1430 [56:03<1:03:08,  4.74s/it] 44%|████▍     | 632/1430 [56:07<1:02:26,  4.70s/it] 44%|████▍     | 633/1430 [56:13<1:07:14,  5.06s/it] 44%|████▍     | 634/1430 [56:18<1:05:39,  4.95s/it] 44%|████▍     | 635/1430 [56:23<1:06:14,  5.00s/it] 44%|████▍     | 636/1430 [56:29<1:07:31,  5.10s/it] 45%|████▍     | 637/1430 [56:33<1:06:04,  5.00s/it] 45%|████▍     | 638/1430 [56:39<1:07:33,  5.12s/it] 45%|████▍     | 639/1430 [56:43<1:05:33,  4.97s/it] 45%|████▍     | 640/1430 [56:49<1:07:05,  5.10s/it] 45%|████▍     | 641/1430 [56:53<1:05:21,  4.97s/it] 45%|████▍     | 642/1430 [56:58<1:05:04,  4.95s/it] 45%|████▍     | 643/1430 [57:03<1:05:10,  4.97s/it] 45%|████▌     | 644/1430 [57:08<1:03:57,  4.88s/it] 45%|████▌     | 645/1430 [57:13<1:03:40,  4.87s/it] 45%|████▌     | 646/1430 [57:18<1:05:29,  5.01s/it] 45%|████▌     | 647/1430 [57:23<1:04:44,  4.96s/it] 45%|████▌     | 648/1430 [57:28<1:05:23,  5.02s/it] 45%|████▌     | 649/1430 [57:33<1:03:54,  4.91s/it] 45%|████▌     | 650/1430 [57:38<1:05:43,  5.06s/it] 46%|████▌     | 651/1430 [57:43<1:05:21,  5.03s/it] 46%|████▌     | 652/1430 [57:48<1:05:44,  5.07s/it] 46%|████▌     | 653/1430 [57:54<1:08:54,  5.32s/it] 46%|████▌     | 654/1430 [57:59<1:06:13,  5.12s/it] 46%|████▌     | 655/1430 [58:04<1:06:45,  5.17s/it] 46%|████▌     | 656/1430 [58:10<1:07:48,  5.26s/it] 46%|████▌     | 657/1430 [58:15<1:06:22,  5.15s/it] 46%|████▌     | 658/1430 [58:19<1:04:59,  5.05s/it] 46%|████▌     | 659/1430 [58:25<1:06:08,  5.15s/it] 46%|████▌     | 660/1430 [58:30<1:05:49,  5.13s/it] 46%|████▌     | 661/1430 [58:34<1:04:01,  5.00s/it] 46%|████▋     | 662/1430 [58:41<1:09:03,  5.40s/it] 46%|████▋     | 663/1430 [58:46<1:07:47,  5.30s/it] 46%|████▋     | 664/1430 [58:51<1:05:53,  5.16s/it] 47%|████▋     | 665/1430 [58:57<1:08:46,  5.39s/it] 47%|████▋     | 666/1430 [59:02<1:07:25,  5.30s/it] 47%|████▋     | 667/1430 [59:07<1:05:52,  5.18s/it] 47%|████▋     | 668/1430 [59:13<1:10:22,  5.54s/it] 47%|████▋     | 669/1430 [59:18<1:09:28,  5.48s/it] 47%|████▋     | 670/1430 [59:23<1:06:22,  5.24s/it] 47%|████▋     | 671/1430 [59:28<1:06:56,  5.29s/it] 47%|████▋     | 672/1430 [59:33<1:05:17,  5.17s/it] 47%|████▋     | 673/1430 [59:39<1:05:19,  5.18s/it] 47%|████▋     | 674/1430 [59:43<1:03:18,  5.02s/it] 47%|████▋     | 675/1430 [59:48<1:01:31,  4.89s/it] 47%|████▋     | 676/1430 [59:55<1:10:53,  5.64s/it] 47%|████▋     | 677/1430 [1:00:00<1:08:16,  5.44s/it] 47%|████▋     | 678/1430 [1:00:05<1:05:26,  5.22s/it] 47%|████▋     | 679/1430 [1:00:10<1:05:57,  5.27s/it] 48%|████▊     | 680/1430 [1:00:15<1:05:49,  5.27s/it] 48%|████▊     | 681/1430 [1:00:20<1:04:43,  5.18s/it] 48%|████▊     | 682/1430 [1:00:25<1:03:24,  5.09s/it] 48%|████▊     | 683/1430 [1:00:34<1:16:03,  6.11s/it] 48%|████▊     | 684/1430 [1:00:39<1:11:16,  5.73s/it] 48%|████▊     | 685/1430 [1:00:44<1:09:06,  5.57s/it] 48%|████▊     | 686/1430 [1:00:49<1:06:35,  5.37s/it] 48%|████▊     | 687/1430 [1:00:54<1:07:40,  5.47s/it] 48%|████▊     | 688/1430 [1:00:59<1:05:05,  5.26s/it] 48%|████▊     | 689/1430 [1:01:04<1:04:24,  5.21s/it] 48%|████▊     | 690/1430 [1:01:09<1:01:56,  5.02s/it] 48%|████▊     | 691/1430 [1:01:14<1:00:44,  4.93s/it] 48%|████▊     | 692/1430 [1:01:19<1:01:22,  4.99s/it] 48%|████▊     | 693/1430 [1:01:24<1:02:00,  5.05s/it] 49%|████▊     | 694/1430 [1:01:29<1:03:04,  5.14s/it] 49%|████▊     | 695/1430 [1:01:34<1:01:47,  5.04s/it] 49%|████▊     | 696/1430 [1:01:40<1:04:48,  5.30s/it] 49%|████▊     | 697/1430 [1:01:45<1:02:13,  5.09s/it] 49%|████▉     | 698/1430 [1:01:49<1:00:04,  4.92s/it] 49%|████▉     | 699/1430 [1:01:54<59:59,  4.92s/it]   49%|████▉     | 700/1430 [1:01:59<59:46,  4.91s/it]                                                    {'loss': 0.0717, 'grad_norm': 1.1431318978862264, 'learning_rate': 1.0540735400144198e-05, 'epoch': 2.45}
+ 49%|████▉     | 700/1430 [1:01:59<59:46,  4.91s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.55it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.21382823586463928, 'eval_acc': 0.950303475065343, 'eval_runtime': 12.3005, 'eval_samples_per_second': 111.459, 'eval_steps_per_second': 0.894, 'epoch': 2.45}
+ 49%|████▉     | 700/1430 [1:02:11<59:46,  4.91s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 49%|████▉     | 701/1430 [1:02:16<1:45:20,  8.67s/it] 49%|████▉     | 702/1430 [1:02:21<1:31:16,  7.52s/it] 49%|████▉     | 703/1430 [1:02:26<1:21:10,  6.70s/it] 49%|████▉     | 704/1430 [1:02:30<1:12:42,  6.01s/it] 49%|████▉     | 705/1430 [1:02:35<1:07:43,  5.61s/it] 49%|████▉     | 706/1430 [1:02:40<1:04:48,  5.37s/it] 49%|████▉     | 707/1430 [1:02:44<1:01:41,  5.12s/it] 50%|████▉     | 708/1430 [1:02:49<1:01:08,  5.08s/it] 50%|████▉     | 709/1430 [1:02:54<59:59,  4.99s/it]   50%|████▉     | 710/1430 [1:02:59<59:29,  4.96s/it] 50%|████▉     | 711/1430 [1:03:04<59:12,  4.94s/it] 50%|████▉     | 712/1430 [1:03:09<1:00:43,  5.07s/it] 50%|████▉     | 713/1430 [1:03:14<58:44,  4.92s/it]   50%|████▉     | 714/1430 [1:03:19<59:27,  4.98s/it] 50%|█████     | 715/1430 [1:03:24<59:37,  5.00s/it] 50%|█████     | 716/1430 [1:03:29<1:00:34,  5.09s/it] 50%|█████     | 717/1430 [1:03:34<59:51,  5.04s/it]   50%|█████     | 718/1430 [1:03:39<59:07,  4.98s/it] 50%|█████     | 719/1430 [1:03:44<57:35,  4.86s/it] 50%|█████     | 720/1430 [1:03:49<57:21,  4.85s/it] 50%|█████     | 721/1430 [1:03:55<1:02:03,  5.25s/it] 50%|█████     | 722/1430 [1:04:00<1:01:32,  5.21s/it] 51%|█████     | 723/1430 [1:04:04<59:07,  5.02s/it]   51%|█████     | 724/1430 [1:04:10<1:01:55,  5.26s/it] 51%|█████     | 725/1430 [1:04:15<59:35,  5.07s/it]   51%|█████     | 726/1430 [1:04:20<57:59,  4.94s/it] 51%|█████     | 727/1430 [1:04:24<57:22,  4.90s/it] 51%|█████     | 728/1430 [1:04:29<56:54,  4.86s/it] 51%|█████     | 729/1430 [1:04:34<56:33,  4.84s/it] 51%|█████     | 730/1430 [1:04:40<59:02,  5.06s/it] 51%|█████     | 731/1430 [1:04:44<57:27,  4.93s/it] 51%|█████     | 732/1430 [1:04:49<57:14,  4.92s/it] 51%|█████▏    | 733/1430 [1:04:54<56:33,  4.87s/it] 51%|█████▏    | 734/1430 [1:04:59<56:30,  4.87s/it] 51%|█████▏    | 735/1430 [1:05:04<56:19,  4.86s/it] 51%|█████▏    | 736/1430 [1:05:09<58:59,  5.10s/it] 52%|█████▏    | 737/1430 [1:05:15<1:00:59,  5.28s/it] 52%|█████▏    | 738/1430 [1:05:20<1:01:36,  5.34s/it] 52%|█████▏    | 739/1430 [1:05:25<59:14,  5.14s/it]   52%|█████▏    | 740/1430 [1:05:29<56:21,  4.90s/it] 52%|█████▏    | 741/1430 [1:05:34<55:55,  4.87s/it] 52%|█████▏    | 742/1430 [1:05:40<59:35,  5.20s/it] 52%|█████▏    | 743/1430 [1:05:46<1:00:47,  5.31s/it] 52%|█████▏    | 744/1430 [1:05:51<59:28,  5.20s/it]   52%|█████▏    | 745/1430 [1:05:56<58:37,  5.14s/it] 52%|█████▏    | 746/1430 [1:06:01<57:48,  5.07s/it] 52%|█████▏    | 747/1430 [1:06:07<1:01:01,  5.36s/it] 52%|█████▏    | 748/1430 [1:06:12<59:58,  5.28s/it]   52%|█████▏    | 749/1430 [1:06:17<58:49,  5.18s/it] 52%|█████▏    | 750/1430 [1:06:22<57:54,  5.11s/it] 53%|█████▎    | 751/1430 [1:06:26<56:46,  5.02s/it] 53%|█████▎    | 752/1430 [1:06:32<57:51,  5.12s/it] 53%|█████▎    | 753/1430 [1:06:37<57:01,  5.05s/it] 53%|█████▎    | 754/1430 [1:06:43<1:02:46,  5.57s/it] 53%|█████▎    | 755/1430 [1:06:51<1:09:03,  6.14s/it] 53%|█████▎    | 756/1430 [1:06:56<1:05:21,  5.82s/it] 53%|█████▎    | 757/1430 [1:07:01<1:03:31,  5.66s/it] 53%|█████▎    | 758/1430 [1:07:06<1:01:29,  5.49s/it] 53%|█████▎    | 759/1430 [1:07:11<59:28,  5.32s/it]   53%|█████▎    | 760/1430 [1:07:16<58:39,  5.25s/it] 53%|█████▎    | 761/1430 [1:07:22<59:51,  5.37s/it] 53%|█████▎    | 762/1430 [1:07:28<1:01:15,  5.50s/it] 53%|█████▎    | 763/1430 [1:07:33<59:11,  5.33s/it]   53%|█████▎    | 764/1430 [1:07:38<58:24,  5.26s/it] 53%|█████▎    | 765/1430 [1:07:43<57:55,  5.23s/it] 54%|█████▎    | 766/1430 [1:07:48<56:04,  5.07s/it] 54%|█████▎    | 767/1430 [1:07:55<1:03:03,  5.71s/it] 54%|█████▎    | 768/1430 [1:08:00<1:01:12,  5.55s/it] 54%|█████▍    | 769/1430 [1:08:05<59:05,  5.36s/it]   54%|█████▍    | 770/1430 [1:08:10<57:25,  5.22s/it] 54%|█████▍    | 771/1430 [1:08:15<57:36,  5.25s/it] 54%|█████▍    | 772/1430 [1:08:20<56:57,  5.19s/it] 54%|█████▍    | 773/1430 [1:08:28<1:04:29,  5.89s/it] 54%|█████▍    | 774/1430 [1:08:33<1:02:38,  5.73s/it] 54%|█████▍    | 775/1430 [1:08:38<59:44,  5.47s/it]   54%|█████▍    | 776/1430 [1:08:43<59:20,  5.44s/it] 54%|█████▍    | 777/1430 [1:08:48<57:06,  5.25s/it] 54%|█████▍    | 778/1430 [1:08:53<55:39,  5.12s/it] 54%|█████▍    | 779/1430 [1:08:58<55:54,  5.15s/it] 55%|█████▍    | 780/1430 [1:09:03<54:39,  5.05s/it] 55%|█████▍    | 781/1430 [1:09:08<54:59,  5.08s/it] 55%|█████▍    | 782/1430 [1:09:14<56:59,  5.28s/it] 55%|█████▍    | 783/1430 [1:09:20<1:00:22,  5.60s/it] 55%|█████▍    | 784/1430 [1:09:25<57:10,  5.31s/it]   55%|█████▍    | 785/1430 [1:09:30<55:43,  5.18s/it] 55%|█████▍    | 786/1430 [1:09:35<54:18,  5.06s/it] 55%|█████▌    | 787/1430 [1:09:39<53:01,  4.95s/it] 55%|█████▌    | 788/1430 [1:09:46<59:24,  5.55s/it] 55%|█████▌    | 789/1430 [1:09:51<56:17,  5.27s/it] 55%|█████▌    | 790/1430 [1:09:56<56:14,  5.27s/it] 55%|█████▌    | 791/1430 [1:10:02<58:43,  5.51s/it] 55%|█████▌    | 792/1430 [1:10:07<56:45,  5.34s/it] 55%|█████▌    | 793/1430 [1:10:12<55:26,  5.22s/it] 56%|█████▌    | 794/1430 [1:10:17<54:33,  5.15s/it] 56%|█████▌    | 795/1430 [1:10:23<57:11,  5.40s/it] 56%|█████▌    | 796/1430 [1:10:28<55:10,  5.22s/it] 56%|█████▌    | 797/1430 [1:10:33<55:33,  5.27s/it] 56%|█████▌    | 798/1430 [1:10:38<54:10,  5.14s/it] 56%|█████▌    | 799/1430 [1:10:43<54:07,  5.15s/it] 56%|█████▌    | 800/1430 [1:10:48<52:30,  5.00s/it]                                                    {'loss': 0.072, 'grad_norm': 1.096787132373707, 'learning_rate': 9.098774333093007e-06, 'epoch': 2.8}
+ 56%|█████▌    | 800/1430 [1:10:48<52:30,  5.00s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.46it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.09s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.20s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.21s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.03it/s][A
+ 73%|███████▎  | 8/11 [00:08<00:03,  1.00s/it][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A                                                    
+                                               [A{'eval_loss': 0.21324209868907928, 'eval_acc': 0.9504724514701824, 'eval_runtime': 12.3839, 'eval_samples_per_second': 110.708, 'eval_steps_per_second': 0.888, 'epoch': 2.8}
+ 56%|█████▌    | 800/1430 [1:11:00<52:30,  5.00s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 56%|█████▌    | 801/1430 [1:11:06<1:33:10,  8.89s/it] 56%|█████▌    | 802/1430 [1:11:11<1:22:09,  7.85s/it] 56%|█████▌    | 803/1430 [1:11:16<1:11:53,  6.88s/it] 56%|█████▌    | 804/1430 [1:11:22<1:09:21,  6.65s/it] 56%|█████▋    | 805/1430 [1:11:27<1:03:29,  6.09s/it] 56%|█████▋    | 806/1430 [1:11:31<58:49,  5.66s/it]   56%|█████▋    | 807/1430 [1:11:36<55:43,  5.37s/it] 57%|█████▋    | 808/1430 [1:11:41<54:16,  5.23s/it] 57%|█████▋    | 809/1430 [1:11:46<52:38,  5.09s/it] 57%|█████▋    | 810/1430 [1:11:50<51:17,  4.96s/it] 57%|█████▋    | 811/1430 [1:11:55<50:04,  4.85s/it] 57%|█████▋    | 812/1430 [1:12:00<51:40,  5.02s/it] 57%|█████▋    | 813/1430 [1:12:05<50:36,  4.92s/it] 57%|█████▋    | 814/1430 [1:12:10<49:52,  4.86s/it] 57%|█████▋    | 815/1430 [1:12:15<50:23,  4.92s/it] 57%|█████▋    | 816/1430 [1:12:21<52:35,  5.14s/it] 57%|█████▋    | 817/1430 [1:12:27<55:02,  5.39s/it] 57%|█████▋    | 818/1430 [1:12:31<53:29,  5.24s/it] 57%|█████▋    | 819/1430 [1:12:36<52:46,  5.18s/it] 57%|█████▋    | 820/1430 [1:12:42<53:12,  5.23s/it] 57%|█████▋    | 821/1430 [1:12:47<52:35,  5.18s/it] 57%|█████▋    | 822/1430 [1:12:52<53:03,  5.24s/it] 58%|█████▊    | 823/1430 [1:12:57<52:13,  5.16s/it] 58%|█████▊    | 824/1430 [1:13:02<52:03,  5.15s/it] 58%|█████▊    | 825/1430 [1:13:07<50:13,  4.98s/it] 58%|█████▊    | 826/1430 [1:13:12<50:01,  4.97s/it] 58%|█████▊    | 827/1430 [1:13:17<49:27,  4.92s/it] 58%|█████▊    | 828/1430 [1:13:21<48:52,  4.87s/it] 58%|█████▊    | 829/1430 [1:13:26<48:44,  4.87s/it] 58%|█████▊    | 830/1430 [1:13:31<47:56,  4.79s/it] 58%|█████▊    | 831/1430 [1:13:36<47:55,  4.80s/it] 58%|█████▊    | 832/1430 [1:13:40<47:30,  4.77s/it] 58%|█████▊    | 833/1430 [1:13:46<50:12,  5.05s/it] 58%|█████▊    | 834/1430 [1:13:52<51:04,  5.14s/it] 58%|█████▊    | 835/1430 [1:13:57<51:13,  5.17s/it] 58%|█████▊    | 836/1430 [1:14:02<51:14,  5.18s/it] 59%|█████▊    | 837/1430 [1:14:07<49:35,  5.02s/it] 59%|█████▊    | 838/1430 [1:14:12<50:28,  5.12s/it] 59%|█████▊    | 839/1430 [1:14:17<48:49,  4.96s/it] 59%|█████▊    | 840/1430 [1:14:22<49:11,  5.00s/it] 59%|█████▉    | 841/1430 [1:14:27<50:09,  5.11s/it] 59%|█████▉    | 842/1430 [1:14:32<49:12,  5.02s/it] 59%|█████▉    | 843/1430 [1:14:37<49:01,  5.01s/it] 59%|█████▉    | 844/1430 [1:14:41<47:50,  4.90s/it] 59%|█████▉    | 845/1430 [1:14:46<46:59,  4.82s/it] 59%|█████▉    | 846/1430 [1:14:51<47:24,  4.87s/it] 59%|█████▉    | 847/1430 [1:14:56<48:32,  5.00s/it] 59%|█████▉    | 848/1430 [1:15:01<47:49,  4.93s/it] 59%|█████▉    | 849/1430 [1:15:06<48:45,  5.04s/it] 59%|█████▉    | 850/1430 [1:15:13<53:11,  5.50s/it] 60%|█████▉    | 851/1430 [1:15:18<51:17,  5.31s/it] 60%|█████▉    | 852/1430 [1:15:23<49:53,  5.18s/it] 60%|█████▉    | 853/1430 [1:15:27<48:37,  5.06s/it] 60%|█████▉    | 854/1430 [1:15:33<48:32,  5.06s/it] 60%|█████▉    | 855/1430 [1:15:38<50:37,  5.28s/it] 60%|█████▉    | 856/1430 [1:15:44<50:18,  5.26s/it] 60%|█████▉    | 857/1430 [1:15:49<49:25,  5.17s/it] 60%|██████    | 858/1430 [1:15:53<48:20,  5.07s/it][INFO|configuration_utils.py:471] 2024-05-21 01:37:15,161 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-858/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 01:37:15,163 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-858/generation_config.json
+[INFO|modeling_utils.py:2598] 2024-05-21 01:37:28,718 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-858/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 01:37:28,747 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-858/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 01:37:28,766 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-858/special_tokens_map.json
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 60%|██████    | 859/1430 [1:16:16<1:37:27, 10.24s/it] 60%|██████    | 860/1430 [1:16:21<1:22:19,  8.67s/it] 60%|██████    | 861/1430 [1:16:26<1:11:36,  7.55s/it] 60%|██████    | 862/1430 [1:16:31<1:04:48,  6.85s/it] 60%|██████    | 863/1430 [1:16:36<1:00:21,  6.39s/it] 60%|██████    | 864/1430 [1:16:41<55:22,  5.87s/it]   60%|██████    | 865/1430 [1:16:46<52:21,  5.56s/it] 61%|██████    | 866/1430 [1:16:50<50:14,  5.34s/it] 61%|██████    | 867/1430 [1:16:56<49:22,  5.26s/it] 61%|██████    | 868/1430 [1:17:01<48:29,  5.18s/it] 61%|██████    | 869/1430 [1:17:05<46:55,  5.02s/it] 61%|██████    | 870/1430 [1:17:10<45:09,  4.84s/it] 61%|██████    | 871/1430 [1:17:15<46:55,  5.04s/it] 61%|██████    | 872/1430 [1:17:20<47:46,  5.14s/it] 61%|██████    | 873/1430 [1:17:26<50:08,  5.40s/it] 61%|██████    | 874/1430 [1:17:31<47:55,  5.17s/it] 61%|██████    | 875/1430 [1:17:39<54:13,  5.86s/it] 61%|██████▏   | 876/1430 [1:17:44<53:06,  5.75s/it] 61%|██████▏   | 877/1430 [1:17:49<51:22,  5.57s/it] 61%|██████▏   | 878/1430 [1:17:54<49:48,  5.41s/it] 61%|██████▏   | 879/1430 [1:18:00<51:32,  5.61s/it] 62%|██████▏   | 880/1430 [1:18:05<49:30,  5.40s/it] 62%|██████▏   | 881/1430 [1:18:11<49:22,  5.40s/it] 62%|██████▏   | 882/1430 [1:18:15<46:56,  5.14s/it] 62%|██████▏   | 883/1430 [1:18:21<49:03,  5.38s/it] 62%|██████▏   | 884/1430 [1:18:26<47:39,  5.24s/it] 62%|██████▏   | 885/1430 [1:18:31<47:48,  5.26s/it] 62%|██████▏   | 886/1430 [1:18:36<46:44,  5.16s/it] 62%|██████▏   | 887/1430 [1:18:42<47:01,  5.20s/it] 62%|██████▏   | 888/1430 [1:18:46<45:55,  5.08s/it] 62%|██████▏   | 889/1430 [1:18:51<44:33,  4.94s/it] 62%|██████▏   | 890/1430 [1:18:56<44:53,  4.99s/it] 62%|██████▏   | 891/1430 [1:19:01<45:48,  5.10s/it] 62%|██████▏   | 892/1430 [1:19:06<44:56,  5.01s/it] 62%|██████▏   | 893/1430 [1:19:12<47:05,  5.26s/it] 63%|██████▎   | 894/1430 [1:19:17<44:51,  5.02s/it] 63%|██████▎   | 895/1430 [1:19:21<43:29,  4.88s/it] 63%|██████▎   | 896/1430 [1:19:26<43:17,  4.86s/it] 63%|██████▎   | 897/1430 [1:19:31<43:59,  4.95s/it] 63%|██████▎   | 898/1430 [1:19:36<45:07,  5.09s/it] 63%|██████▎   | 899/1430 [1:19:41<44:37,  5.04s/it] 63%|██████▎   | 900/1430 [1:19:46<43:59,  4.98s/it]                                                    {'loss': 0.0517, 'grad_norm': 6.176654597087225, 'learning_rate': 7.656813266041817e-06, 'epoch': 3.15}
+ 63%|██████▎   | 900/1430 [1:19:46<43:59,  4.98s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.46it/s][A
+ 36%|███▋      | 4/11 [00:04<00:08,  1.19s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.26s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.25s/it][A
+ 64%|██████▎   | 7/11 [00:07<00:03,  1.00it/s][A
+ 73%|███████▎  | 8/11 [00:08<00:03,  1.02s/it][A
+ 82%|████████▏ | 9/11 [00:09<00:01,  1.06it/s][A
+ 91%|█████████ | 10/11 [00:10<00:00,  1.04it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A                                                    
+                                               [A{'eval_loss': 0.25303930044174194, 'eval_acc': 0.9500651847832478, 'eval_runtime': 12.6504, 'eval_samples_per_second': 108.376, 'eval_steps_per_second': 0.87, 'epoch': 3.15}
+ 63%|██████▎   | 900/1430 [1:19:59<43:59,  4.98s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A
+                                               [A 63%|██████▎   | 901/1430 [1:20:03<1:16:18,  8.66s/it] 63%|██████▎   | 902/1430 [1:20:08<1:05:56,  7.49s/it] 63%|██████▎   | 903/1430 [1:20:13<59:28,  6.77s/it]   63%|██████▎   | 904/1430 [1:20:18<53:23,  6.09s/it] 63%|██████▎   | 905/1430 [1:20:23<50:21,  5.76s/it] 63%|██████▎   | 906/1430 [1:20:29<50:25,  5.77s/it] 63%|██████▎   | 907/1430 [1:20:34<48:14,  5.53s/it] 63%|██████▎   | 908/1430 [1:20:38<46:24,  5.33s/it] 64%|██████▎   | 909/1430 [1:20:43<44:52,  5.17s/it] 64%|██████▎   | 910/1430 [1:20:48<43:42,  5.04s/it] 64%|██████▎   | 911/1430 [1:20:54<45:45,  5.29s/it] 64%|██████▍   | 912/1430 [1:20:59<44:08,  5.11s/it] 64%|██████▍   | 913/1430 [1:21:03<43:11,  5.01s/it] 64%|██████▍   | 914/1430 [1:21:09<44:04,  5.13s/it] 64%|██████▍   | 915/1430 [1:21:14<43:09,  5.03s/it] 64%|██████▍   | 916/1430 [1:21:18<42:11,  4.92s/it] 64%|██████▍   | 917/1430 [1:21:23<42:42,  5.00s/it] 64%|██████▍   | 918/1430 [1:21:29<42:56,  5.03s/it] 64%|██████▍   | 919/1430 [1:21:37<52:25,  6.16s/it] 64%|██████▍   | 920/1430 [1:21:42<48:39,  5.72s/it] 64%|██████▍   | 921/1430 [1:21:47<46:57,  5.54s/it] 64%|██████▍   | 922/1430 [1:21:52<45:07,  5.33s/it] 65%|██████▍   | 923/1430 [1:21:57<43:15,  5.12s/it] 65%|██████▍   | 924/1430 [1:22:01<42:19,  5.02s/it] 65%|██████▍   | 925/1430 [1:22:06<42:21,  5.03s/it] 65%|██████▍   | 926/1430 [1:22:11<41:35,  4.95s/it] 65%|██████▍   | 927/1430 [1:22:16<41:05,  4.90s/it] 65%|██████▍   | 928/1430 [1:22:21<41:05,  4.91s/it] 65%|██████▍   | 929/1430 [1:22:26<41:34,  4.98s/it] 65%|██████▌   | 930/1430 [1:22:34<47:45,  5.73s/it] 65%|██████▌   | 931/1430 [1:22:39<46:15,  5.56s/it] 65%|██████▌   | 932/1430 [1:22:43<43:55,  5.29s/it] 65%|██████▌   | 933/1430 [1:22:49<44:41,  5.40s/it] 65%|██████▌   | 934/1430 [1:22:54<43:16,  5.23s/it] 65%|██████▌   | 935/1430 [1:22:59<43:25,  5.26s/it] 65%|██████▌   | 936/1430 [1:23:04<41:34,  5.05s/it] 66%|██████▌   | 937/1430 [1:23:09<41:18,  5.03s/it] 66%|██████▌   | 938/1430 [1:23:13<40:34,  4.95s/it] 66%|██████▌   | 939/1430 [1:23:18<39:39,  4.85s/it] 66%|██████▌   | 940/1430 [1:23:23<39:09,  4.79s/it] 66%|██████▌   | 941/1430 [1:23:28<39:32,  4.85s/it] 66%|██████▌   | 942/1430 [1:23:33<40:08,  4.94s/it] 66%|██████▌   | 943/1430 [1:23:38<40:19,  4.97s/it] 66%|██████▌   | 944/1430 [1:23:43<40:30,  5.00s/it] 66%|██████▌   | 945/1430 [1:23:48<41:24,  5.12s/it] 66%|██████▌   | 946/1430 [1:23:54<41:44,  5.18s/it] 66%|██████▌   | 947/1430 [1:23:59<42:34,  5.29s/it] 66%|██████▋   | 948/1430 [1:24:05<42:38,  5.31s/it] 66%|██████▋   | 949/1430 [1:24:10<43:08,  5.38s/it] 66%|██████▋   | 950/1430 [1:24:15<42:03,  5.26s/it] 67%|██████▋   | 951/1430 [1:24:21<42:40,  5.34s/it] 67%|██████▋   | 952/1430 [1:24:26<42:26,  5.33s/it] 67%|██████▋   | 953/1430 [1:24:31<42:36,  5.36s/it] 67%|██████▋   | 954/1430 [1:24:38<44:50,  5.65s/it] 67%|██████▋   | 955/1430 [1:24:43<42:55,  5.42s/it] 67%|██████▋   | 956/1430 [1:24:48<41:59,  5.32s/it] 67%|██████▋   | 957/1430 [1:24:53<41:10,  5.22s/it] 67%|██████▋   | 958/1430 [1:24:58<42:22,  5.39s/it] 67%|██████▋   | 959/1430 [1:25:04<42:13,  5.38s/it] 67%|██████▋   | 960/1430 [1:25:10<44:36,  5.69s/it] 67%|██████▋   | 961/1430 [1:25:15<41:58,  5.37s/it] 67%|██████▋   | 962/1430 [1:25:20<40:50,  5.24s/it] 67%|██████▋   | 963/1430 [1:25:25<40:12,  5.17s/it] 67%|██████▋   | 964/1430 [1:25:30<40:39,  5.24s/it] 67%|██████▋   | 965/1430 [1:25:36<41:32,  5.36s/it] 68%|██████▊   | 966/1430 [1:25:43<45:32,  5.89s/it] 68%|██████▊   | 967/1430 [1:25:49<44:44,  5.80s/it] 68%|██████▊   | 968/1430 [1:25:53<42:00,  5.46s/it] 68%|██████▊   | 969/1430 [1:25:58<41:19,  5.38s/it] 68%|██████▊   | 970/1430 [1:26:04<40:35,  5.29s/it] 68%|██████▊   | 971/1430 [1:26:09<40:35,  5.31s/it] 68%|██████▊   | 972/1430 [1:26:15<43:14,  5.67s/it] 68%|██████▊   | 973/1430 [1:26:20<41:17,  5.42s/it] 68%|██████▊   | 974/1430 [1:26:25<39:47,  5.23s/it] 68%|██████▊   | 975/1430 [1:26:30<38:40,  5.10s/it] 68%|██████▊   | 976/1430 [1:26:35<37:48,  5.00s/it] 68%|██████▊   | 977/1430 [1:26:39<37:12,  4.93s/it] 68%|██████▊   | 978/1430 [1:26:44<36:27,  4.84s/it] 68%|██████▊   | 979/1430 [1:26:50<39:29,  5.25s/it] 69%|██████▊   | 980/1430 [1:26:55<38:21,  5.11s/it] 69%|██████▊   | 981/1430 [1:27:00<37:21,  4.99s/it] 69%|██████▊   | 982/1430 [1:27:04<36:16,  4.86s/it] 69%|██████▊   | 983/1430 [1:27:09<35:31,  4.77s/it] 69%|██████▉   | 984/1430 [1:27:14<35:57,  4.84s/it] 69%|██████▉   | 985/1430 [1:27:19<36:05,  4.87s/it] 69%|██████▉   | 986/1430 [1:27:23<35:38,  4.82s/it] 69%|██████▉   | 987/1430 [1:27:28<35:39,  4.83s/it] 69%|██████▉   | 988/1430 [1:27:33<35:38,  4.84s/it] 69%|██████▉   | 989/1430 [1:27:38<35:27,  4.83s/it] 69%|██████▉   | 990/1430 [1:27:43<35:30,  4.84s/it] 69%|██████▉   | 991/1430 [1:27:48<35:48,  4.89s/it] 69%|██████▉   | 992/1430 [1:27:52<35:08,  4.82s/it] 69%|██████▉   | 993/1430 [1:27:57<34:34,  4.75s/it] 70%|██████▉   | 994/1430 [1:28:02<34:17,  4.72s/it] 70%|██████▉   | 995/1430 [1:28:07<35:03,  4.84s/it] 70%|██████▉   | 996/1430 [1:28:13<37:06,  5.13s/it] 70%|██████▉   | 997/1430 [1:28:19<40:06,  5.56s/it] 70%|██████▉   | 998/1430 [1:28:24<38:18,  5.32s/it] 70%|██████▉   | 999/1430 [1:28:31<41:22,  5.76s/it] 70%|██████▉   | 1000/1430 [1:28:36<40:28,  5.65s/it]                                                     {'loss': 0.0254, 'grad_norm': 1.0114877208731867, 'learning_rate': 6.214852198990627e-06, 'epoch': 3.5}
+ 70%|██████▉   | 1000/1430 [1:28:36<40:28,  5.65s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.54it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.06s/it][A                                                     
+                                               [A{'eval_loss': 0.245191752910614, 'eval_acc': 0.9517528137507142, 'eval_runtime': 12.3695, 'eval_samples_per_second': 110.837, 'eval_steps_per_second': 0.889, 'epoch': 3.5}
+ 70%|██████▉   | 1000/1430 [1:28:48<40:28,  5.65s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.06s/it][A
+                                               [A 70%|███████   | 1001/1430 [1:28:53<1:05:21,  9.14s/it] 70%|███████   | 1002/1430 [1:28:59<56:38,  7.94s/it]   70%|███████   | 1003/1430 [1:29:03<49:59,  7.03s/it] 70%|███████   | 1004/1430 [1:29:09<46:11,  6.51s/it] 70%|███████   | 1005/1430 [1:29:15<44:54,  6.34s/it] 70%|███████   | 1006/1430 [1:29:20<41:48,  5.92s/it] 70%|███████   | 1007/1430 [1:29:25<40:37,  5.76s/it] 70%|███████   | 1008/1430 [1:29:30<39:23,  5.60s/it] 71%|███████   | 1009/1430 [1:29:35<37:18,  5.32s/it] 71%|███████   | 1010/1430 [1:29:40<36:06,  5.16s/it] 71%|███████   | 1011/1430 [1:29:45<35:25,  5.07s/it] 71%|███████   | 1012/1430 [1:29:50<35:33,  5.10s/it] 71%|███████   | 1013/1430 [1:29:56<37:15,  5.36s/it] 71%|███████   | 1014/1430 [1:30:01<36:09,  5.22s/it] 71%|███████   | 1015/1430 [1:30:06<36:45,  5.31s/it] 71%|███████   | 1016/1430 [1:30:11<35:36,  5.16s/it] 71%|███████   | 1017/1430 [1:30:16<34:44,  5.05s/it] 71%|███████   | 1018/1430 [1:30:20<33:07,  4.82s/it] 71%|███████▏  | 1019/1430 [1:30:25<34:15,  5.00s/it] 71%|███████▏  | 1020/1430 [1:30:33<40:06,  5.87s/it] 71%|███████▏  | 1021/1430 [1:30:39<39:17,  5.76s/it] 71%|███████▏  | 1022/1430 [1:30:44<38:01,  5.59s/it] 72%|███████▏  | 1023/1430 [1:30:49<37:05,  5.47s/it] 72%|███████▏  | 1024/1430 [1:30:54<36:15,  5.36s/it] 72%|███████▏  | 1025/1430 [1:30:59<35:09,  5.21s/it] 72%|███████▏  | 1026/1430 [1:31:05<36:45,  5.46s/it] 72%|███████▏  | 1027/1430 [1:31:11<37:41,  5.61s/it] 72%|███████▏  | 1028/1430 [1:31:16<36:25,  5.44s/it] 72%|███████▏  | 1029/1430 [1:31:21<35:51,  5.36s/it] 72%|███████▏  | 1030/1430 [1:31:27<35:21,  5.30s/it] 72%|███████▏  | 1031/1430 [1:31:32<34:45,  5.23s/it] 72%|███████▏  | 1032/1430 [1:31:37<34:33,  5.21s/it] 72%|███████▏  | 1033/1430 [1:31:42<33:56,  5.13s/it] 72%|███████▏  | 1034/1430 [1:31:46<32:47,  4.97s/it] 72%|███████▏  | 1035/1430 [1:31:51<32:50,  4.99s/it] 72%|███████▏  | 1036/1430 [1:31:56<32:53,  5.01s/it] 73%|███████▎  | 1037/1430 [1:32:01<32:09,  4.91s/it] 73%|███████▎  | 1038/1430 [1:32:06<32:12,  4.93s/it] 73%|███████▎  | 1039/1430 [1:32:11<31:39,  4.86s/it] 73%|███████▎  | 1040/1430 [1:32:15<31:02,  4.78s/it] 73%|███████▎  | 1041/1430 [1:32:20<31:40,  4.89s/it] 73%|███████▎  | 1042/1430 [1:32:26<32:59,  5.10s/it] 73%|███████▎  | 1043/1430 [1:32:31<32:20,  5.01s/it] 73%|███████▎  | 1044/1430 [1:32:36<32:06,  4.99s/it] 73%|███████▎  | 1045/1430 [1:32:41<32:47,  5.11s/it] 73%|███████▎  | 1046/1430 [1:32:46<32:41,  5.11s/it] 73%|███████▎  | 1047/1430 [1:32:52<34:14,  5.37s/it] 73%|███████▎  | 1048/1430 [1:32:57<32:39,  5.13s/it] 73%|███████▎  | 1049/1430 [1:33:02<31:54,  5.03s/it] 73%|███████▎  | 1050/1430 [1:33:07<31:36,  4.99s/it] 73%|███████▎  | 1051/1430 [1:33:12<31:43,  5.02s/it] 74%|███████▎  | 1052/1430 [1:33:16<31:16,  4.96s/it] 74%|███████▎  | 1053/1430 [1:33:22<32:06,  5.11s/it] 74%|███████▎  | 1054/1430 [1:33:28<33:05,  5.28s/it] 74%|███████▍  | 1055/1430 [1:33:33<32:48,  5.25s/it] 74%|███████▍  | 1056/1430 [1:33:38<32:21,  5.19s/it] 74%|███████▍  | 1057/1430 [1:33:43<31:42,  5.10s/it] 74%|███████▍  | 1058/1430 [1:33:48<31:26,  5.07s/it] 74%|███████▍  | 1059/1430 [1:33:53<30:55,  5.00s/it] 74%|███████▍  | 1060/1430 [1:33:58<31:31,  5.11s/it] 74%|███████▍  | 1061/1430 [1:34:03<31:00,  5.04s/it] 74%|███████▍  | 1062/1430 [1:34:08<31:31,  5.14s/it] 74%|███████▍  | 1063/1430 [1:34:13<30:47,  5.03s/it] 74%|███████▍  | 1064/1430 [1:34:17<29:44,  4.88s/it] 74%|███████▍  | 1065/1430 [1:34:22<29:16,  4.81s/it] 75%|███████▍  | 1066/1430 [1:34:27<29:19,  4.84s/it] 75%|███████▍  | 1067/1430 [1:34:33<31:06,  5.14s/it] 75%|███████▍  | 1068/1430 [1:34:38<30:25,  5.04s/it] 75%|███████▍  | 1069/1430 [1:34:43<30:49,  5.12s/it] 75%|███████▍  | 1070/1430 [1:34:48<30:10,  5.03s/it] 75%|███████▍  | 1071/1430 [1:34:53<29:54,  5.00s/it] 75%|███████▍  | 1072/1430 [1:34:58<29:54,  5.01s/it] 75%|███████▌  | 1073/1430 [1:35:03<29:39,  4.98s/it] 75%|███████▌  | 1074/1430 [1:35:07<28:43,  4.84s/it] 75%|███████▌  | 1075/1430 [1:35:12<29:05,  4.92s/it] 75%|███████▌  | 1076/1430 [1:35:17<29:02,  4.92s/it] 75%|███████▌  | 1077/1430 [1:35:23<30:14,  5.14s/it] 75%|███████▌  | 1078/1430 [1:35:28<30:30,  5.20s/it] 75%|███████▌  | 1079/1430 [1:35:33<29:15,  5.00s/it] 76%|███████▌  | 1080/1430 [1:35:38<30:06,  5.16s/it] 76%|███████▌  | 1081/1430 [1:35:43<29:04,  5.00s/it] 76%|███████▌  | 1082/1430 [1:35:48<28:17,  4.88s/it] 76%|███████▌  | 1083/1430 [1:35:52<28:05,  4.86s/it] 76%|███████▌  | 1084/1430 [1:35:57<28:05,  4.87s/it] 76%|███████▌  | 1085/1430 [1:36:02<28:07,  4.89s/it] 76%|███████▌  | 1086/1430 [1:36:07<28:18,  4.94s/it] 76%|███████▌  | 1087/1430 [1:36:13<29:04,  5.09s/it] 76%|███████▌  | 1088/1430 [1:36:17<28:23,  4.98s/it] 76%|███████▌  | 1089/1430 [1:36:23<29:26,  5.18s/it] 76%|███████▌  | 1090/1430 [1:36:28<29:43,  5.24s/it] 76%|███████▋  | 1091/1430 [1:36:33<28:33,  5.05s/it] 76%|███████▋  | 1092/1430 [1:36:39<30:18,  5.38s/it] 76%|███████▋  | 1093/1430 [1:36:44<29:35,  5.27s/it] 77%|███████▋  | 1094/1430 [1:36:49<28:32,  5.10s/it] 77%|███████▋  | 1095/1430 [1:36:54<27:40,  4.96s/it] 77%|███████▋  | 1096/1430 [1:36:59<27:49,  5.00s/it] 77%|███████▋  | 1097/1430 [1:37:05<30:12,  5.44s/it] 77%|███████▋  | 1098/1430 [1:37:09<28:17,  5.11s/it] 77%|███████▋  | 1099/1430 [1:37:15<29:25,  5.33s/it] 77%|███████▋  | 1100/1430 [1:37:21<29:24,  5.35s/it]                                                     {'loss': 0.0237, 'grad_norm': 2.484223942992658, 'learning_rate': 4.772891131939438e-06, 'epoch': 3.85}
+ 77%|███████▋  | 1100/1430 [1:37:21<29:24,  5.35s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:08,  1.05it/s][A
+ 27%|██▋       | 3/11 [00:02<00:06,  1.33it/s][A
+ 36%|███▋      | 4/11 [00:04<00:09,  1.29s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.33s/it][A
+ 55%|█████▍    | 6/11 [00:07<00:06,  1.30s/it][A
+ 64%|██████▎   | 7/11 [00:07<00:04,  1.04s/it][A
+ 73%|███████▎  | 8/11 [00:08<00:03,  1.06s/it][A
+ 82%|████████▏ | 9/11 [00:09<00:01,  1.01it/s][A
+ 91%|█████████ | 10/11 [00:10<00:01,  1.03s/it][A
+100%|██████████| 11/11 [00:12<00:00,  1.12s/it][A                                                     
+                                               [A{'eval_loss': 0.2476317435503006, 'eval_acc': 0.9520402871470339, 'eval_runtime': 13.402, 'eval_samples_per_second': 102.298, 'eval_steps_per_second': 0.821, 'epoch': 3.85}
+ 77%|███████▋  | 1100/1430 [1:37:34<29:24,  5.35s/it]
+100%|██████████| 11/11 [00:12<00:00,  1.12s/it][A
+                                               [A 77%|███████▋  | 1101/1430 [1:37:39<50:58,  9.30s/it] 77%|███████▋  | 1102/1430 [1:37:44<44:18,  8.11s/it] 77%|███████▋  | 1103/1430 [1:37:49<38:55,  7.14s/it] 77%|███████▋  | 1104/1430 [1:37:57<39:14,  7.22s/it] 77%|███████▋  | 1105/1430 [1:38:02<36:38,  6.76s/it] 77%|███████▋  | 1106/1430 [1:38:08<34:32,  6.40s/it] 77%|███████▋  | 1107/1430 [1:38:13<31:41,  5.89s/it] 77%|███████▋  | 1108/1430 [1:38:17<29:06,  5.42s/it] 78%|███████▊  | 1109/1430 [1:38:22<27:37,  5.16s/it] 78%|███████▊  | 1110/1430 [1:38:27<27:04,  5.08s/it] 78%|███████▊  | 1111/1430 [1:38:31<26:43,  5.03s/it] 78%|███████▊  | 1112/1430 [1:38:36<26:00,  4.91s/it] 78%|███████▊  | 1113/1430 [1:38:41<25:31,  4.83s/it] 78%|███████▊  | 1114/1430 [1:38:48<28:45,  5.46s/it] 78%|███████▊  | 1115/1430 [1:38:52<27:07,  5.17s/it] 78%|███████▊  | 1116/1430 [1:38:57<26:27,  5.06s/it] 78%|███████▊  | 1117/1430 [1:39:01<25:36,  4.91s/it] 78%|███████▊  | 1118/1430 [1:39:07<27:08,  5.22s/it] 78%|███████▊  | 1119/1430 [1:39:13<27:07,  5.23s/it] 78%|███████▊  | 1120/1430 [1:39:18<26:36,  5.15s/it] 78%|███████▊  | 1121/1430 [1:39:23<26:47,  5.20s/it] 78%|███████▊  | 1122/1430 [1:39:29<27:30,  5.36s/it] 79%|███████▊  | 1123/1430 [1:39:34<27:07,  5.30s/it] 79%|███████▊  | 1124/1430 [1:39:39<26:43,  5.24s/it] 79%|███████▊  | 1125/1430 [1:39:44<25:59,  5.11s/it] 79%|███████▊  | 1126/1430 [1:39:49<25:42,  5.08s/it] 79%|███████▉  | 1127/1430 [1:39:54<25:40,  5.08s/it] 79%|███████▉  | 1128/1430 [1:39:59<25:00,  4.97s/it] 79%|███████▉  | 1129/1430 [1:40:03<24:24,  4.86s/it] 79%|███████▉  | 1130/1430 [1:40:08<24:23,  4.88s/it] 79%|███████▉  | 1131/1430 [1:40:13<24:22,  4.89s/it] 79%|███████▉  | 1132/1430 [1:40:18<24:35,  4.95s/it] 79%|███████▉  | 1133/1430 [1:40:23<24:07,  4.87s/it] 79%|███████▉  | 1134/1430 [1:40:28<24:28,  4.96s/it] 79%|███████▉  | 1135/1430 [1:40:34<26:22,  5.37s/it] 79%|███████▉  | 1136/1430 [1:40:39<25:27,  5.20s/it] 80%|███████▉  | 1137/1430 [1:40:44<24:28,  5.01s/it] 80%|███████▉  | 1138/1430 [1:40:49<24:35,  5.05s/it] 80%|███████▉  | 1139/1430 [1:40:54<24:41,  5.09s/it] 80%|███████▉  | 1140/1430 [1:40:59<24:14,  5.02s/it] 80%|███████▉  | 1141/1430 [1:41:04<23:40,  4.92s/it] 80%|███████▉  | 1142/1430 [1:41:08<23:30,  4.90s/it] 80%|███████▉  | 1143/1430 [1:41:13<23:35,  4.93s/it] 80%|████████  | 1144/1430 [1:41:18<23:35,  4.95s/it][INFO|configuration_utils.py:471] 2024-05-21 02:02:40,182 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1144/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 02:02:40,184 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1144/generation_config.json
+[INFO|modeling_utils.py:2598] 2024-05-21 02:02:54,694 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1144/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 02:02:54,725 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1144/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 02:02:54,746 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1144/special_tokens_map.json
+/home/export/base/ycsc_chenkh/chenkh_nvlink/.conda/envs/py3.10torch2.1devel/lib/python3.10/site-packages/torch/utils/checkpoint.py:429: UserWarning: torch.utils.checkpoint: please pass in use_reentrant=True or use_reentrant=False explicitly. The default value of use_reentrant will be updated to be False in the future. To maintain current behavior, pass use_reentrant=True. It is recommended that you use use_reentrant=False. Refer to docs for more details on the differences between the two variants.
+  warnings.warn(
+ 80%|████████  | 1145/1430 [1:41:42<50:30, 10.63s/it] 80%|████████  | 1146/1430 [1:41:47<42:20,  8.95s/it] 80%|████████  | 1147/1430 [1:41:52<36:44,  7.79s/it] 80%|████████  | 1148/1430 [1:41:58<33:22,  7.10s/it] 80%|████████  | 1149/1430 [1:42:02<29:48,  6.36s/it] 80%|████████  | 1150/1430 [1:42:08<27:54,  5.98s/it] 80%|████████  | 1151/1430 [1:42:12<26:09,  5.62s/it] 81%|████████  | 1152/1430 [1:42:17<25:16,  5.46s/it] 81%|████████  | 1153/1430 [1:42:22<24:15,  5.26s/it] 81%|████████  | 1154/1430 [1:42:27<24:01,  5.22s/it] 81%|████████  | 1155/1430 [1:42:32<23:08,  5.05s/it] 81%|████████  | 1156/1430 [1:42:38<23:45,  5.20s/it] 81%|████████  | 1157/1430 [1:42:42<22:55,  5.04s/it] 81%|████████  | 1158/1430 [1:42:47<22:37,  4.99s/it] 81%|████████  | 1159/1430 [1:42:52<22:07,  4.90s/it] 81%|████████  | 1160/1430 [1:42:57<21:56,  4.88s/it] 81%|████████  | 1161/1430 [1:43:01<21:43,  4.84s/it] 81%|████████▏ | 1162/1430 [1:43:06<21:26,  4.80s/it] 81%|████████▏ | 1163/1430 [1:43:11<21:19,  4.79s/it] 81%|████████▏ | 1164/1430 [1:43:16<21:49,  4.92s/it] 81%|████████▏ | 1165/1430 [1:43:21<21:58,  4.97s/it] 82%|████████▏ | 1166/1430 [1:43:26<21:47,  4.95s/it] 82%|████████▏ | 1167/1430 [1:43:32<22:26,  5.12s/it] 82%|████████▏ | 1168/1430 [1:43:37<22:12,  5.09s/it] 82%|████████▏ | 1169/1430 [1:43:43<23:26,  5.39s/it] 82%|████████▏ | 1170/1430 [1:43:47<22:35,  5.21s/it] 82%|████████▏ | 1171/1430 [1:43:52<21:58,  5.09s/it] 82%|████████▏ | 1172/1430 [1:43:57<21:10,  4.92s/it] 82%|████████▏ | 1173/1430 [1:44:01<20:43,  4.84s/it] 82%|████████▏ | 1174/1430 [1:44:06<20:21,  4.77s/it] 82%|████████▏ | 1175/1430 [1:44:11<20:29,  4.82s/it] 82%|████████▏ | 1176/1430 [1:44:16<20:40,  4.88s/it] 82%|████████▏ | 1177/1430 [1:44:21<21:07,  5.01s/it] 82%|████████▏ | 1178/1430 [1:44:27<22:09,  5.28s/it] 82%|████████▏ | 1179/1430 [1:44:32<21:38,  5.17s/it] 83%|████████▎ | 1180/1430 [1:44:37<21:03,  5.05s/it] 83%|████████▎ | 1181/1430 [1:44:42<21:16,  5.13s/it] 83%|████████▎ | 1182/1430 [1:44:47<21:12,  5.13s/it] 83%|████████▎ | 1183/1430 [1:44:52<20:18,  4.93s/it] 83%|████████▎ | 1184/1430 [1:44:57<19:53,  4.85s/it] 83%|████████▎ | 1185/1430 [1:45:01<19:45,  4.84s/it] 83%|████████▎ | 1186/1430 [1:45:06<19:07,  4.70s/it] 83%|████████▎ | 1187/1430 [1:45:11<19:26,  4.80s/it] 83%|████████▎ | 1188/1430 [1:45:16<19:27,  4.82s/it] 83%|████████▎ | 1189/1430 [1:45:20<19:07,  4.76s/it] 83%|████████▎ | 1190/1430 [1:45:25<18:56,  4.74s/it] 83%|████████▎ | 1191/1430 [1:45:30<19:23,  4.87s/it] 83%|████████▎ | 1192/1430 [1:45:35<19:37,  4.95s/it] 83%|████████▎ | 1193/1430 [1:45:40<18:53,  4.78s/it] 83%|████████▎ | 1194/1430 [1:45:45<19:41,  5.01s/it] 84%|████████▎ | 1195/1430 [1:45:50<19:33,  4.99s/it] 84%|████████▎ | 1196/1430 [1:45:55<18:45,  4.81s/it] 84%|████████▎ | 1197/1430 [1:45:59<18:28,  4.76s/it] 84%|████████▍ | 1198/1430 [1:46:04<18:52,  4.88s/it] 84%|████████▍ | 1199/1430 [1:46:10<19:08,  4.97s/it] 84%|████████▍ | 1200/1430 [1:46:14<18:40,  4.87s/it]                                                     {'loss': 0.013, 'grad_norm': 0.7800689161862169, 'learning_rate': 3.3309300648882483e-06, 'epoch': 4.2}
+ 84%|████████▍ | 1200/1430 [1:46:14<18:40,  4.87s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:02<00:09,  1.02s/it][A
+ 27%|██▋       | 3/11 [00:02<00:06,  1.25it/s][A
+ 36%|███▋      | 4/11 [00:04<00:08,  1.27s/it][A
+ 45%|████▌     | 5/11 [00:06<00:07,  1.32s/it][A
+ 55%|█████▍    | 6/11 [00:07<00:06,  1.35s/it][A
+ 64%|██████▎   | 7/11 [00:07<00:04,  1.07s/it][A
+ 73%|███████▎  | 8/11 [00:08<00:03,  1.07s/it][A
+ 82%|████████▏ | 9/11 [00:09<00:01,  1.02it/s][A
+ 91%|█████████ | 10/11 [00:10<00:00,  1.02it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.07s/it][A                                                     
+                                               [A{'eval_loss': 0.29213303327560425, 'eval_acc': 0.9526859203689542, 'eval_runtime': 13.3003, 'eval_samples_per_second': 103.081, 'eval_steps_per_second': 0.827, 'epoch': 4.2}
+ 84%|████████▍ | 1200/1430 [1:46:27<18:40,  4.87s/it]
+100%|██████████| 11/11 [00:12<00:00,  1.07s/it][A
+                                               [A 84%|████████▍ | 1201/1430 [1:46:32<33:52,  8.88s/it] 84%|████████▍ | 1202/1430 [1:46:37<28:53,  7.60s/it] 84%|████████▍ | 1203/1430 [1:46:42<26:13,  6.93s/it] 84%|████████▍ | 1204/1430 [1:46:47<23:44,  6.30s/it] 84%|████████▍ | 1205/1430 [1:46:52<22:00,  5.87s/it] 84%|████████▍ | 1206/1430 [1:46:57<20:59,  5.62s/it] 84%|████████▍ | 1207/1430 [1:47:02<20:06,  5.41s/it] 84%|████████▍ | 1208/1430 [1:47:07<19:12,  5.19s/it] 85%|████████▍ | 1209/1430 [1:47:11<18:34,  5.04s/it] 85%|████████▍ | 1210/1430 [1:47:17<19:08,  5.22s/it] 85%|████████▍ | 1211/1430 [1:47:22<18:55,  5.19s/it] 85%|████████▍ | 1212/1430 [1:47:27<18:39,  5.14s/it] 85%|████████▍ | 1213/1430 [1:47:33<19:19,  5.34s/it] 85%|████████▍ | 1214/1430 [1:47:38<18:40,  5.19s/it] 85%|████████▍ | 1215/1430 [1:47:44<19:17,  5.38s/it] 85%|████████▌ | 1216/1430 [1:47:48<18:29,  5.19s/it] 85%|████████▌ | 1217/1430 [1:47:53<18:11,  5.13s/it] 85%|████████▌ | 1218/1430 [1:48:01<20:30,  5.81s/it] 85%|████████▌ | 1219/1430 [1:48:06<19:25,  5.52s/it] 85%|████████▌ | 1220/1430 [1:48:10<18:35,  5.31s/it] 85%|████████▌ | 1221/1430 [1:48:17<19:28,  5.59s/it] 85%|████████▌ | 1222/1430 [1:48:21<18:22,  5.30s/it] 86%|████████▌ | 1223/1430 [1:48:26<17:36,  5.10s/it] 86%|████████▌ | 1224/1430 [1:48:31<17:10,  5.00s/it] 86%|████████▌ | 1225/1430 [1:48:37<18:03,  5.29s/it] 86%|████████▌ | 1226/1430 [1:48:41<17:28,  5.14s/it] 86%|████████▌ | 1227/1430 [1:48:46<17:04,  5.04s/it] 86%|████████▌ | 1228/1430 [1:48:51<16:44,  4.97s/it] 86%|████████▌ | 1229/1430 [1:48:57<17:15,  5.15s/it] 86%|████████▌ | 1230/1430 [1:49:02<17:37,  5.29s/it] 86%|████████▌ | 1231/1430 [1:49:07<17:02,  5.14s/it] 86%|████████▌ | 1232/1430 [1:49:12<16:26,  4.98s/it] 86%|████████▌ | 1233/1430 [1:49:17<17:04,  5.20s/it] 86%|████████▋ | 1234/1430 [1:49:22<16:46,  5.13s/it] 86%|████████▋ | 1235/1430 [1:49:30<19:02,  5.86s/it] 86%|████████▋ | 1236/1430 [1:49:35<18:31,  5.73s/it] 87%|████████▋ | 1237/1430 [1:49:40<17:33,  5.46s/it] 87%|████████▋ | 1238/1430 [1:49:45<16:49,  5.26s/it] 87%|████████▋ | 1239/1430 [1:49:50<16:38,  5.23s/it] 87%|████████▋ | 1240/1430 [1:49:55<15:59,  5.05s/it] 87%|████████▋ | 1241/1430 [1:49:59<15:29,  4.92s/it] 87%|████████▋ | 1242/1430 [1:50:05<15:45,  5.03s/it] 87%|████████▋ | 1243/1430 [1:50:10<16:02,  5.15s/it] 87%|████████▋ | 1244/1430 [1:50:17<18:02,  5.82s/it] 87%|████████▋ | 1245/1430 [1:50:23<17:15,  5.59s/it] 87%|████████▋ | 1246/1430 [1:50:28<16:57,  5.53s/it] 87%|████████▋ | 1247/1430 [1:50:34<17:47,  5.84s/it] 87%|████████▋ | 1248/1430 [1:50:39<16:46,  5.53s/it] 87%|████████▋ | 1249/1430 [1:50:44<16:05,  5.34s/it] 87%|████████▋ | 1250/1430 [1:50:49<15:36,  5.20s/it] 87%|████████▋ | 1251/1430 [1:50:57<18:00,  6.03s/it] 88%|████████▊ | 1252/1430 [1:51:02<16:50,  5.68s/it] 88%|████████▊ | 1253/1430 [1:51:07<16:14,  5.50s/it] 88%|████████▊ | 1254/1430 [1:51:12<15:38,  5.33s/it] 88%|████████▊ | 1255/1430 [1:51:18<16:27,  5.64s/it] 88%|████████▊ | 1256/1430 [1:51:23<15:40,  5.40s/it] 88%|████████▊ | 1257/1430 [1:51:29<15:35,  5.41s/it] 88%|████████▊ | 1258/1430 [1:51:33<14:48,  5.16s/it] 88%|████████▊ | 1259/1430 [1:51:39<15:00,  5.26s/it] 88%|████████▊ | 1260/1430 [1:51:43<14:25,  5.09s/it] 88%|████████▊ | 1261/1430 [1:51:49<14:59,  5.32s/it] 88%|████████▊ | 1262/1430 [1:51:55<15:16,  5.45s/it] 88%|████████▊ | 1263/1430 [1:52:00<14:43,  5.29s/it] 88%|████████▊ | 1264/1430 [1:52:05<14:37,  5.29s/it] 88%|████████▊ | 1265/1430 [1:52:10<14:10,  5.15s/it] 89%|████████▊ | 1266/1430 [1:52:15<13:59,  5.12s/it] 89%|████████▊ | 1267/1430 [1:52:20<13:42,  5.05s/it] 89%|████████▊ | 1268/1430 [1:52:25<13:26,  4.98s/it] 89%|████████▊ | 1269/1430 [1:52:29<13:07,  4.89s/it] 89%|████████▉ | 1270/1430 [1:52:35<13:50,  5.19s/it] 89%|████████▉ | 1271/1430 [1:52:40<13:21,  5.04s/it] 89%|████████▉ | 1272/1430 [1:52:45<13:18,  5.05s/it] 89%|████████▉ | 1273/1430 [1:52:50<13:01,  4.98s/it] 89%|████████▉ | 1274/1430 [1:52:55<13:12,  5.08s/it] 89%|████████▉ | 1275/1430 [1:53:02<14:07,  5.46s/it] 89%|████████▉ | 1276/1430 [1:53:07<13:53,  5.41s/it] 89%|████████▉ | 1277/1430 [1:53:12<13:47,  5.41s/it] 89%|████████▉ | 1278/1430 [1:53:18<14:01,  5.54s/it] 89%|████████▉ | 1279/1430 [1:53:23<13:45,  5.46s/it] 90%|████████▉ | 1280/1430 [1:53:28<13:11,  5.28s/it] 90%|████████▉ | 1281/1430 [1:53:34<13:10,  5.31s/it] 90%|████████▉ | 1282/1430 [1:53:39<13:09,  5.34s/it] 90%|████████▉ | 1283/1430 [1:53:44<12:45,  5.21s/it] 90%|████████▉ | 1284/1430 [1:53:49<12:47,  5.26s/it] 90%|████████▉ | 1285/1430 [1:53:54<12:23,  5.13s/it] 90%|████████▉ | 1286/1430 [1:53:59<12:03,  5.03s/it] 90%|█████████ | 1287/1430 [1:54:04<11:49,  4.96s/it] 90%|█████████ | 1288/1430 [1:54:08<11:29,  4.86s/it] 90%|█████████ | 1289/1430 [1:54:13<11:34,  4.92s/it] 90%|█████████ | 1290/1430 [1:54:18<11:24,  4.89s/it] 90%|█████████ | 1291/1430 [1:54:24<12:09,  5.25s/it] 90%|█████████ | 1292/1430 [1:54:30<12:35,  5.47s/it] 90%|█████████ | 1293/1430 [1:54:36<12:56,  5.67s/it] 90%|█████████ | 1294/1430 [1:54:41<12:22,  5.46s/it] 91%|█████████ | 1295/1430 [1:54:46<12:04,  5.37s/it] 91%|█████████ | 1296/1430 [1:54:51<11:34,  5.19s/it] 91%|█████████ | 1297/1430 [1:54:57<11:37,  5.25s/it] 91%|█████████ | 1298/1430 [1:55:02<11:34,  5.27s/it] 91%|█████████ | 1299/1430 [1:55:07<11:35,  5.31s/it] 91%|█████████ | 1300/1430 [1:55:12<11:15,  5.20s/it]                                                     {'loss': 0.0057, 'grad_norm': 0.46509324118272316, 'learning_rate': 1.8889689978370584e-06, 'epoch': 4.55}
+ 91%|█████████ | 1300/1430 [1:55:12<11:15,  5.20s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.54it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A                                                     
+                                               [A{'eval_loss': 0.2896672785282135, 'eval_acc': 0.9528125764196934, 'eval_runtime': 12.3193, 'eval_samples_per_second': 111.289, 'eval_steps_per_second': 0.893, 'epoch': 4.55}
+ 91%|█████████ | 1300/1430 [1:55:25<11:15,  5.20s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.05s/it][A
+                                               [A 91%|█████████ | 1301/1430 [1:55:30<18:58,  8.82s/it] 91%|█████████ | 1302/1430 [1:55:35<16:26,  7.71s/it] 91%|█████████ | 1303/1430 [1:55:40<14:49,  7.01s/it] 91%|█████████ | 1304/1430 [1:55:45<13:13,  6.30s/it] 91%|█████████▏| 1305/1430 [1:55:50<12:24,  5.96s/it] 91%|█████████▏| 1306/1430 [1:55:55<11:38,  5.63s/it] 91%|█████████▏| 1307/1430 [1:56:00<11:03,  5.39s/it] 91%|█████████▏| 1308/1430 [1:56:05<10:49,  5.32s/it] 92%|█████████▏| 1309/1430 [1:56:10<10:26,  5.17s/it] 92%|█████████▏| 1310/1430 [1:56:15<10:25,  5.21s/it] 92%|█████████▏| 1311/1430 [1:56:20<10:22,  5.23s/it] 92%|█████████▏| 1312/1430 [1:56:27<11:18,  5.75s/it] 92%|█████████▏| 1313/1430 [1:56:32<10:48,  5.54s/it] 92%|█████████▏| 1314/1430 [1:56:37<10:31,  5.45s/it] 92%|█████████▏| 1315/1430 [1:56:42<10:03,  5.25s/it] 92%|█████████▏| 1316/1430 [1:56:48<10:03,  5.30s/it] 92%|█████████▏| 1317/1430 [1:56:52<09:38,  5.12s/it] 92%|█████████▏| 1318/1430 [1:56:57<09:27,  5.07s/it] 92%|█████████▏| 1319/1430 [1:57:02<09:11,  4.97s/it] 92%|█████████▏| 1320/1430 [1:57:07<09:13,  5.03s/it] 92%|█████████▏| 1321/1430 [1:57:12<09:04,  4.99s/it] 92%|█████████▏| 1322/1430 [1:57:17<08:55,  4.96s/it] 93%|█████████▎| 1323/1430 [1:57:23<09:12,  5.16s/it] 93%|█████████▎| 1324/1430 [1:57:27<08:43,  4.94s/it] 93%|█████████▎| 1325/1430 [1:57:34<09:35,  5.48s/it] 93%|█████████▎| 1326/1430 [1:57:39<09:09,  5.29s/it] 93%|█████████▎| 1327/1430 [1:57:44<09:01,  5.26s/it] 93%|█████████▎| 1328/1430 [1:57:50<09:15,  5.44s/it] 93%|█████████▎| 1329/1430 [1:57:55<09:05,  5.40s/it] 93%|█████████▎| 1330/1430 [1:58:00<08:37,  5.17s/it] 93%|█████████▎| 1331/1430 [1:58:04<08:22,  5.08s/it] 93%|█████████▎| 1332/1430 [1:58:09<08:14,  5.04s/it] 93%|█████████▎| 1333/1430 [1:58:15<08:16,  5.12s/it] 93%|█████████▎| 1334/1430 [1:58:20<08:06,  5.07s/it] 93%|█████████▎| 1335/1430 [1:58:25<07:59,  5.05s/it] 93%|█████████▎| 1336/1430 [1:58:30<07:50,  5.00s/it] 93%|█████████▎| 1337/1430 [1:58:34<07:40,  4.96s/it] 94%|█████████▎| 1338/1430 [1:58:39<07:26,  4.86s/it] 94%|█████████▎| 1339/1430 [1:58:44<07:37,  5.03s/it] 94%|█████████▎| 1340/1430 [1:58:50<07:58,  5.31s/it] 94%|█████████▍| 1341/1430 [1:58:55<07:40,  5.17s/it] 94%|█████████▍| 1342/1430 [1:59:00<07:21,  5.01s/it] 94%|█████████▍| 1343/1430 [1:59:05<07:11,  4.96s/it] 94%|█████████▍| 1344/1430 [1:59:09<06:58,  4.87s/it] 94%|█████████▍| 1345/1430 [1:59:17<08:11,  5.78s/it] 94%|█████████▍| 1346/1430 [1:59:22<07:41,  5.50s/it] 94%|█████████▍| 1347/1430 [1:59:27<07:24,  5.36s/it] 94%|█████████▍| 1348/1430 [1:59:33<07:20,  5.38s/it] 94%|█████████▍| 1349/1430 [1:59:37<06:57,  5.16s/it] 94%|█████████▍| 1350/1430 [1:59:42<06:47,  5.09s/it] 94%|█████████▍| 1351/1430 [1:59:47<06:34,  4.99s/it] 95%|█████████▍| 1352/1430 [1:59:52<06:24,  4.93s/it] 95%|█████████▍| 1353/1430 [1:59:57<06:29,  5.06s/it] 95%|█████████▍| 1354/1430 [2:00:02<06:10,  4.88s/it] 95%|█████████▍| 1355/1430 [2:00:06<06:01,  4.82s/it] 95%|█████████▍| 1356/1430 [2:00:11<05:55,  4.80s/it] 95%|█████████▍| 1357/1430 [2:00:16<05:53,  4.84s/it] 95%|█████████▍| 1358/1430 [2:00:21<05:44,  4.79s/it] 95%|█████████▌| 1359/1430 [2:00:26<05:52,  4.97s/it] 95%|█████████▌| 1360/1430 [2:00:31<05:54,  5.06s/it] 95%|█████████▌| 1361/1430 [2:00:36<05:49,  5.06s/it] 95%|█████████▌| 1362/1430 [2:00:41<05:39,  4.99s/it] 95%|█████████▌| 1363/1430 [2:00:47<05:41,  5.10s/it] 95%|█████████▌| 1364/1430 [2:00:52<05:47,  5.26s/it] 95%|█████████▌| 1365/1430 [2:00:57<05:34,  5.15s/it] 96%|█████████▌| 1366/1430 [2:01:02<05:24,  5.07s/it] 96%|█████████▌| 1367/1430 [2:01:07<05:19,  5.07s/it] 96%|█████████▌| 1368/1430 [2:01:12<05:06,  4.95s/it] 96%|█████████▌| 1369/1430 [2:01:16<04:54,  4.82s/it] 96%|█████████▌| 1370/1430 [2:01:22<05:03,  5.06s/it] 96%|█████████▌| 1371/1430 [2:01:27<05:00,  5.09s/it] 96%|█████████▌| 1372/1430 [2:01:32<04:59,  5.17s/it] 96%|█████████▌| 1373/1430 [2:01:37<04:52,  5.14s/it] 96%|█████████▌| 1374/1430 [2:01:42<04:44,  5.08s/it] 96%|█████████▌| 1375/1430 [2:01:48<04:43,  5.16s/it] 96%|█████████▌| 1376/1430 [2:01:52<04:31,  5.02s/it] 96%|█████████▋| 1377/1430 [2:01:58<04:31,  5.12s/it] 96%|█████████▋| 1378/1430 [2:02:03<04:34,  5.28s/it] 96%|█████████▋| 1379/1430 [2:02:08<04:21,  5.13s/it] 97%|█████████▋| 1380/1430 [2:02:13<04:07,  4.95s/it] 97%|█████████▋| 1381/1430 [2:02:18<04:09,  5.09s/it] 97%|█████████▋| 1382/1430 [2:02:23<04:01,  5.02s/it] 97%|█████████▋| 1383/1430 [2:02:28<03:54,  4.98s/it] 97%|█████████▋| 1384/1430 [2:02:33<03:45,  4.90s/it] 97%|█████████▋| 1385/1430 [2:02:37<03:39,  4.87s/it] 97%|█████████▋| 1386/1430 [2:02:42<03:32,  4.82s/it] 97%|█████████▋| 1387/1430 [2:02:47<03:26,  4.81s/it] 97%|█████████▋| 1388/1430 [2:02:52<03:21,  4.80s/it] 97%|█████████▋| 1389/1430 [2:02:56<03:14,  4.75s/it] 97%|█████████▋| 1390/1430 [2:03:01<03:14,  4.85s/it] 97%|█████████▋| 1391/1430 [2:03:06<03:06,  4.78s/it] 97%|█████████▋| 1392/1430 [2:03:11<03:04,  4.86s/it] 97%|█████████▋| 1393/1430 [2:03:16<02:57,  4.81s/it] 97%|█████████▋| 1394/1430 [2:03:22<03:08,  5.25s/it] 98%|█████████▊| 1395/1430 [2:03:27<03:02,  5.22s/it] 98%|█████████▊| 1396/1430 [2:03:33<03:04,  5.43s/it] 98%|█████████▊| 1397/1430 [2:03:38<02:51,  5.19s/it] 98%|█████████▊| 1398/1430 [2:03:43<02:49,  5.30s/it] 98%|█████████▊| 1399/1430 [2:03:48<02:39,  5.15s/it] 98%|█████████▊| 1400/1430 [2:03:55<02:47,  5.58s/it]                                                     {'loss': 0.0057, 'grad_norm': 0.3791243525184161, 'learning_rate': 4.470079307858688e-07, 'epoch': 4.9}
+ 98%|█████████▊| 1400/1430 [2:03:55<02:47,  5.58s/it]
+  0%|          | 0/11 [00:00<?, ?it/s][A
+ 18%|█▊        | 2/11 [00:01<00:06,  1.30it/s][A
+ 27%|██▋       | 3/11 [00:02<00:05,  1.54it/s][A
+ 36%|███▋      | 4/11 [00:03<00:07,  1.07s/it][A
+ 45%|████▌     | 5/11 [00:05<00:07,  1.19s/it][A
+ 55%|█████▍    | 6/11 [00:06<00:06,  1.20s/it][A
+ 64%|██████▎   | 7/11 [00:06<00:03,  1.04it/s][A
+ 73%|███████▎  | 8/11 [00:07<00:02,  1.00it/s][A
+ 82%|████████▏ | 9/11 [00:08<00:01,  1.07it/s][A
+ 91%|█████████ | 10/11 [00:09<00:00,  1.06it/s][A
+100%|██████████| 11/11 [00:10<00:00,  1.04s/it][A                                                     
+                                               [A{'eval_loss': 0.2819245159626007, 'eval_acc': 0.9532112265300275, 'eval_runtime': 12.3024, 'eval_samples_per_second': 111.442, 'eval_steps_per_second': 0.894, 'epoch': 4.9}
+ 98%|█████████▊| 1400/1430 [2:04:07<02:47,  5.58s/it]
+100%|██████████| 11/11 [00:11<00:00,  1.04s/it][A
+                                               [A 98%|█████████▊| 1401/1430 [2:04:13<04:30,  9.34s/it] 98%|█████████▊| 1402/1430 [2:04:18<03:43,  7.99s/it] 98%|█████████▊| 1403/1430 [2:04:24<03:22,  7.51s/it] 98%|█████████▊| 1404/1430 [2:04:30<03:03,  7.07s/it] 98%|█████████▊| 1405/1430 [2:04:35<02:41,  6.44s/it] 98%|█████████▊| 1406/1430 [2:04:40<02:23,  5.98s/it] 98%|█████████▊| 1407/1430 [2:04:46<02:17,  5.98s/it] 98%|█████████▊| 1408/1430 [2:04:51<02:04,  5.67s/it] 99%|█████████▊| 1409/1430 [2:04:56<01:53,  5.41s/it] 99%|█████████▊| 1410/1430 [2:05:01<01:48,  5.41s/it] 99%|█████████▊| 1411/1430 [2:05:06<01:38,  5.17s/it] 99%|█████████▊| 1412/1430 [2:05:10<01:30,  5.04s/it] 99%|█████████▉| 1413/1430 [2:05:15<01:24,  4.98s/it] 99%|█████████▉| 1414/1430 [2:05:20<01:19,  4.98s/it] 99%|█████████▉| 1415/1430 [2:05:25<01:14,  4.94s/it] 99%|█████████▉| 1416/1430 [2:05:30<01:09,  4.95s/it] 99%|█████████▉| 1417/1430 [2:05:35<01:04,  4.98s/it] 99%|█████████▉| 1418/1430 [2:05:40<01:00,  5.03s/it] 99%|█████████▉| 1419/1430 [2:05:45<00:55,  5.09s/it] 99%|█████████▉| 1420/1430 [2:05:50<00:49,  5.00s/it] 99%|█████████▉| 1421/1430 [2:05:55<00:44,  4.89s/it] 99%|█████████▉| 1422/1430 [2:06:02<00:44,  5.57s/it]100%|█████████▉| 1423/1430 [2:06:07<00:37,  5.42s/it]100%|█████████▉| 1424/1430 [2:06:12<00:31,  5.20s/it]100%|█████████▉| 1425/1430 [2:06:17<00:25,  5.20s/it]100%|█████████▉| 1426/1430 [2:06:22<00:20,  5.12s/it]100%|█████████▉| 1427/1430 [2:06:28<00:15,  5.32s/it]100%|█████████▉| 1428/1430 [2:06:33<00:10,  5.21s/it]100%|█████████▉| 1429/1430 [2:06:37<00:05,  5.07s/it]100%|██████████| 1430/1430 [2:06:43<00:00,  5.10s/it][INFO|configuration_utils.py:471] 2024-05-21 02:28:04,486 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1430/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 02:28:04,488 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1430/generation_config.json
+[INFO|modeling_utils.py:2598] 2024-05-21 02:28:18,655 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1430/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 02:28:18,696 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1430/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 02:28:18,725 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/tmp-checkpoint-1430/special_tokens_map.json
+[INFO|trainer.py:2316] 2024-05-21 02:28:18,958 >> 
+
+Training completed. Do not forget to share your model on huggingface.co/models =)
+
+
+                                                     {'train_runtime': 7640.4826, 'train_samples_per_second': 23.9, 'train_steps_per_second': 0.187, 'train_loss': 0.1681842274390734, 'epoch': 5.0}
+100%|██████████| 1430/1430 [2:07:01<00:00,  5.10s/it]100%|██████████| 1430/1430 [2:07:01<00:00,  5.33s/it]
+[INFO|configuration_utils.py:471] 2024-05-21 02:28:23,190 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/checkpoint-last/config.json
+[INFO|configuration_utils.py:697] 2024-05-21 02:28:23,209 >> Configuration saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/checkpoint-last/generation_config.json
+[2024-05-21 02:28:27,857] [INFO] [launch.py:347:main] Process 3869 exits successfully.
+[2024-05-21 02:28:29,860] [INFO] [launch.py:347:main] Process 3875 exits successfully.
+[2024-05-21 02:28:30,861] [INFO] [launch.py:347:main] Process 3873 exits successfully.
+[2024-05-21 02:28:31,862] [INFO] [launch.py:347:main] Process 3872 exits successfully.
+[2024-05-21 02:28:32,863] [INFO] [launch.py:347:main] Process 3871 exits successfully.
+[2024-05-21 02:28:32,864] [INFO] [launch.py:347:main] Process 3870 exits successfully.
+[2024-05-21 02:28:33,865] [INFO] [launch.py:347:main] Process 3874 exits successfully.
+[INFO|modeling_utils.py:2598] 2024-05-21 02:28:41,293 >> The model is bigger than the maximum size per checkpoint (5GB) and is going to be split in 4 checkpoint shards. You can find where each parameters has been saved in the index located at /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/checkpoint-last/model.safetensors.index.json.
+[INFO|tokenization_utils_base.py:2488] 2024-05-21 02:28:41,372 >> tokenizer config file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/checkpoint-last/tokenizer_config.json
+[INFO|tokenization_utils_base.py:2497] 2024-05-21 02:28:41,416 >> Special tokens file saved in /home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai//output/exp.LLMTuning/Finetune-LDC2017-amrparsing-llama3-llama3-8b-ConditionalGenMode-lr-2e-5-totalbsz128-decay0.1-5epoch-bsz128-Newest-Reproduce-Devel/checkpoint-last/special_tokens_map.json
+***** train metrics *****
+  epoch                    =          5.0
+  total_flos               = 2052224217GF
+  train_loss               =       0.1682
+  train_runtime            =   2:07:20.48
+  train_samples            =        36521
+  train_samples_per_second =         23.9
+  train_steps_per_second   =        0.187
+[INFO|modelcard.py:450] 2024-05-21 02:28:41,762 >> Dropping the following result as it does not have all the necessary fields:
+{'task': {'name': 'Causal Language Modeling', 'type': 'text-generation'}}
+wandb: 
+wandb: Run history:
+wandb:                eval/acc ▁▄▅▆▇▆▇▇▇█████
+wandb:               eval/loss █▅▃▂▁▃▂▂▄▃▃▆▆▅
+wandb:            eval/runtime █▁▁▁▁▁▁▁▂▁▅▅▁▁
+wandb: eval/samples_per_second ▁███████▇█▄▄██
+wandb:   eval/steps_per_second ▁███████▇█▄▄██
+wandb:             train/epoch ▁▁▁▂▂▂▂▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▇▇▇▇███
+wandb:       train/global_step ▁▁▁▂▂▂▂▃▃▃▃▄▄▄▄▅▅▅▅▆▆▆▆▇▇▇▇███
+wandb:         train/grad_norm █▁▂▁▁▁▂▁▁▁▁▁▁▁▁
+wandb:     train/learning_rate ▁█▇▇▆▆▅▅▄▄▃▃▂▂▁
+wandb:              train/loss █▂▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb: 
+wandb: Run summary:
+wandb:                 eval/acc 0.95321
+wandb:                eval/loss 0.28192
+wandb:             eval/runtime 12.3024
+wandb:  eval/samples_per_second 111.442
+wandb:    eval/steps_per_second 0.894
+wandb:               total_flos 2.2035589740185518e+18
+wandb:              train/epoch 5.0
+wandb:        train/global_step 1430
+wandb:          train/grad_norm 0.37912
+wandb:      train/learning_rate 0.0
+wandb:               train/loss 0.0057
+wandb:               train_loss 0.16818
+wandb:            train_runtime 7640.4826
+wandb: train_samples_per_second 23.9
+wandb:   train_steps_per_second 0.187
+wandb: 
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /online1/ycsc_chenkh/chenkh_nvlink/xfbai/code/exp.LLMTuning-devel/src/parsing/wandb/offline-run-20240521_002059-me6qsvxz
+wandb: Find logs at: ./wandb/offline-run-20240521_002059-me6qsvxz/logs
+[2024-05-21 02:28:51,886] [INFO] [launch.py:347:main] Process 3868 exits successfully.

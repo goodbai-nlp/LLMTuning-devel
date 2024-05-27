@@ -47,6 +47,10 @@ def padding_func(
 def get_raw_dataset(dataset_name, output_path, seed, local_rank):
     if dataset_name.endswith("webnlg20") or dataset_name.endswith("webnlg17"):
         return WebNLGDatasetVicuna(output_path, seed, local_rank, dataset_name)
+    elif dataset_name.endswith("webnlg17-llama3"):
+        return WebNLGDatasetVicunaLlama3(output_path, seed, local_rank, dataset_name)
+    elif dataset_name.endswith("EventNarrative"):
+        return WebNLGDatasetVicuna(output_path, seed, local_rank, dataset_name, input_key="src", output_key="tgt")
     elif dataset_name.endswith("webnlg20new") or dataset_name.endswith("webnlg17new"):
         return WebNLGDatasetVicunaV2(output_path, seed, local_rank, dataset_name)
     elif dataset_name.endswith("wsj"):
@@ -59,6 +63,12 @@ def get_raw_dataset(dataset_name, output_path, seed, local_rank):
         return InstructionTuningDatasetLlama2(output_path, seed, local_rank, dataset_name)
     elif dataset_name.endswith("amr2text"):
         return AMR2TextDataset(output_path, seed, local_rank, dataset_name)
+    elif dataset_name.endswith("amr2text-llama3"):
+        return AMR2TextDatasetLlama3(output_path, seed, local_rank, dataset_name)
+    elif dataset_name.endswith("amrparsing-llama3"):
+        return AMRParsingDatasetLlama3(output_path, seed, local_rank, dataset_name)
+    elif dataset_name.endswith("trucated-pubmedqa"):
+        return TrucatedPubMedQADataset(output_path, seed, local_rank, dataset_name)
     else:
         raise RuntimeError(
             f"We do not have configs for dataset {dataset_name}, but you can add it by yourself in raw_datasets.py."
@@ -273,6 +283,54 @@ class InstructionTuningDatasetVicuna(PromptRawDataset):
         return {"text": input_full, "prompt": input_prompt}
 
 
+class TrucatedPubMedQADataset(PromptRawDataset):
+    def __init__(self, output_path, seed, local_rank, data_path):
+        super().__init__(output_path, seed, local_rank, data_path)
+        self.dataset_name = "trucated-pubmedqa"
+        self.dataset_name_clean = "trucated-pubmedqa"
+        self.input_key = "context"
+        self.output_key = "final_decision"
+        print("Loaded dataset", self.raw_datasets)
+
+    def get_train_data(self):
+        return self.raw_datasets["train"]
+
+    def get_eval_data(self):
+        return self.raw_datasets["validation"]
+
+    def get_prompt(self, sample):
+        return f"{sample['context'].rstrip()}\nQuestion:\n{sample['QUESTION']}\nPlease respond with yes, no or maybe. The answer to the question is:"
+
+    def get_chosen(self, sample):
+        return sample[self.output_key]
+
+    def get_rejected(self, sample):
+        print(f"Warning: dataset {self.dataset_name} does not include rejected response.")
+        return None
+
+    def get_prompt_and_chosen(self, sample):
+        return f"{self.get_prompt(sample)}{sample[self.output_key]}"
+
+    def get_prompt_and_rejected(self, sample):
+        print(f"Warning: dataset {self.dataset_name} does not include rejected response.")
+        return None
+
+    def process_function(self, samples):
+        input_prompt = [
+            self.get_prompt({"context": context, "QUESTION": question})
+            for context, question in zip(
+                samples["context"], samples["QUESTION"]
+            )
+        ]
+        input_full = [
+            self.get_prompt_and_chosen({"context": context, "QUESTION": question, "final_decision": decision})
+            for context, question, decision in zip(
+                samples["context"], samples["QUESTION"], samples["final_decision"]
+            )
+        ]
+        return {"text": input_full, "prompt": input_prompt}
+
+
 class InstructionTuningDatasetLlama2(PromptRawDataset):
     def __init__(self, output_path, seed, local_rank, data_path):
         self.output_path = output_path
@@ -335,6 +393,49 @@ class AMR2TextDataset(InstructionTuningDataset):
         self.task_instruction = 'Generate a descriptive text for the given abstract meaning representation graph.'
 
 
+class AMR2TextDatasetLlama3(AMR2TextDataset):
+    def process_function(self, samples):
+        input_prompt = [
+            f'{"<|begin_of_text|>"}{self.get_prompt({"instruction": instruction, "input": input})}{"<|end_of_text|>"}'
+            for instruction, input in zip(
+                samples["instruction"], samples["input"]
+            )
+        ]
+        input_full = [
+            f'{"<|begin_of_text|>"}{self.get_prompt_and_chosen({"instruction": instruction, "input": input, "output": output})}{"<|end_of_text|>"}'
+            for instruction, input, output in zip(
+                samples["instruction"], samples["input"], samples["output"],
+            )
+        ]
+        return {"text": input_full, "prompt": input_prompt}
+
+
+class AMRParsingDatasetLlama3(InstructionTuningDataset):
+    def __init__(self, output_path, seed, local_rank, data_path):
+        self.output_path = output_path
+        self.dataset_name = "InstructData"
+        self.sys_instruction = ""
+        self.raw_datasets = load_dataset(
+            data_path
+        )
+        self.input_key = "sent"
+        self.output_key = "amr"
+        self.instruction = "Generate the abstract meaning graph for the given sentence."
+
+    def process_function(self, samples):
+        input_prompt = [
+            f'{"<|begin_of_text|>"}{self.get_prompt({"instruction": self.instruction, "input": input})}{"<|end_of_text|>"}'
+            for input in samples[self.input_key]
+        ]
+        input_full = [
+            f'{"<|begin_of_text|>"}{self.get_prompt_and_chosen({"instruction": self.instruction, "input": input, "output": output})}{"<|end_of_text|>"}'
+            for input, output in zip(
+                samples[self.input_key], samples[self.output_key],
+            )
+        ]
+        return {"text": input_full, "prompt": input_prompt}
+
+
 class ConParsingDatasetVicuna(InstructionTuningDatasetVicuna):
     def __init__(self, output_path, seed, local_rank, data_path, out_format="bracket"):
         super().__init__(output_path, seed, local_rank, data_path)
@@ -381,7 +482,7 @@ class ConParsingDataset(InstructionTuningDataset):
             )
         ]
         return {"text": input_full, "prompt": input_prompt}
-    
+
 
 class ChallengeQADatasetLlama2(InstructionTuningDatasetLlama2):
     def __init__(self, output_path, seed, local_rank, data_path):
@@ -449,7 +550,7 @@ class WebNLGV2DatasetLlama2(InstructionTuningDatasetLlama2):
     
 
 class WebNLGDatasetVicuna(InstructionTuningDatasetVicuna):
-    def __init__(self, output_path, seed, local_rank, data_path):
+    def __init__(self, output_path, seed, local_rank, data_path, input_key="input", output_key="output"):
         super().__init__(output_path, seed, local_rank, data_path)
         self.dataset_name = "WebNLG"
         self.raw_datasets = load_dataset(
@@ -461,8 +562,8 @@ class WebNLGDatasetVicuna(InstructionTuningDatasetVicuna):
             },
         )
         self.task_instruction = "Generate a coherent piece of text that contains all of the information in the triples."
-        self.input_key = "input"
-        self.output_key = "output"
+        self.input_key = input_key
+        self.output_key = output_key
 
     def process_function(self, samples):
         input_prompt = [
@@ -476,8 +577,24 @@ class WebNLGDatasetVicuna(InstructionTuningDatasetVicuna):
             )
         ]
         return {"text": input_full, "prompt": input_prompt}
+
+
+class WebNLGDatasetVicunaLlama3(WebNLGDatasetVicuna):
     
-    
+    def process_function(self, samples):
+        input_prompt = [
+            f'{"<|begin_of_text|>"}{self.get_prompt({"instruction": self.task_instruction, "input": input})}{"<|end_of_text|>"}'
+            for input in samples[self.input_key]
+        ]
+        input_full = [
+            f'{"<|begin_of_text|>"}{self.get_prompt_and_chosen({"instruction": self.task_instruction, "input": input, "output": output})}{"<|end_of_text|>"}'
+            for input, output in zip(
+                samples[self.input_key], samples[self.output_key],
+            )
+        ]
+        return {"text": input_full, "prompt": input_prompt}
+
+
 class WebNLGDatasetVicunaV2(InstructionTuningDatasetVicuna):
     def __init__(self, output_path, seed, local_rank, data_path):
         super().__init__(output_path, seed, local_rank, data_path)

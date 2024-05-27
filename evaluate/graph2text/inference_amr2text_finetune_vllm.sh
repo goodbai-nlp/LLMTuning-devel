@@ -1,8 +1,7 @@
 #!/bin/bash
 export CUDA_VISIBLE_DEVICES=0
 
-BasePath=/data/home/usera401
-# BasePath=/cpfs/29bcf0bdae829206-000001/home/usera401
+BasePath=/UNICOMFS/hitsz_khchen_1
 
 DATA=${BasePath}/data/AMRData/LDC2020-var-amr2text/test.jsonl
 DATA=${BasePath}/data/AMRData/LDC2020-leo-amr2text/test.jsonl

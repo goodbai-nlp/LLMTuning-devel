@@ -1,6 +1,6 @@
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 
-BasePath=/UNICOMFS/hitsz_khchen_1
+BasePath=/home/export/base/ycsc_chenkh/chenkh_nvlink/online1/xfbai/
 CurDir=$(cd $(dirname $0);cd ..; pwd)
 
 MODEL_NAME=llama2-7b
@@ -9,9 +9,7 @@ do
 
 MODEL=${BasePath}/data/pretrained-models/${MODEL_NAME}
 DataPath=${BasePath}/data/AMRData/
-DataSetName=LDC2020-var-amr2text
-DataSetName=LDC2020-leo-amr2text
-DataSetName=LDC2020-leo-amr2text-llama3
+DataSetName=LDC2017-amrparsing-llama3
 
 export HF_DATASETS_CACHE=${DataPath}/${DataSetName}/.cache
 
@@ -25,7 +23,7 @@ echo "Training llama model ${MODEL_SIZE} using $NUM_GPUS GPUs, $BATCH_SIZE_PER_G
 lr=2e-5
 NUM_EPOCHS=5
 
-OUTPUT_DIR=${BasePath}/output/exp.LLMTuning/Finetune-${DataSetName}-${MODEL_NAME}-ConditionalGenMode-lr-${lr}-totalbsz${TOTAL_BATCH_SIZE}-decay0.1-${NUM_EPOCHS}epoch-bsz128-Newest-Reproduce-Devel
+OUTPUT_DIR=${BasePath}/output/exp.LLMTuning/Finetune-${DataSetName}-${MODEL_NAME}-ConditionalGenMode-lr-${lr}-totalbsz${TOTAL_BATCH_SIZE}-decay0.1-${NUM_EPOCHS}epoch-bsz128-STD
 
 if [ ! -d ${OUTPUT_DIR} ];then
   mkdir -p ${OUTPUT_DIR}
@@ -72,6 +70,6 @@ deepspeed ${CurDir}/finetune_std.py \
     --tf32 True \
     --overwrite_output_dir \
     --preprocessing_num_workers 1 \
-    --data_cache_dir ${DataPath}/${DataSetName}/.cache-clm \
-    --report_to "wandb" 2>&1 | tee ${OUTPUT_DIR}/training.log
+    --data_cache_dir ${DataPath}/${DataSetName}/.cache-clm-std \
+    --report_to "tensorboard" 2>&1 | tee ${OUTPUT_DIR}/training.log
 done

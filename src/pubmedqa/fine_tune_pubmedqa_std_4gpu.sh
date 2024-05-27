@@ -1,32 +1,16 @@
+export CUDA_VISIBLE_DEVICES=0,1,2,3
 
-BasePath=/UNICOMFS/hitsz_khchen_1
-CurDir=$(cd $(dirname $0);cd ..; pwd)
+BasePath=/data/xfbai
+MODEL=${BasePath}/data/pretrained-models/llama-7b
+DataPath=${BasePath}/data/TaskData
 
-MODEL_NAME=llama2-7b
-for MODEL_NAME in llama3-8b
-do
-
-MODEL=${BasePath}/data/pretrained-models/${MODEL_NAME}
-DataPath=${BasePath}/data/AMRData/
-DataSetName=LDC2020-var-amr2text
-DataSetName=LDC2020-leo-amr2text
-DataSetName=LDC2020-leo-amr2text-llama3
-
-DataPath=${BasePath}/data/Data2text/
-# DataSetName=webnlg20
-# DataSetName=webnlg17
-DataSetName=webnlg17-llama3
-#DataSetName=EventNarrative
+DataSetName=trucated-pubmedqa
 
 export HF_DATASETS_CACHE=${DataPath}/${DataSetName}/.cache
 
-
 lr=2e-5
-NUM_EPOCHS=5
-BATCH_SIZE_PER_GPU=16
-GRADIENT_ACC_STEPS=1
 
-OUTPUT_DIR=${BasePath}/output/exp.LLMTuning/Preprocess-${DataSetName}-${MODEL_NAME}-ConditionalGenMode
+OUTPUT_DIR=${BasePath}/output/exp.InstructTuning/Finetune-${DataSetName}-llama-7b-GenMode-lr-${lr}-totalbsz128-decay0.1-3epoch-NewToken-V2
 
 if [ ! -d ${OUTPUT_DIR} ];then
   mkdir -p ${OUTPUT_DIR}
@@ -39,16 +23,21 @@ else
   esac
 fi
 
-echo ${CurDir}
-python ${CurDir}/finetune_std.py \
-    --deepspeed ${CurDir}/ds_configs/stage1_no_offloading.conf \
+MODEL_SIZE=7B
+NUM_GPUS=4
+BATCH_SIZE_PER_GPU=1
+TOTAL_BATCH_SIZE=4
+GRADIENT_ACC_STEPS=$(($TOTAL_BATCH_SIZE/$NUM_GPUS/$BATCH_SIZE_PER_GPU))
+echo "Training llama model ${MODEL_SIZE} using $NUM_GPUS GPUs, $BATCH_SIZE_PER_GPU batch size per GPU, $GRADIENT_ACC_STEPS gradient accumulation steps"
+
+deepspeed finetune.py \
+    --deepspeed ds_configs/stage3_no_offloading.conf \
     --data_path ${DataPath}/${DataSetName} \
     --model_name_or_path ${MODEL} \
     --tokenizer_name ${MODEL} \
     --use_fast_tokenizer False \
-    --conditional_gen True \
-    --max_seq_length 1024 \
-    --do_preprocess \
+    --conditional_gen False \
+    --max_seq_length 512 \
     --do_train \
     --do_eval \
     --per_device_train_batch_size $BATCH_SIZE_PER_GPU \
@@ -62,19 +51,15 @@ python ${CurDir}/finetune_std.py \
     --logging_steps 100 \
     --greater_is_better False \
     --save_strategy "epoch" \
-    --save_total_limit 5 \
+    --save_total_limit 3 \
     --ignore_opt_states True \
-    --num_train_epochs ${NUM_EPOCHS} \
+    --num_train_epochs 3 \
     --logging_first_step True \
     --gradient_checkpointing \
-    --use_peft False \
-    --use_flash_attn True \
     --output_dir ${OUTPUT_DIR} \
     --bf16 \
     --tf32 True \
-    --overwrite_cache \
     --overwrite_output_dir \
     --preprocessing_num_workers 1 \
-    --data_cache_dir ${DataPath}/${DataSetName}/.cache-clm \
+    --data_cache_dir ${DataPath}/${DataSetName}/.cache \
     --report_to "tensorboard" 2>&1 | tee ${OUTPUT_DIR}/training.log
-done

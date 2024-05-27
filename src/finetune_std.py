@@ -37,6 +37,7 @@ from transformers.trainer_utils import get_last_checkpoint
 
 from lm_trainer import LMTrainer
 from common.options import LLMTrainingArguments
+os.environ['WANDB_MODE'] = 'offline'
 
 logger = logging.getLogger(__name__)
 
@@ -107,6 +108,10 @@ class ModelArguments:
             "choices": ["auto", "bfloat16", "float16", "float32"],
         },
     )
+    add_special_token: bool = field(
+        default=False,
+        metadata={"help": "Whether to add special tokens or not."},
+    )
 
 
 @dataclass
@@ -173,9 +178,9 @@ def main():
     else:
         model_args, data_args, training_args = parser.parse_args_into_dataclasses()
         
-    os.environ["WANDB_API_KEY"] = "3988f776c1a564f70fec2e58ebfa6c2af0873a34"
-    os.environ["WANDB_PROJECT"] = training_args.wandb_project
-    wandb.login()
+    #os.environ["WANDB_API_KEY"] = "3988f776c1a564f70fec2e58ebfa6c2af0873a34"
+    #os.environ["WANDB_PROJECT"] = training_args.wandb_project
+    #wandb.login()
     # Setup logging
     logging.basicConfig(
         format="%(asctime)s - %(levelname)s - %(name)s - %(message)s",
@@ -260,7 +265,7 @@ def main():
         tokenizer.pad_token = "<pad>"
         tokenizer.pad_token_id = tokenizer.eos_token_id
         # exit()
-        
+
     elif isinstance(tokenizer, GPTNeoXTokenizerFast):
         num_added_tokens = tokenizer.add_special_tokens({
             "pad_token": "<pad>",
@@ -273,7 +278,16 @@ def main():
     #     num_added_tokens = tokenizer.add_special_tokens({'unk_token': '<unk>'})
     else:
         logger.info(f"Unsupportted Tokenizer Type:{type(tokenizer)}")
-        exit()
+        tokenizer.pad_token = "<pad>"
+        tokenizer.pad_token_id = tokenizer.eos_token_id
+        # exit()
+    
+    if model_args.add_special_token:
+        from common.constants import raw_special_tokens
+        special_tokens = [itm.replace("Ġ", " ") for itm in raw_special_tokens]
+        special_tokens_dict = {'additional_special_tokens': special_tokens}
+        num_added_toks = tokenizer.add_special_tokens(special_tokens_dict)
+        print(f"Manually add {num_added_toks} special tokens")
         
     def tokenize_function_lm(examples):
         return tokenizer(
@@ -386,6 +400,10 @@ def main():
             eval_dataset.save_to_disk(valid_cache_path)
 
     if data_args.do_preprocess:
+        for index in random.sample(range(len(train_dataset)), 3):
+            logger.info(f"Sample {index} of the training set: {train_dataset[index]}.")
+            sent = tokenizer.batch_decode([train_dataset[index]["input_ids"]])
+            logger.info(f"Text: {sent}")
         exit()
 
     logger.info("Loading from cache ...")

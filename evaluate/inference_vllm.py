@@ -57,6 +57,12 @@ def parse_args():
         required=True,
     )
     parser.add_argument(
+        "--out_path",
+        type=str,
+        default=None,
+        help="testset",
+    )
+    parser.add_argument(
         "--num_beams",
         type=int,
         default=5,
@@ -141,6 +147,12 @@ def parse_args():
         help="input key of test set",
     )
     parser.add_argument(
+        "--decode_special_token",
+        action="store_true",
+        default=False,
+        help="whether to decode special tokens or not"
+    )
+    parser.add_argument(
         "--bit_8",
         action="store_true", default=False
     )
@@ -165,12 +177,27 @@ webnlg_template="""<s>[INST] Following is a set of knowledge graph triples delim
 Generate a coherent piece of text that contains all of the information in the triples. Only use information from the provided triples.[/INST]"""
 
 
-def create_prompt(data, args):
+def create_prompt(data, args, tokenizer=None):
     if args.prompt_template == "None":
         prompts = [itm[args.input_key] for itm in data]
-    if args.prompt_template == "llama2-chat":
+    elif args.prompt_template == "llama2-chat" or args.prompt_template == "llama3-chat" or args.prompt_template == "phi-3-instruct":
         system_prompt = "You are a helpful, respectful and honest assistant. Always answer as helpfully as possible, while being safe.  Your answers should not include any harmful, unethical, racist, sexist, toxic, dangerous, or illegal content. Please ensure that your responses are socially unbiased and positive in nature. If a question does not make any sense, or is not factually coherent, explain why instead of answering something not correct. If you don't know the answer to a question, please don't share false information."
-        prompts = [f"[INST] <<SYS>>\n{system_prompt}\n<</SYS>>\n\n{sample[args.input_key].rstrip()} [/INST]" for sample in data]
+        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
+        prompts = []
+        for sample in data:
+            chat = [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": sample[args.input_key].rstrip()},
+            ]
+            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
+    elif args.prompt_template in ["mixtral", "gemma-it"]:
+        assert tokenizer is not None, "tokenizer should not be None when using {args.prompt_template} template."
+        prompts = []
+        for sample in data:
+            chat = [
+                {"role": "user", "content": sample[args.input_key].rstrip()},
+            ]
+            prompts.append(tokenizer.apply_chat_template(chat, tokenize=False, add_generation_prompt=True))
     elif args.prompt_template == "llama2-chat-kg":
         prompts = [webnlg_template.format(triples=sample[args.input_key]) for sample in data]
     elif args.prompt_template == "pubmedqa":
@@ -178,6 +205,13 @@ def create_prompt(data, args):
     elif args.prompt_template == "supervised":
         prompts = [
             f"Human:\n{args.instruction} {sample[args.input_key]}\nAssistant:\n"
+            for sample in data
+        ]
+    elif args.prompt_template == "supervised-llama3":
+        sys_instruction = ""
+        task_instruction = args.instruction if "instruction" not in data[0] else data[0]["instruction"]
+        prompts = [
+            f'<|begin_of_text|>{sys_instruction}Human:\n{task_instruction} {sample[args.input_key]}\nAssistant:\n'
             for sample in data
         ]
     elif args.prompt_template == "vicuna":
@@ -241,7 +275,8 @@ def initialize_engine(args) -> LLMEngine:
     # max_cpu_loras: controls the size of the CPU LoRA cache.
     engine_args = EngineArgs(model=args.model_name_or_path,
                              enable_lora=True if args.lora_name_or_path else False,
-                             tensor_parallel_size=world_size, 
+                             tensor_parallel_size=world_size,
+                             trust_remote_code=True,
                              gpu_memory_utilization=0.90,
                              max_loras=1,
                              max_lora_rank=64,
@@ -253,6 +288,7 @@ def initialize_engine(args) -> LLMEngine:
 def process_requests(engine: LLMEngine, sampling_params: SamplingParams, test_prompts: List[str], lora_request: Optional[LoRARequest]):
     """Continuously process a list of prompts and handle the outputs."""
     request_id = 0
+    gen_ids = [[] for _ in range(len(test_prompts))]
     gen_res = ["" for _ in range(len(test_prompts))]
     prompt_res = ["" for _ in range(len(test_prompts))]
     while test_prompts or engine.has_unfinished_requests():
@@ -271,15 +307,17 @@ def process_requests(engine: LLMEngine, sampling_params: SamplingParams, test_pr
                 prompt = request_output.prompt
                 iid = int(request_output.request_id)
                 generated_text = request_output.outputs[0].text.replace("\n", "")
+                gen_ids[iid] = request_output.outputs[0].token_ids
                 gen_res[iid] = generated_text
                 prompt_res[iid] = prompt
     
-    return prompt_res, gen_res
+    return prompt_res, gen_res, gen_ids
 
 
 def main():
     args = parse_args()
     lora_request = LoRARequest("llama-lora", 1, args.lora_name_or_path) if args.lora_name_or_path else None
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name_or_path, fast_tokenizer=False, add_eos_token=False, trust_remote_code=True)
     # model = LLM(model=args.model_name if args.model_name else args.model_name_or_path, download_dir=args.model_name_or_path, tensor_parallel_size=world_size, gpu_memory_utilization=0.90)
     model_engine = initialize_engine(args)
     print(args.test_file)
@@ -287,26 +325,41 @@ def main():
     if args.test_file.endswith("jsonl"):
         with open(args.test_file, "r", encoding="utf-8") as fin:
             data = [json.loads(line.strip()) for line in fin]
-            prompts = create_prompt(data, args)
+            prompts = create_prompt(data, args, tokenizer)
     elif args.test_file.endswith("json"):
         with open(args.test_file, "r", encoding="utf-8") as fin:
             data = json.load(fin)
-            prompts = create_prompt(data, args)
+            prompts = create_prompt(data, args, tokenizer)
     else:
         print("unsupported file format")
 
     print(f"Loaded {len(prompts)} data for generation")
     print(f"Example data: {prompts[:5]}")
+    # exit()
     
     if args.beam_search:
-        gen_params = SamplingParams(n=args.num_beams, use_beam_search=True, temperature=0.0, best_of=args.num_beams, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>"])
+        gen_params = SamplingParams(n=args.num_beams, use_beam_search=True, temperature=0.0, best_of=args.num_beams, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>", "<|end_of_text|>", tokenizer.eos_token])
     else:
-        gen_params = SamplingParams(n=1, use_beam_search=False, best_of=1, temperature=0, frequency_penalty=args.frequency_penalty, presence_penalty=args.presence_penalty, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>", "###"])
+        gen_params = SamplingParams(n=1, use_beam_search=False, best_of=1, temperature=0, frequency_penalty=args.frequency_penalty, presence_penalty=args.presence_penalty, max_tokens=args.max_new_tokens, stop=["</s>", "<pad>", "<|endoftext|>", "<|end_of_text|>", "###", tokenizer.eos_token])
 
-    prompt_res, gen_res = process_requests(model_engine, gen_params, prompts, lora_request)
+    prompt_res, gen_res, gen_ids = process_requests(model_engine, gen_params, prompts, lora_request)
+    
+    if args.decode_special_token:
+        gen_res = []
+        for idx in tqdm(range(0, len(gen_ids), 100)):
+            ith_gen_res = tokenizer.batch_decode(gen_ids[idx:idx+100], skip_special_tokens=False)
+            gen_res += [itm.replace("\n", " ").replace(tokenizer.eos_token, "") for itm in ith_gen_res]
     
     out_prefix = args.test_file.split("/")[-1].split(".")[0]
-    out_file = f"{args.model_name_or_path}/{args.out_prefix}_{out_prefix}_vllm.txt" if args.lora_name_or_path is None else f"{args.lora_name_or_path}/{args.out_prefix}_{out_prefix}_vllm.txt"
+    
+    if args.out_path is not None:
+        out_path = args.out_path
+        if not os.path.exists(out_path):
+            os.mkdir(out_path)
+    else:
+        out_path = args.model_name_or_path
+        
+    out_file = f"{out_path}/{args.out_prefix}_{out_prefix}_vllm.txt" if args.lora_name_or_path is None else f"{args.lora_name_or_path}/{args.out_prefix}_{out_prefix}_vllm.txt"
     with open(out_file, "w", encoding="utf-8") as fout:
         fout.write("\n".join(gen_res) + "\n")
 
